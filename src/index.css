@@ -1,13 +1,150 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.makeLink {
+	cursor: pointer;
+}
+
+.OTP input {
+	text-align: center;
+}
+
+.OTP ::-webkit-input-placeholder {
+	text-align: center;
+}
+
+.OTP :-moz-placeholder {
+	text-align: center;
+}
+
+.breadcrumb {
+	background-color: transparent;
+	padding-top: 0;
+}
+
+.customNav {
+	background-color: white;
+	border-bottom: 2px solid rgb(207, 202, 202);
+}
+
+.navMenuIcon {
+	display: none;
+}
+
+.navBrandName {
+	display: flex;
+	align-items: center;
+}
+
+.navSearch,
+.navSearch:focus,
+.navSearch:active {
+	border: none;
+	box-shadow: none;
+}
+
+.navForm {
+	border: 0.5px solid rgb(214, 211, 211);
+	border-radius: 2rem;
+	display: flex;
+	/* align-items: center; */
+}
+
+.navDropdown a {
+	color: black;
+}
+
+.admin-layout {
+	min-height: 100vh;
+	display: flex;
+	position: relative;
+	top: 3.6rem;
+}
+
+.admin-content {
+	background-color: rgb(240, 240, 240);
+	max-width: 100%;
+	flex-grow: 1;
+}
+
+.sidebar {
+	min-height: 100vh;
+	position: relative;
+	background-color: white;
+	transition: transform 0.3s ease-out;
+}
+
+.sidebarOpen {
+	transform: translateX(0);
+}
+
+.sidebarClose {
+	transform: translateX(-100%);
+}
+
+.list-group-item {
+	cursor: pointer;
+	font-size: 0.9rem;
+	font-weight: 400;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.list-group a {
+	text-decoration: none;
+	color: black;
+}
+
+.linkActive {
+	background-color: rgb(253, 236, 209);
+}
+
+.list-group-item svg {
+	margin-right: 0.5rem;
+}
+
+.list-group-item:hover {
+	background-color: rgb(253, 236, 209);
+}
+
+@media (max-width: 992px) {
+	.navBrandName {
+		display: none;
+	}
+	.navForm {
+		display: none;
+	}
+	.navLogo {
+		flex-grow: 1;
+	}
+	.navMenuIcon {
+		display: block;
+		cursor: pointer;
+	}
+	.sidebar {
+		position: fixed;
+		left: 0;
+		z-index: 100;
+	}
+	.backdrop {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+		background-color: rgba(0, 0, 0, 0.7);
+	}
 }
