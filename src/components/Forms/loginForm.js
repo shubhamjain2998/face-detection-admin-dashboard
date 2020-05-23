@@ -3,6 +3,9 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from '../../axios-faceDet';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 const LoginSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
@@ -12,12 +15,29 @@ const LoginSchema = Yup.object().shape({
 const RegisterSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
 	password: Yup.string().required('Required'),
-	repeatPassword: Yup.string().required('Required'),
+	repeatPassword: Yup.string().oneOf(
+		[Yup.ref('password'), null],
+		'Passwords must match'
+	),
 });
 
 const LoginForm = (props) => {
 	const onSubmitHandler = (values) => {
 		console.log(values);
+		const formData = new FormData();
+		formData['email'] = values.email;
+		formData['password'] = values.password;
+		console.log(formData);
+		axios
+			.post('/attendance/api/user/register', {
+				email: values.email,
+				password: values.password,
+			})
+			.then((res) => {
+				console.log(res);
+				props.setUser({email: res.data.email, token: null});
+			})
+			.catch((err) => console.log(err.message));
 	};
 
 	const loginInitial = {
@@ -134,4 +154,11 @@ const LoginForm = (props) => {
 	);
 };
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setUser: (authData) =>
+			dispatch({ type: actionTypes.ADD_USER, authData: authData }),
+	};
+};
+
+export default connect(null, mapDispatchToProps)(LoginForm);

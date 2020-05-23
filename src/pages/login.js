@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../components/logo';
-import LoginForm from '../components/loginForm';
+import LoginForm from '../components/Forms/loginForm';
 import { Card } from 'react-bootstrap';
 
 const Login = () => {

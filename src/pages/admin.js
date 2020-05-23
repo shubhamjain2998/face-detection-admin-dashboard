@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import DashboardNavbar from '../components/navbar';
+import DashboardNavbar from '../components/Layout/navbar';
 import { useLocation } from 'react-router-dom';
-import Sidebar from '../components/sidebar';
-import Backdrop from '../components/backdrop';
+import Sidebar from '../components/Layout/sidebar';
+import Backdrop from '../components/Layout/backdrop';
 
 const Admin = (props) => {
 	const location = useLocation();
 	const [sidebar, setSidebar] = useState(false);
 
-	if (location.pathname === '/login' || location.pathname === '/register') {
+	if (
+		location.pathname === '/login' ||
+		location.pathname === '/register' ||
+		location.pathname === '/org'
+	) {
 		return <>{props.children}</>;
 	}
 

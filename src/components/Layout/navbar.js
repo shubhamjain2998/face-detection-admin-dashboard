@@ -7,7 +7,7 @@ import {
 	Image,
 	NavDropdown,
 } from 'react-bootstrap';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { RiBarChartHorizontalLine, RiSearch2Line } from 'react-icons/ri';
 import { AiOutlineMenu } from 'react-icons/ai';
 

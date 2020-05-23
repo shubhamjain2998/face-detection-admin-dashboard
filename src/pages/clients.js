@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import ClientCard from '../components/clientCard';
+import ClientCard from '../components/Cards/clientCard';
 import Heading from '../components/heading';
 import john from '../assets/avatar-02.jpg';
 import { Row, Col, Button, Form, Container } from 'react-bootstrap';
 import { BsPlus, BsGrid3X3Gap } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa';
-import ClientForm from '../components/clientForm';
 import CustomModal from '../components/modal';
 import CustomTable from '../components/table';
+import AccountForm from '../components/Forms/accountForm';
 // import { Form } from 'formik';
 
 const clients = [
@@ -73,22 +73,7 @@ const clients = [
 	},
 ];
 
-const formElements = [
-	{ name: 'firstName', type: 'text', value: '', placeholder: 'First Name' },
-	{ name: 'lastName', type: 'text', value: '', placeholder: 'Last Name' },
-	{ name: 'username', type: 'text', value: '', placeholder: 'Username' },
-	{ name: 'email', type: 'email', value: '', placeholder: 'Email ID' },
-	{ name: 'password', type: 'password', value: '', placeholder: 'Password' },
-	{
-		name: 'confirmPassword',
-		type: 'password',
-		value: '',
-		placeholder: 'Confirm Password',
-	},
-	{ name: 'clientId', type: 'number', value: '', placeholder: 'Client ID' },
-	{ name: 'phone', type: 'number', value: '', placeholder: 'Mobile Number' },
-	{ name: 'companyName', type: 'text', value: '', placeholder: 'Company Name' },
-];
+
 
 const Clients = () => {
 	const [show, setShow] = useState(false);
@@ -102,7 +87,7 @@ const Clients = () => {
 
 	return (
 		<Container fluid>
-			<Row className='pt-3'>
+			<Row >
 				<Col lg={9}>
 					<Heading name='Clients' link='client' />
 				</Col>
@@ -162,7 +147,7 @@ const Clients = () => {
 			)}
 
 			<CustomModal show={show} onClose={handleClose}>
-				<ClientForm elements={formElements} />
+				<AccountForm />
 			</CustomModal>
 		</Container>
 	);

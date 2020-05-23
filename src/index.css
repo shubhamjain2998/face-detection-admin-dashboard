@@ -10,6 +10,15 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+.switch-wrapper {
+	position: relative;
+}
+
+.switch-wrapper > div {
+	position: absolute;
+	width: 100%;
+}
+
 .makeLink {
 	cursor: pointer;
 }
@@ -91,7 +100,21 @@ code {
 	transform: translateX(-100%);
 }
 
+.dropdown {
+	transition: all 1s ease-out;
+}
+
+.sidebar-dropdown-item {
+	padding-left: 3rem !important;
+	border: none;
+}
+
+.list-group {
+	height: 100%;
+}
+
 .list-group-item {
+	min-width: 15rem;
 	cursor: pointer;
 	font-size: 0.9rem;
 	font-weight: 400;
@@ -117,6 +140,31 @@ code {
 
 .list-group-item:hover {
 	background-color: rgb(253, 236, 209);
+}
+
+.h7 {
+	font-size: 0.8rem;
+}
+
+.h8 {
+	font-size: 0.6rem;
+}
+
+.profile-card {
+	background-color: white;
+	border: 2px solid rgb(219, 212, 212);
+	border-radius: 5px;
+}
+
+.profile-card-left {
+	border-right: 2px dashed rgb(180, 179, 179);
+}
+
+@media (max-width: 768px) {
+	.profile-card-left {
+		border-right: none;
+		border-bottom: 2px dashed rgb(180, 179, 179);
+	}
 }
 
 @media (max-width: 992px) {
