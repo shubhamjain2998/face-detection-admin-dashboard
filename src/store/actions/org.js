@@ -37,8 +37,8 @@ export const orgCreation = (orgDetails) => {
 		axios 
 			.post('/attendance/api/org', orgdata)
 			.then((res) => {
-				console.log(res);
-				dispatch(orgCreationCompleted({}));
+				console.log(res.data);
+				dispatch(orgCreationCompleted(res.data));
 			})
 			.catch((err) => {
 				console.log(err);

@@ -2,7 +2,8 @@ import React from 'react';
 import CustomForm from './customForm';
 import * as actions from '../../store/actions/index';
 import * as Yup from 'yup';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
 
 const FILE_SIZE = 10485760;
 
@@ -36,10 +37,17 @@ const formElements = [
 ];
 
 const OrganizationForm = (props) => {
+	const dispatch = useDispatch();
+	const organization = useSelector((state) => state.org);
+
 	const onSubmitHandler = (values) => {
 		console.log(values);
-		props.addOrganization(values);
+		dispatch(actions.orgCreation(values));
 	};
+
+	if (organization.details.pk && !organization.loading && !organization.error) {
+		return <Redirect to='/account' />
+	}
 
 	return (
 		<div className='d-flex align-items-center flex-column'>
@@ -54,10 +62,4 @@ const OrganizationForm = (props) => {
 	);
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		addOrganization: (orgDetails) => dispatch(actions.orgCreation(orgDetails)),
-	};
-};
-
-export default connect(null, mapDispatchToProps)(OrganizationForm);
+export default OrganizationForm;

@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import axios from '../../axios-faceDet';
-import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
+import { Link, Redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 const LoginSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
@@ -22,22 +21,39 @@ const RegisterSchema = Yup.object().shape({
 });
 
 const LoginForm = (props) => {
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
+
+	const [authenticated, setAuthenticated] = useState(false);
+	const [registered, setRegistered] = useState(false);
+
+	useEffect(() => {
+		if (!props.register) {
+			if (user.token && !user.error && !user.loading) {
+				setAuthenticated(true);
+			}
+		} else {
+			if (!user.error && !user.loading && user.user.pk) {
+				setRegistered(true);
+			}
+		}
+	}, [props.register, user.token, user.error, user.loading, user.user.pk]);
+
+	if (!props.register && authenticated) {
+		return <Redirect to="/org" />
+	}
+	
+	if (props.register && registered) {
+		return <Redirect to="/login" />
+	}
+
 	const onSubmitHandler = (values) => {
 		console.log(values);
-		const formData = new FormData();
-		formData['email'] = values.email;
-		formData['password'] = values.password;
-		console.log(formData);
-		axios
-			.post('/attendance/api/user/register', {
-				email: values.email,
-				password: values.password,
-			})
-			.then((res) => {
-				console.log(res);
-				props.setUser({email: res.data.email, token: null});
-			})
-			.catch((err) => console.log(err.message));
+		if (props.register) {
+			dispatch(actions.registerUser(values));
+		} else {
+			dispatch(actions.loginUser(values));
+		}
 	};
 
 	const loginInitial = {
@@ -154,11 +170,4 @@ const LoginForm = (props) => {
 	);
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setUser: (authData) =>
-			dispatch({ type: actionTypes.ADD_USER, authData: authData }),
-	};
-};
-
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default LoginForm;

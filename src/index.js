@@ -8,13 +8,17 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import userReducer from './store/reducers/user';
-import thunk from "redux-thunk";
+import thunk from 'redux-thunk';
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
+import orgReducer from './store/reducers/org';
+import accReducer from './store/reducers/accounts';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
 	user: userReducer,
+	org: orgReducer,
+	acc: accReducer
 });
 
 const store = createStore(

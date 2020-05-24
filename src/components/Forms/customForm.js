@@ -44,7 +44,7 @@ const CustomForm = (props) => {
 									(el, i) => {
 										if (el.type === 'file') {
 											return (
-												<Col key={el.name + i} className='my-3'>
+												<Col md={12} key={el.name + i} className='my-3'>
 													<Form.File custom>
 														<Form.File.Input
 															name={el.name}
@@ -66,8 +66,48 @@ const CustomForm = (props) => {
 												</Col>
 											);
 										}
-										console.log(values);
-										console.log(errors);
+
+										if (el.type === 'checkbox') {
+											return (
+												<Col md={6} lg={3} key={el.name + i} className='my-3'>
+													<Form.Check
+														label={el.label}
+														inline
+														name={el.name}
+														type={el.type}
+														placeholder={el.placeholder}
+														onChange={handleChange}
+														onBlur={handleBlur}
+														value={values[el.name]}
+													/>
+												</Col>
+											);
+										}
+
+										if (el.type === 'select') {
+											return (
+												<Col md={6} key={el.name + i} className='my-3'>
+													<Form.Label>{el.label}</Form.Label>
+													<Form.Control
+														as='select'
+														custom
+														name={el.name}
+														type={el.type}
+														placeholder={el.placeholder}
+														onChange={handleChange}
+														onBlur={handleBlur}
+														value={values[el.name]}
+													>
+														{el.options.map((e, i) => (
+															<option key={e + i}>{e}</option>
+														))}
+													</Form.Control>
+												</Col>
+											);
+										}
+
+										// console.log(values);
+										// console.log(errors);
 										return (
 											<Col md={6} key={el.name + i} className='my-3'>
 												<Form.Control
@@ -90,12 +130,7 @@ const CustomForm = (props) => {
 								)}
 							</Form.Row>
 						</Form.Group>
-						<Button
-							variant='warning'
-							type='submit'
-							disabled={isSubmitting || !isValid}
-							block
-						>
+						<Button variant='warning' type='submit' disabled={!isValid} block>
 							Submit
 						</Button>
 					</Form>

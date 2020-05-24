@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
-import Login from './pages/login';
-import Register from './pages/register';
+import Login from './pages/Registration/login';
+import Register from './pages/Registration/register';
 import Clients from './pages/clients';
 import Dashboard from './pages/dashboard';
 import Admin from './pages/admin';
 import Profile from './pages/profile';
 import Employee from './pages/employee';
-import OrgRegister from './pages/orgRegister';
+import OrgRegister from './pages/Registration/orgRegister';
+import AccRegister from './pages/Registration/accRegister';
 
 const App = () => {
 	return (
@@ -22,7 +23,7 @@ const App = () => {
 				>
 					<Route path='/login' component={Login} />
 					<Route path='/register' component={Register} />
-					<Route path='/account' component={Register} />
+					<Route path='/account' component={AccRegister} />
 					<Route path='/org' component={OrgRegister} />
 					<Route path='/client' component={Clients} />
 					<Route path='/profile' component={Profile} />

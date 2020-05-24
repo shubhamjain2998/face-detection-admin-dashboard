@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from '../components/Forms/loginForm';
-import FrontPage from '../components/Cards/frontPage';
+import LoginForm from '../../components/Forms/loginForm';
+import FrontPage from '../../components/Cards/frontPage';
 
 const Register = () => {
 	return (
