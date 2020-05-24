@@ -8,7 +8,7 @@ import Dashboard from './pages/dashboard';
 import Admin from './pages/admin';
 import Profile from './pages/profile';
 import Employee from './pages/employee';
-import OrganizationForm from './components/Forms/orgForm';
+import OrgRegister from './pages/orgRegister';
 
 const App = () => {
 	return (
@@ -23,7 +23,7 @@ const App = () => {
 					<Route path='/login' component={Login} />
 					<Route path='/register' component={Register} />
 					<Route path='/account' component={Register} />
-					<Route path='/org' component={OrganizationForm} />
+					<Route path='/org' component={OrgRegister} />
 					<Route path='/client' component={Clients} />
 					<Route path='/profile' component={Profile} />
 					<Route path='/employee' component={Employee} />

@@ -35,18 +35,39 @@ const CustomForm = (props) => {
 					handleSubmit,
 					isSubmitting,
 					isValid,
+					setFieldValue,
 				}) => (
 					<Form noValidate onSubmit={handleSubmit}>
 						<Form.Group>
 							<Form.Row>
 								{elements.map(
 									(el, i) => {
-										// if (el.type === 'file') {
-										// 	return (
+										if (el.type === 'file') {
+											return (
+												<Col key={el.name + i} className='my-3'>
+													<Form.File custom>
+														<Form.File.Input
+															name={el.name}
+															type={el.type}
+															onChange={(e) => {
+																e.preventDefault();
+																const file = e.target.files[0];
+																setFieldValue(el.name, file);
+															}}
+															isValid={touched[el.name] && !errors[el.name]}
+															isInvalid={touched[el.name] && errors[el.name]}
+														/>
+														<Form.File.Label data-browse='Select File'>
+															{values[el.name] ? values[el.name].name : el.label}
+														</Form.File.Label>
+													</Form.File>
 
-										// 	);
-										// }
-										// console.log(errors);
+													<p className='h7 text-danger'>{errors[el.name]}</p>
+												</Col>
+											);
+										}
+										console.log(values);
+										console.log(errors);
 										return (
 											<Col md={6} key={el.name + i} className='my-3'>
 												<Form.Control

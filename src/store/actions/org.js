@@ -27,10 +27,14 @@ export const orgCreation = (orgDetails) => {
 	orgdata.append('orgType', orgDetails.orgType);
 	orgdata.append('contact', orgDetails.phone);
 	orgdata.append('staffcount', orgDetails.staffCount);
+	orgdata.append('logo', orgDetails.logo); //TODO: change logo name here
 	return (dispatch) => {
 		dispatch(orgCreationStarted());
 		console.log(orgdata);
-		axios
+
+		//TODO: Add Token Authentication
+
+		axios 
 			.post('/attendance/api/org', orgdata)
 			.then((res) => {
 				console.log(res);

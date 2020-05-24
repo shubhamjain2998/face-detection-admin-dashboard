@@ -23,6 +23,11 @@ code {
 	cursor: pointer;
 }
 
+.frontPageCard {
+	min-width: 30%;
+	max-width: 60%;
+}
+
 .OTP input {
 	text-align: center;
 }
@@ -164,6 +169,9 @@ code {
 	.profile-card-left {
 		border-right: none;
 		border-bottom: 2px dashed rgb(180, 179, 179);
+	}
+	.frontPageCard {
+		max-width: 100%;
 	}
 }
 
