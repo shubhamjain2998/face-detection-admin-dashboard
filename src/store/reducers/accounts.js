@@ -1,10 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from './utility';
+import { updateObject, accounts } from './utility';
 
-const accounts = {
+const acc = {
 	error: null,
 	loading: false,
 	details: {
+		pk: null,
 		empId: null,
 		emailId: null,
 		username: null,
@@ -15,7 +16,7 @@ const accounts = {
 		readEmp: false,
 		addEmp: false,
 		readAtt: false,
-		writeAtt: false,
+		addAtt: false,
 		readDept: false,
 		addDept: false,
 		idType: null,
@@ -27,7 +28,9 @@ const accounts = {
 	},
 };
 
-const accReducer = (state = accounts, action) => {
+let updatedDetails = {};
+
+const accReducer = (state = acc, action) => {
 	switch (action.type) {
 		case actionTypes.ACCOUNT_CREATION_STARTED:
 			return updateObject(state, { loading: true });
@@ -41,6 +44,18 @@ const accReducer = (state = accounts, action) => {
 
 		case actionTypes.ACCOUNT_CREATION_FAILED:
 			return updateObject(state, { error: action.error });
+
+		case actionTypes.SET_ACCOUNT_DETAILS:
+			updatedDetails = { ...state.details, ...action.data };
+			return updateObject(state, {
+				error: null,
+				loading: false,
+				details: updatedDetails,
+			});
+
+		case actionTypes.REMOVE_ACCOUNT_DETAILS:
+			updatedDetails = updateObject(state.details, accounts.details);
+			return updateObject(state, accounts);
 
 		default:
 			return state;

@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-faceDet';
+import { user, accounts, organization } from '../reducers/utility';
 
 export const registerUserStarted = () => {
 	return {
@@ -31,7 +32,7 @@ export const loginCompleted = (token, details) => {
 	return {
 		type: actionTypes.LOGIN_COMPLETED,
 		token: token,
-		data: details
+		data: details,
 	};
 };
 
@@ -42,9 +43,38 @@ export const loginFailed = (error) => {
 	};
 };
 
-export const logout = () => {
+export const removeUser = () => {
 	return {
-		type: actionTypes.LOGOUT,
+		type: actionTypes.REMOVE_USER,
+		data: user,
+	};
+};
+
+export const setAccount = (accountDetails) => {
+	return {
+		type: actionTypes.SET_ACCOUNT_DETAILS,
+		data: accountDetails,
+	};
+};
+
+export const removeAccount = () => {
+	return {
+		type: actionTypes.REMOVE_ACCOUNT_DETAILS,
+		data: accounts,
+	};
+};
+
+export const setOrg = (orgDetails) => {
+	return {
+		type: actionTypes.SET_ORGANIZATION_DETAILS,
+		data: orgDetails,
+	};
+};
+
+export const removeOrg = () => {
+	return {
+		type: actionTypes.REMOVE_ORGANIZATION_DETAILS,
+		data: organization,
 	};
 };
 
@@ -62,7 +92,7 @@ export const registerUser = (userDetails) => {
 			})
 			.catch((err) => {
 				console.log(err.message);
-				dispatch(registerUserFailed(err))
+				dispatch(registerUserFailed(err));
 			});
 	};
 };
@@ -76,14 +106,43 @@ export const loginUser = (userDetails) => {
 				password: userDetails.password,
 			})
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				dispatch(loginCompleted(res.data.token, res.data.user));
+				axios
+					.get('/attendance/api/accounts/filter?email=' + res.data.user.id)
+					.then((res) => {
+						if (res.data.length > 0) {
+							dispatch(setAccount(res.data[0]));
+							axios
+								.get('/attendance/api/org/' + res.data[0].orgId + '/')
+								.then((res) => {
+									dispatch(setOrg(res.data));
+								})
+								.catch((err) => {
+									console.log(err.message);
+									dispatch(loginFailed(err));
+								});
+						} else {
+							dispatch(setAccount(accounts));
+							dispatch(setOrg(organization));
+						}
+					})
+					.catch((err) => {
+						console.log(err.message);
+						dispatch(loginFailed(err));
+					});
 			})
 			.catch((err) => {
 				console.log(err.message);
-				dispatch(loginFailed(err))
+				dispatch(loginFailed(err));
 			});
 	};
 };
 
-
+export const logout = () => {
+	return (dispatch) => {
+		dispatch(removeUser());
+		dispatch(removeAccount());
+		dispatch(removeOrg());
+	};
+};

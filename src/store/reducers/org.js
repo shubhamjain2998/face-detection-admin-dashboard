@@ -1,27 +1,29 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from './utility';
+import { updateObject, organization } from './utility';
 
-const organization = {
+const org = {
 	error: null,
 	loading: false,
 	details: {
 		url: '',
 		pk: null,
-		name: null,
+		Name: null,
 		orgType: null,
 		contact: null,
-		staffCount: null,
+		staffcount: null,
 		logo: 'null',
 	},
 };
 
-const orgReducer = (state = organization, action) => {
+let newDetails = {};
+
+const orgReducer = (state = org, action) => {
 	switch (action.type) {
 		case actionTypes.ORGANIZATION_CREATION_STARTED:
 			return updateObject(state, { loading: true });
 
 		case actionTypes.ORGANIZATION_CREATION_COMPLETED:
-			const newDetails = updateObject(state.details, action.data);
+			newDetails = updateObject(state.details, action.data);
 			return updateObject(state, {
 				error: null,
 				loading: false,
@@ -30,6 +32,17 @@ const orgReducer = (state = organization, action) => {
 
 		case actionTypes.ORGANIZATION_CREATION_FAILED:
 			return updateObject(state, { error: action.error, loading: false });
+
+		case actionTypes.SET_ORGANIZATION_DETAILS:
+			newDetails = updateObject(state.details, action.data);
+			return updateObject(state, {
+				error: null,
+				loading: false,
+				details: newDetails,
+			});
+
+		case actionTypes.REMOVE_ORGANIZATION_DETAILS:
+			return updateObject(state, organization)
 
 		default:
 			return state;

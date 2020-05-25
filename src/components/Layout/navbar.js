@@ -10,11 +10,16 @@ import {
 import logo from '../../assets/logo.png';
 import { RiBarChartHorizontalLine, RiSearch2Line } from 'react-icons/ri';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const DashboardNavbar = (props) => {
+	const org = useSelector((state) => state.org);
+	// const user = useSelector((state) => state.user);
+
 	return (
 		<React.Fragment>
-			<Navbar className='customNav' variant='light' fixed="top">
+			<Navbar className='customNav' variant='light' fixed='top'>
 				<div className='navMenuIcon' onClick={props.showSidebar}>
 					<AiOutlineMenu />
 				</div>
@@ -28,7 +33,7 @@ const DashboardNavbar = (props) => {
 					<span style={{ cursor: 'pointer' }} onClick={props.showSidebar}>
 						<RiBarChartHorizontalLine />
 					</span>
-					<p className='my-0 px-3'>Dreamguy's Technologies</p>
+					<p className='my-0 px-3'>{org.details.Name}</p>
 				</div>
 				<Form inline className='navForm'>
 					<FormControl
@@ -44,7 +49,7 @@ const DashboardNavbar = (props) => {
 					<NavDropdown title='Admin' className='navDropdown'>
 						<NavDropdown.Item>My Profile</NavDropdown.Item>
 						<NavDropdown.Item>Settings</NavDropdown.Item>
-						<NavDropdown.Item>Log Out</NavDropdown.Item>
+						<NavLink to='/logout' className='px-4'>logout</NavLink>
 					</NavDropdown>
 				</div>
 			</Navbar>

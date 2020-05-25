@@ -3,6 +3,7 @@ import CustomForm from './customForm';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import { Redirect } from 'react-router-dom';
 
 const FILE_SIZE = 10485760;
 
@@ -94,8 +95,10 @@ const formElements = [
 	},
 ];
 
-const AccountForm = () => {
+const AccountForm = (props) => {
 	const dispatch = useDispatch();
+	const account = useSelector((state) => state.acc);
+
 	const user = useSelector((state) => state.user);
 	const org = useSelector((state) => state.org);
 
@@ -103,6 +106,10 @@ const AccountForm = () => {
 		console.log(values);
 		dispatch(actions.accountCreation(values, user, org));
 	};
+
+	if (account.details.pk && !account.loading && !account.error) {
+		return <Redirect to='/' />
+	}
 
 	return (
 		<div className='d-flex align-items-center flex-column'>

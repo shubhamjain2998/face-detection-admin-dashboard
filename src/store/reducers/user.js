@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from './utility';
+import { updateObject, user } from './utility';
 
 const initialState = {
 	error: null,
@@ -21,15 +21,17 @@ const userReducer = (state = initialState, action) => {
 
 		case actionTypes.REGISTRATION_COMPLETED:
 			newUser = {
-				pk: action.authData.pk,
+				pk: action.authData.id,
 				email: action.authData.email,
 				is_superuser: false,
 			};
 
-			return {
-				...initialState,
-				...{ error: null, token: null, user: newUser, loading: false },
-			};
+			return updateObject(state, {
+				error: null,
+				token: null,
+				user: newUser,
+				loading: false,
+			});
 
 		case actionTypes.REGISTRATION_FAILED:
 			return updateObject(state, { error: action.error, loading: true });
@@ -53,19 +55,8 @@ const userReducer = (state = initialState, action) => {
 		case actionTypes.LOGIN_FAILED:
 			return updateObject(state, { error: action.error, loading: false });
 
-		case actionTypes.LOGOUT:
-			newUser = updateObject(state.user, {
-				pk: null,
-				email: null,
-				is_superuser: false,
-			});
-
-			return updateObject(state, {
-				error: null,
-				token: null,
-				user: newUser,
-				loading: false,
-			});
+		case actionTypes.REMOVE_USER:
+			return updateObject(state, user);
 
 		default:
 			return state;

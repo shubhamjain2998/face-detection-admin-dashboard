@@ -10,8 +10,11 @@ import Profile from './pages/profile';
 import Employee from './pages/employee';
 import OrgRegister from './pages/Registration/orgRegister';
 import AccRegister from './pages/Registration/accRegister';
+import Logout from './pages/Registration/logout';
+import PrivateRoute from './components/privateRoute';
 
 const App = () => {
+	
 	return (
 		<div>
 			<Admin>
@@ -22,13 +25,14 @@ const App = () => {
 					className='switch-wrapper'
 				>
 					<Route path='/login' component={Login} />
+					<Route path='/logout' component={Logout} />
 					<Route path='/register' component={Register} />
-					<Route path='/account' component={AccRegister} />
-					<Route path='/org' component={OrgRegister} />
-					<Route path='/client' component={Clients} />
-					<Route path='/profile' component={Profile} />
-					<Route path='/employee' component={Employee} />
-					<Route path='/' exact component={Dashboard} />
+					<PrivateRoute path='/account' component={AccRegister} />
+					<PrivateRoute path='/org' component={OrgRegister} />
+					<PrivateRoute path='/client' component={Clients} />
+					<PrivateRoute path='/profile' component={Profile} />
+					<PrivateRoute path='/employee' component={Employee} />
+					<PrivateRoute path='/' exact component={Dashboard} />
 				</AnimatedSwitch>
 			</Admin>
 		</div>

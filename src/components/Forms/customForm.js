@@ -62,7 +62,9 @@ const CustomForm = (props) => {
 														</Form.File.Label>
 													</Form.File>
 
-													<p className='h7 text-danger'>{errors[el.name]}</p>
+													<p className='h7 text-danger'>
+														{touched[el.name] && errors[el.name]}
+													</p>
 												</Col>
 											);
 										}

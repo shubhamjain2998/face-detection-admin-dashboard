@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 const LoginSchema = Yup.object().shape({
@@ -22,31 +22,6 @@ const RegisterSchema = Yup.object().shape({
 
 const LoginForm = (props) => {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
-
-	const [authenticated, setAuthenticated] = useState(false);
-	const [registered, setRegistered] = useState(false);
-
-	useEffect(() => {
-		if (!props.register) {
-			if (user.token && !user.error && !user.loading) {
-				setAuthenticated(true);
-			}
-		} else {
-			if (!user.error && !user.loading && user.user.pk) {
-				setRegistered(true);
-			}
-		}
-	}, [props.register, user.token, user.error, user.loading, user.user.pk]);
-
-	if (!props.register && authenticated) {
-		return <Redirect to="/org" />
-	}
-	
-	if (props.register && registered) {
-		return <Redirect to="/login" />
-	}
-
 	const onSubmitHandler = (values) => {
 		console.log(values);
 		if (props.register) {
