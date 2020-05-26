@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
@@ -13,7 +13,9 @@ const LoginSchema = Yup.object().shape({
 
 const RegisterSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
-	password: Yup.string().required('Required'),
+	password: Yup.string()
+		.min(8, 'Password should contain more than 8 characters')
+		.required('Required'),
 	repeatPassword: Yup.string().oneOf(
 		[Yup.ref('password'), null],
 		'Passwords must match'
@@ -22,8 +24,16 @@ const RegisterSchema = Yup.object().shape({
 
 const LoginForm = (props) => {
 	const dispatch = useDispatch();
+
+	const loginRef = useRef(null);
+
+	useEffect(() => {
+		loginRef.current.focus();
+	}, []);
+
 	const onSubmitHandler = (values) => {
 		console.log(values);
+		dispatch(actions.fetchDept());
 		if (props.register) {
 			dispatch(actions.registerUser(values));
 		} else {
@@ -67,6 +77,7 @@ const LoginForm = (props) => {
 							<Form.Label>Email Address</Form.Label>
 							<Form.Control
 								name='email'
+								ref={loginRef}
 								type='email'
 								onChange={handleChange}
 								onBlur={handleBlur}
@@ -116,7 +127,7 @@ const LoginForm = (props) => {
 						<Button
 							variant='primary'
 							type='submit'
-							disabled={isSubmitting || !isValid}
+							disabled={!isValid}
 							className='w-100'
 						>
 							{props.register ? 'Register' : 'login'}

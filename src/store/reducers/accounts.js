@@ -26,6 +26,7 @@ const acc = {
 		deptId: null,
 		role: null,
 	},
+	department: [],
 };
 
 let updatedDetails = {};
@@ -46,7 +47,7 @@ const accReducer = (state = acc, action) => {
 			return updateObject(state, { error: action.error });
 
 		case actionTypes.SET_ACCOUNT_DETAILS:
-			updatedDetails = { ...state.details, ...action.data };
+			updatedDetails = updateObject(state.details, action.data);
 			return updateObject(state, {
 				error: null,
 				loading: false,
@@ -56,6 +57,9 @@ const accReducer = (state = acc, action) => {
 		case actionTypes.REMOVE_ACCOUNT_DETAILS:
 			updatedDetails = updateObject(state.details, accounts.details);
 			return updateObject(state, accounts);
+
+		case actionTypes.FETCH_DEPARTMENTS:
+			return updateObject(state, { department: action.data });
 
 		default:
 			return state;

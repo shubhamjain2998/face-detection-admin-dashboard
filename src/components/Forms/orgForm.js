@@ -111,6 +111,11 @@ const OrganizationForm = (props) => {
 				validationSchema={organizationSchema}
 				handleSubmit={onSubmitHandler}
 			/>
+			{organization.error ? (
+				<p className='py-2 text-danger'>{organization.error.message}</p>
+			) : (
+				''
+			)}
 		</div>
 	);
 };

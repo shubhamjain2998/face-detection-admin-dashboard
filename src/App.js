@@ -12,6 +12,7 @@ import OrgRegister from './pages/Registration/orgRegister';
 import AccRegister from './pages/Registration/accRegister';
 import Logout from './pages/Registration/logout';
 import PrivateRoute from './components/privateRoute';
+import Department from './pages/department';
 
 const App = () => {
 	
@@ -32,6 +33,7 @@ const App = () => {
 					<PrivateRoute path='/client' component={Clients} />
 					<PrivateRoute path='/profile' component={Profile} />
 					<PrivateRoute path='/employee' component={Employee} />
+					<PrivateRoute path='/dept' component={Department} />
 					<PrivateRoute path='/' exact component={Dashboard} />
 				</AnimatedSwitch>
 			</Admin>

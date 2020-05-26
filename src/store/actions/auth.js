@@ -106,10 +106,10 @@ export const loginUser = (userDetails) => {
 				password: userDetails.password,
 			})
 			.then((res) => {
-				// console.log(res);
+				console.log(res);
 				dispatch(loginCompleted(res.data.token, res.data.user));
 				axios
-					.get('/attendance/api/accounts/filter?email=' + res.data.user.id)
+					.get('/attendance/api/accounts/filter?email=' + res.data.user.email)
 					.then((res) => {
 						if (res.data.length > 0) {
 							dispatch(setAccount(res.data[0]));
@@ -123,8 +123,8 @@ export const loginUser = (userDetails) => {
 									dispatch(loginFailed(err));
 								});
 						} else {
-							dispatch(setAccount(accounts));
-							dispatch(setOrg(organization));
+							dispatch(setAccount(accounts.details));
+							dispatch(setOrg(organization.details));
 						}
 					})
 					.catch((err) => {

@@ -74,10 +74,14 @@ const ClientCard = ({ client, onDelete }) => {
 					<Link
 						to={{
 							pathname: '/profile',
-							state: { acc: account, name: org.Name },
+							state: { acc: account, org: org },
 						}}
 					>
-						<Button variant='outline-secondary' className='mx-1 my-1'>
+						<Button
+							variant='outline-secondary'
+							className='mx-1 my-1'
+							disabled={account == null}
+						>
 							View Profile
 						</Button>
 					</Link>

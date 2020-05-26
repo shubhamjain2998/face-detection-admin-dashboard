@@ -8,9 +8,11 @@ import {
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Sidebar = (props) => {
 	let attachedClass = ['sidebar', 'sidebarOpen'];
+	const user = useSelector((state) => state.user.user);
 
 	const [authDropdown, setAuthDropdown] = useState(false);
 
@@ -21,23 +23,25 @@ const Sidebar = (props) => {
 		return <div className={attachedClass.join(' ')}></div>;
 	}
 
-	const routes = [
-		{ name: 'Dashboard', link: '/', icon: <AiOutlineDashboard /> },
-		{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
-		{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
-		{ name: 'Department', link: '/' },
-		{
-			name: 'Authentication',
-			icon: <AiOutlineKey />,
-			dropdown: [
-				{ name: 'Login', link: '/login' },
-				{ name: 'Register', link: '/register' },
-				{ name: 'Forgot Password', link: '/' },
-				{ name: 'OTP', link: '/' },
-			],
-		},
-		{ name: 'Users', link: '/', icon: <AiOutlineUserAdd /> },
-	];
+	let routes;
+
+	if (user.is_superuser) {
+		routes = [
+			{ name: 'Dashboard', link: '/', icon: <AiOutlineDashboard /> },
+			{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
+			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Department', link: '/dept' },
+
+			{ name: 'Users', link: '/', icon: <AiOutlineUserAdd /> },
+		];
+	} else {
+		routes = [
+			{ name: 'Dashboard', link: '/', icon: <AiOutlineDashboard /> },
+			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Department', link: '/dept' },
+			{ name: 'Users', link: '/', icon: <AiOutlineUserAdd /> },
+		];
+	}
 
 	return (
 		<div className={attachedClass.join(' ')}>
@@ -66,7 +70,7 @@ const Sidebar = (props) => {
 					}
 					return (
 						<NavLink key={route.name + i} to={route.link}>
-							<ListGroup.Item>
+							<ListGroup.Item onClick={props.showSidebar}>
 								{route.icon ? route.icon : ''}
 								{route.name}
 							</ListGroup.Item>

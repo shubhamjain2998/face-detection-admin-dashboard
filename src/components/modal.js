@@ -5,7 +5,7 @@ const CustomModal = (props) => {
 	return (
 		<>
 			<Modal show={props.show} onHide={props.onClose} size='lg' animation={false}>
-				<Modal.Header closeButton>Add Client</Modal.Header>
+				<Modal.Header closeButton>{props.heading}</Modal.Header>
 				{props.children}
 			</Modal>
 		</>

@@ -10,21 +10,25 @@ const Login = () => {
 
 	// console.log(account.pk);
 
+	let redirect = null;
+
 	if (user.token && account.pk) {
-		return <Redirect to='/' />;
+		redirect = <Redirect to='/' />;
 	}
 
 	if (user.token && account.pk === null) {
 		if (user.user.is_superuser) {
-			return <Redirect to='/' />;
+			redirect = <Redirect to='/' />;
 		} else {
-			return <Redirect to='/org' />;
+			redirect = <Redirect to='/org' />;
 		}
 	}
 
 	return (
 		<FrontPage>
 			<LoginForm />
+			{user.error ? <p className='py-2 text-danger'>{user.error.message}</p> : ''}
+			{redirect ? redirect : ''}
 		</FrontPage>
 	);
 };

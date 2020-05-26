@@ -2,13 +2,13 @@ import React from 'react';
 import { Row, Col, Image, Button, Container } from 'react-bootstrap';
 import john from '../../assets/avatar-02.jpg';
 
-const ProfileCard = ({account, name}) => {
+const ProfileCard = ({ account, org }) => {
 	// console.log(props.location);
 	// const account = props.location.state.acc;
 	// const name = props.location.state.name;
 
-	const fields = ['Phone:', 'Email:', 'Birthday:', 'Address:', 'Gender:'];
-	const values = [account.phone, '', '', '', account.gender];
+	const fields = ['Phone:', 'Email:', 'Gender:'];
+	const values = [account.phone, account.emailId, account.gender];
 
 	return (
 		<Container fluid>
@@ -24,7 +24,7 @@ const ProfileCard = ({account, name}) => {
 							<Image src={account.profileImg} alt='' fluid roundedCircle />
 						</Col>
 						<Col>
-							<h5>{name}</h5>
+							<h5>{org.Name}</h5>
 							<p className='mb-0 h7 font-weight-bold'>
 								{account.firstName + ' ' + account.lastName}
 							</p>

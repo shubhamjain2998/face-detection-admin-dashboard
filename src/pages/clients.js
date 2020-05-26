@@ -69,6 +69,8 @@ const Clients = () => {
 		setShow(false);
 	};
 
+	const tableElements = ['Name', 'Type', 'Contact Number', 'Staff Count']
+
 	return (
 		<Container fluid>
 			<Row>
@@ -121,11 +123,11 @@ const Clients = () => {
 
 			{!showCard && (
 				<Row>
-					<CustomTable />
+					<CustomTable elements={tableElements} values={orgs} type='client' />
 				</Row>
 			)}
 
-			<CustomModal show={show} onClose={handleClose}>
+			<CustomModal show={show} onClose={handleClose} heading='Add Client'>
 				<OrganizationForm
 					add
 					values={clientTemplate}

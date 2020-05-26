@@ -17,6 +17,15 @@ export const organization = {
 		staffcount: null,
 		logo: 'null',
 	},
+	currentOrg: {
+		url: '',
+		pk: null,
+		Name: null,
+		orgType: null,
+		contact: null,
+		staffcount: null,
+		logo: 'null',
+	},
 };
 
 export const user = {

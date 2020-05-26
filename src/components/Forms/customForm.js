@@ -71,7 +71,7 @@ const CustomForm = (props) => {
 
 										if (el.type === 'checkbox') {
 											return (
-												<Col md={6} lg={3} key={el.name + i} className='my-3'>
+												<Col md={6} lg={4} key={el.name + i} className='my-3'>
 													<Form.Check
 														label={el.label}
 														inline
@@ -81,6 +81,7 @@ const CustomForm = (props) => {
 														onChange={handleChange}
 														onBlur={handleBlur}
 														value={values[el.name]}
+														checked={values[el.name]}
 													/>
 												</Col>
 											);
@@ -111,7 +112,11 @@ const CustomForm = (props) => {
 										// console.log(values);
 										// console.log(errors);
 										return (
-											<Col md={6} key={el.name + i} className='my-3'>
+											<Col
+												md={el.col ? el.col : 6}
+												key={el.name + i}
+												className='my-3'
+											>
 												<Form.Control
 													name={el.name}
 													type={el.type}
@@ -122,6 +127,11 @@ const CustomForm = (props) => {
 													isValid={touched[el.name] && !errors[el.name]}
 													isInvalid={touched[el.name] && errors[el.name]}
 												></Form.Control>
+												{el.helpText ? (
+													<small className='form-text text-muted'>{el.helpText}</small>
+												) : (
+													''
+												)}
 												<Form.Control.Feedback type='invalid'>
 													{errors[el.name]}
 												</Form.Control.Feedback>

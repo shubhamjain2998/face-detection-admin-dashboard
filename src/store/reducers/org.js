@@ -13,6 +13,16 @@ const org = {
 		staffcount: null,
 		logo: 'null',
 	},
+	currentOrg: {
+		url: '',
+		pk: null,
+		Name: null,
+		orgType: null,
+		contact: null,
+		staffcount: null,
+		logo: 'null',
+	},
+	list: [],
 };
 
 let newDetails = {};
@@ -42,7 +52,14 @@ const orgReducer = (state = org, action) => {
 			});
 
 		case actionTypes.REMOVE_ORGANIZATION_DETAILS:
-			return updateObject(state, organization)
+			return updateObject(state, organization);
+
+		case actionTypes.SET_CURRENT_ORG:
+			newDetails = updateObject(state.details, action.data);
+			return updateObject(state, { currentOrg: newDetails });
+
+		case actionTypes.FETCH_ORGANIZATIONS:
+			return updateObject(state, { list: action.data });
 
 		default:
 			return state;

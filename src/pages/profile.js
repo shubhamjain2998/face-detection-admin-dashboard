@@ -9,7 +9,7 @@ const Profile = (props) => {
 			<Heading name='Profile' link='profile' />
 			<ProfileCard
 				account={props.location.state.acc}
-				name={props.location.state.name}
+				org={props.location.state.org}
 			/>
 		</div>
 	);

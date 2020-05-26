@@ -21,6 +21,20 @@ export const orgCreationFailed = (error) => {
 	};
 };
 
+export const setCurrentOrg = (orgDetails) => {
+	return {
+		type: actionTypes.SET_CURRENT_ORG,
+		data: orgDetails
+	}
+}
+
+export const fetchOrgs = (orgs) => {
+	return {
+		type: actionTypes.FETCH_ORGANIZATIONS,
+		data: orgs
+	}
+}
+
 export const orgCreation = (orgDetails) => {
 	const orgdata = new FormData();
 	orgdata.append('Name', orgDetails.name);

@@ -1,64 +1,63 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 
-const headers = [
-	'Name',
-	'Client ID',
-	'Contact Person',
-	'Email',
-	'Mobile',
-	'Status',
-	'Action',
-];
+const CustomTable = (props) => {
+	let headers = null;
 
-const data = [
-	[
-		'Carlson Tech',
-		'CLT-0008',
-		'Betty Carlson',
-		'bettycarlson@example.com',
-		'9876543210',
-		'Inactive',
-		'Inactive',
-	],
-	[
-		'Carlson Tech',
-		'CLT-0008',
-		'Betty Carlson',
-		'bettycarlson@example.com',
-		'9876543210',
-		'Inactive',
-	],
-	[
-		'Carlson Tech',
-		'CLT-0008',
-		'Betty Carlson',
-		'bettycarlson@example.com',
-		'9876543210',
-		'Inactive',
-		'Inactive',
-	],
-];
+	if (props.type === 'client') {
+		console.log(props.elements);
+		headers = (
+			<>
+				<th className='col-1'>#</th>
+				{props.elements.map((el, i) => (
+					<th key={el + i} className={el === 'Type' ? 'col-4' : 'col-2'}>
+						{el}
+					</th>
+				))}
+			</>
+		);
+	} else if (props.type === 'dept') {
+		headers = (
+			<>
+				<th className='col-1'>#</th>
+				<th className='col-4'>Department Name</th>
+				<th className='col-6'>Department Description</th>
+			</>
+		);
+	}
 
-const CustomTable = () => {
 	return (
-		<div className="px-4 table-responsive">
+		<div className='px-4 table-responsive'>
 			<Table striped>
 				<thead>
-					<tr>
-						{headers.map((el, i) => (
-							<th key={el + i}>{el}</th>
-						))}
+					<tr className='d-flex'>
+						{headers}
+						<th className='col-1'>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((r, i) => (
-						<tr key={r + i}>
-							{r.map((c, i) => (
-								<td key={c + i}>{c}</td>
-							))}
-						</tr>
-					))}
+					{props.values.map((r, i) => {
+						if (props.type === 'dept') {
+							return (
+								<tr key={r + i} className='d-flex'>
+									<td className='col-1'>{i + 1}</td>
+									<td className='col-4'>{r.DeptName}</td>
+									<td className='col-6'>{r.Description}</td>
+									<td className='col-1'>-</td>
+								</tr>
+							);
+						} else {
+							return (
+								<tr key={r + i} className='d-flex'>
+									<td className='col-1'>{i + 1}</td>
+									<td className='col-2'>{r.Name}</td>
+									<td className='col-4'>{r.orgType}</td>
+									<td className='col-2'>{r.contact}</td>
+									<td className='col-2'>{r.staffcount}</td>
+								</tr>
+							);
+						}
+					})}
 				</tbody>
 			</Table>
 		</div>
