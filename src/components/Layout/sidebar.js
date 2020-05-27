@@ -27,19 +27,19 @@ const Sidebar = (props) => {
 
 	if (user.is_superuser) {
 		routes = [
-			{ name: 'Dashboard', link: '/', icon: <AiOutlineDashboard /> },
+			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
 			{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Department', link: '/dept' },
 
-			{ name: 'Users', link: '/', icon: <AiOutlineUserAdd /> },
+			{ name: 'Users', link: '/home', icon: <AiOutlineUserAdd /> },
 		];
 	} else {
 		routes = [
-			{ name: 'Dashboard', link: '/', icon: <AiOutlineDashboard /> },
+			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Department', link: '/dept' },
-			{ name: 'Users', link: '/', icon: <AiOutlineUserAdd /> },
+			{ name: 'Users', link: '/home', icon: <AiOutlineUserAdd /> },
 		];
 	}
 

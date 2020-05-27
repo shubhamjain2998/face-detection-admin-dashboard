@@ -34,7 +34,8 @@ const App = () => {
 					<PrivateRoute path='/profile' component={Profile} />
 					<PrivateRoute path='/employee' component={Employee} />
 					<PrivateRoute path='/dept' component={Department} />
-					<PrivateRoute path='/' exact component={Dashboard} />
+					<PrivateRoute path='/home' exact component={Dashboard} />
+					<PrivateRoute path='/' exact component={Login} />
 				</AnimatedSwitch>
 			</Admin>
 		</div>
@@ -60,10 +61,12 @@ export default App;
 // !DONE: SideBar
 // !DONE: Clients Table
 // !DONE: Profile Page
-//TODO: Employee Page
+// !DONE: Employee Page
+
+
 //TODO: Users Page
 //TODO: Attendance Table Admin
 //TODO: Attendance Table Employee
-//TODO: Department Page
+//TODO: Department Page CRUD
 //TODO: Designation Page
 //TODO: Dashboard

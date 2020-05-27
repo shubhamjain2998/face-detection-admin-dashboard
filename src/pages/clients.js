@@ -9,10 +9,14 @@ import CustomModal from '../components/modal';
 import CustomTable from '../components/table';
 import axios from '../axios-faceDet';
 import OrganizationForm from '../components/Forms/orgForm';
+import { useDispatch } from 'react-redux';
+import * as actions from '../store/actions/index';
 
 const Clients = () => {
 	const [show, setShow] = useState(false);
 	const [showCard, setShowCard] = useState(true);
+
+	const dispatch = useDispatch();
 
 	const [orgs, setOrgs] = useState(null);
 	const [fetchedOrgs, setFetchedOrgs] = useState(false);
@@ -30,11 +34,12 @@ const Clients = () => {
 		if (!fetchedOrgs) {
 			axios.get('attendance/api/org').then((res) => {
 				console.log(res.data);
+				dispatch(actions.fetchOrgs(res.data));
 				setOrgs(res.data);
 				setFetchedOrgs(true);
 			});
 		}
-	}, [fetchedOrgs]);
+	}, [fetchedOrgs, dispatch]);
 
 	const onDeleteHandler = (id) => {
 		axios
@@ -69,7 +74,7 @@ const Clients = () => {
 		setShow(false);
 	};
 
-	const tableElements = ['Name', 'Type', 'Contact Number', 'Staff Count']
+	const tableElements = ['Name', 'Type', 'Contact Number', 'Staff Count'];
 
 	return (
 		<Container fluid>
@@ -128,11 +133,7 @@ const Clients = () => {
 			)}
 
 			<CustomModal show={show} onClose={handleClose} heading='Add Client'>
-				<OrganizationForm
-					add
-					values={clientTemplate}
-					onEditingDone={addingDone}
-				/>
+				<OrganizationForm add values={clientTemplate} onEditingDone={addingDone} />
 			</CustomModal>
 		</Container>
 	);

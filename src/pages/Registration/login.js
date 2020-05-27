@@ -13,12 +13,12 @@ const Login = () => {
 	let redirect = null;
 
 	if (user.token && account.pk) {
-		redirect = <Redirect to='/' />;
+		redirect = <Redirect to='/home' />;
 	}
 
 	if (user.token && account.pk === null) {
 		if (user.user.is_superuser) {
-			redirect = <Redirect to='/' />;
+			redirect = <Redirect to='/home' />;
 		} else {
 			redirect = <Redirect to='/org' />;
 		}

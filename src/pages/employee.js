@@ -45,12 +45,12 @@ const Employee = () => {
 		lastName: '',
 		gender: '',
 		phone: '',
-		readEmp: '',
-		addEmp: '',
-		readAtt: '',
-		addAtt: '',
-		readDept: '',
-		addDept: '',
+		readEmp: false,
+		addEmp: false,
+		readAtt: false,
+		addAtt: false,
+		readDept: false,
+		addDept: false,
 		idType: '',
 		idProof: '',
 		profileImg: '',
@@ -143,7 +143,7 @@ const Employee = () => {
 						variant='warning'
 						className='px-2'
 						onClick={handleShow}
-						disabled={activeOrg === 'All'}
+						disabled={activeOrg === 'All' && user.is_superuser}
 					>
 						<span className='pr-1'>
 							<BsPlus />
@@ -212,7 +212,12 @@ const Employee = () => {
 			)} */}
 
 			<CustomModal show={show} onClose={handleClose} heading='Add Employee'>
-				<AccountForm add values={empTemplate} onEditingDone={addingDone} />
+				<AccountForm
+					org={selectedOrg}
+					add
+					values={empTemplate}
+					onEditingDone={addingDone}
+				/>
 			</CustomModal>
 		</Container>
 	);

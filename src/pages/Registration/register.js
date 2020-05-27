@@ -10,7 +10,7 @@ const Register = () => {
 	// console.log(account.pk);
 
 	if (!user.error && !user.loading && user.user.pk) {
-		return <Redirect to='/' />;
+		return <Redirect to='/home' />;
 	}
 
 	return (

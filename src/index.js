@@ -18,7 +18,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
 	user: userReducer,
 	org: orgReducer,
-	acc: accReducer
+	acc: accReducer,
 });
 
 const store = createStore(
@@ -27,13 +27,13 @@ const store = createStore(
 );
 
 const app = (
-	<React.StrictMode>
-		<Provider store={store}>
-			<BrowserRouter>
+	<Provider store={store}>
+		<BrowserRouter>
+			<React.StrictMode>
 				<App />
-			</BrowserRouter>
-		</Provider>
-	</React.StrictMode>
+			</React.StrictMode>
+		</BrowserRouter>
+	</Provider>
 );
 
 ReactDOM.render(app, document.getElementById('root'));

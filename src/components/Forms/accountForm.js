@@ -10,6 +10,17 @@ const FILE_SIZE = 10485760;
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
 
+const RegisterSchema = Yup.object().shape({
+	email: Yup.string().email('Invalid Email').required('Required'),
+	password: Yup.string()
+		.min(8, 'Password should contain more than 8 characters')
+		.required('Required'),
+	repeatPassword: Yup.string().oneOf(
+		[Yup.ref('password'), null],
+		'Passwords must match'
+	),
+});
+
 const accountSchema = Yup.object().shape({
 	firstName: Yup.string().required('Required'),
 	lastName: Yup.string().required('Required'),
@@ -40,6 +51,10 @@ const accountSchema = Yup.object().shape({
 });
 
 const AccountForm = (props) => {
+	let modifiedSchema;
+
+	const deptarments = useSelector((state) => state.acc.dept);
+
 	const formElements = [
 		{
 			name: 'firstName',
@@ -84,7 +99,6 @@ const AccountForm = (props) => {
 			type: 'text',
 			value: props.values ? props.values.idProof : '',
 			placeholder: 'ID Proof',
-			col: '12',
 			helpText: 'ID Proof should be unique',
 		},
 		{ name: 'profileImg', type: 'file', value: '', label: 'Profile Photo' },
@@ -92,40 +106,60 @@ const AccountForm = (props) => {
 		{
 			name: 'readEmp',
 			type: 'checkbox',
-			value: props.values ? props.values.readEmp : '',
+			value: props.values ? props.values.readEmp : false,
 			label: 'Read Employee',
 		},
 		{
 			name: 'writeEmp',
 			type: 'checkbox',
-			value: props.values ? props.values.addEmp : '',
+			value: props.values ? props.values.addEmp : false,
 			label: 'Write Employee',
 		},
 		{
 			name: 'readAtt',
 			type: 'checkbox',
-			value: props.values ? props.values.readAtt : '',
+			value: props.values ? props.values.readAtt : false,
 			label: 'Read Attendance',
 		},
 		{
 			name: 'writeAtt',
 			type: 'checkbox',
-			value: props.values ? props.values.addAtt : '',
+			value: props.values ? props.values.addAtt : false,
 			label: 'Write Attendance',
 		},
 		{
 			name: 'readDept',
 			type: 'checkbox',
-			value: props.values ? props.values.readDept : '',
+			value: props.values ? props.values.readDept : false,
 			label: 'Read Department',
 		},
 		{
 			name: 'writeDept',
 			type: 'checkbox',
-			value: props.values ? props.values.addDept : '',
+			value: props.values ? props.values.addDept : false,
 			label: 'Write Department',
 		},
 	];
+
+	if (props.add) {
+		modifiedSchema = accountSchema.concat(RegisterSchema);
+		const registerElements = [
+			{ name: 'email', type: 'email', value: '', placeholder: 'Enter Your Email' },
+			{ name: 'password', type: 'password', value: '', placeholder: 'Password' },
+			{
+				name: 'confirmPassword',
+				type: 'password',
+				value: '',
+				placeholder: 'Confirm Password',
+			},
+		];
+		formElements.unshift(...registerElements);
+	}
+
+	if (props.add || props.edit) {
+		// const roleElement = {name: 'role', type: 'select', value: 'employee', }
+		// const deptElement = {}
+	}
 
 	const dispatch = useDispatch();
 	const account = useSelector((state) => state.acc);
@@ -141,8 +175,7 @@ const AccountForm = (props) => {
 			var empData = new FormData();
 			// console.log(props.values);
 			// console.log(values);
-			empData.append('empId', props.values.empId);
-			empData.append('emailId', props.values.emailId);
+
 			empData.append('username', values.username);
 			empData.append('firstName', values.firstName);
 			empData.append('lastName', values.lastName);
@@ -157,13 +190,16 @@ const AccountForm = (props) => {
 			empData.append('idType', values.idType);
 			empData.append('idProof', values.idProof);
 			empData.append('profileImg', values.profileImg);
-			empData.append('orgId', props.values.orgId);
+
 			empData.append('deptId', '1');
 			empData.append('role', 'client');
 
 			// console.log(empData.entries);
 
 			if (props.edit) {
+				empData.append('empId', props.values.empId);
+				empData.append('emailId', props.values.emailId);
+				empData.append('orgId', props.values.orgId);
 				axios
 					.put('/attendance/api/accounts/' + props.values.empId + '/', empData)
 					.then((res) => {
@@ -173,18 +209,42 @@ const AccountForm = (props) => {
 					.catch((err) => console.log(err));
 			} else {
 				axios
-					.post('/attendance/api/accounts', empData)
-					.then((res) => {
-						console.log(res.data);
-						props.onEditingDone(res.data);
+					.post('/attendance/api/user/register', {
+						email: values.email,
+						password: values.password,
 					})
-					.catch((err) => console.log(err));
+					.then((res) => {
+						console.log(res);
+						empData.append('emailId', res.data.email);
+						if (user.user.is_superuser) {
+							empData.append('empId', props.org.pk + res.data.id);
+							empData.append('orgId', props.org.pk);
+						} else {
+							empData.append('orgId', org.details.pk);
+						}
+						axios
+							.post('/attendance/api/accounts/register', empData)
+							.then((res) => {
+								console.log(res.data);
+								props.onEditingDone(res.data);
+							})
+							.catch((err) => console.log(err));
+					})
+					.catch((err) => {
+						console.log(err.message);
+					});
 			}
 		}
 	};
 
-	if (!props.edit && account.details.pk && !account.loading && !account.error) {
-		return <Redirect to='/' />;
+	if (
+		!props.edit &&
+		!props.add &&
+		account.details.pk &&
+		!account.loading &&
+		!account.error
+	) {
+		return <Redirect to='/home' />;
 	}
 
 	return (
@@ -192,7 +252,7 @@ const AccountForm = (props) => {
 			{props.edit ? '' : <h5 className='my-0'>Register Your Account</h5>}
 			<CustomForm
 				elements={formElements}
-				validationSchema={accountSchema}
+				validationSchema={props.add ? modifiedSchema : accountSchema}
 				handleSubmit={onSubmitHandler}
 			/>
 			{account.error ? (
