@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const CustomTable = (props) => {
 	let headers = null;
@@ -43,10 +44,10 @@ const CustomTable = (props) => {
 				<thead>
 					<tr className='d-flex'>
 						{headers}
-						<th className='col-1'>Action</th>
+						<th className='col-1'></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody className='dataTable'>
 					{props.values.map((r, i) => {
 						if (props.type === 'dept') {
 							return (
@@ -54,7 +55,9 @@ const CustomTable = (props) => {
 									<td className='col-1'>{i + 1}</td>
 									<td className='col-4'>{r.DeptName}</td>
 									<td className='col-6'>{r.Description}</td>
-									<td className='col-1'>-</td>
+									<td>
+										<BsThreeDotsVertical />
+									</td>
 								</tr>
 							);
 						} else if (props.type === 'client') {
@@ -65,17 +68,23 @@ const CustomTable = (props) => {
 									<td className='col-4'>{r.orgType}</td>
 									<td className='col-2'>{r.contact}</td>
 									<td className='col-2'>{r.staffcount}</td>
+									<td>
+										<BsThreeDotsVertical />
+									</td>
 								</tr>
 							);
 						} else if (props.type === 'emp') {
 							return (
-								<tr className='d-flex'>
+								<tr key={r + i} className='d-flex'>
 									<td className='col-1'>{i + 1}</td>
 									<td className='col-2'>{r.firstName + ' ' + r.lastName}</td>
 									<td className='col-2'>{r.phone}</td>
 									<td className='col-2'>{r.idType}</td>
 									<td className='col-2'>{r.idProof}</td>
 									<td className='col-2'>{r.role}</td>
+									<td>
+										<BsThreeDotsVertical />
+									</td>
 								</tr>
 							);
 						}

@@ -30,16 +30,28 @@ const Sidebar = (props) => {
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
 			{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
-
-			{ name: 'Users', link: '/home', icon: <AiOutlineUserAdd /> },
+			{
+				name: 'Attendance',
+				dropdown: [
+					{ name: 'admin', link: '/home' },
+					{ name: 'employee', link: '/home' },
+				],
+			},
 		];
 	} else {
 		routes = [
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
-			{ name: 'Users', link: '/home', icon: <AiOutlineUserAdd /> },
+			{
+				name: 'Attendance',
+				dropdown: [
+					{ name: 'employee', link: '/home' },
+				],
+			},
 		];
 	}
 

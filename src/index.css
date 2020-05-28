@@ -173,6 +173,10 @@ code {
 	.frontPageCard {
 		max-width: 100%;
 	}
+
+	.dataTable td {
+		overflow-wrap: break-word;
+	}
 }
 
 @media (max-width: 992px) {

@@ -13,6 +13,7 @@ import AccRegister from './pages/Registration/accRegister';
 import Logout from './pages/Registration/logout';
 import PrivateRoute from './components/privateRoute';
 import Department from './pages/department';
+import Users from './pages/users';
 
 const App = () => {
 	
@@ -34,6 +35,7 @@ const App = () => {
 					<PrivateRoute path='/profile' component={Profile} />
 					<PrivateRoute path='/employee' component={Employee} />
 					<PrivateRoute path='/dept' component={Department} />
+					<PrivateRoute path='/user' component={Users} />
 					<PrivateRoute path='/home' exact component={Dashboard} />
 					<PrivateRoute path='/' exact component={Login} />
 				</AnimatedSwitch>
