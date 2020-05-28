@@ -33,6 +33,9 @@ let updatedDetails = {};
 
 const accReducer = (state = acc, action) => {
 	switch (action.type) {
+		case actionTypes.LOGIN_STARTED:
+			return updateObject(state, { loading: true });
+
 		case actionTypes.ACCOUNT_CREATION_STARTED:
 			return updateObject(state, { loading: true });
 

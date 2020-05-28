@@ -29,6 +29,9 @@ let newDetails = {};
 
 const orgReducer = (state = org, action) => {
 	switch (action.type) {
+		case actionTypes.LOGIN_STARTED:
+			return updateObject(state, { loading: true });
+
 		case actionTypes.ORGANIZATION_CREATION_STARTED:
 			return updateObject(state, { loading: true });
 
