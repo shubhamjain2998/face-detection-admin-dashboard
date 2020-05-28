@@ -65,7 +65,7 @@ const EmployeeCard = ({ employee, onDelete }) => {
 					{emp.role}
 				</p>
 			</Card.Body>
-			<CustomModal show={show} onClose={handleClose}>
+			<CustomModal show={show} onClose={handleClose} heading='Edit Employee Details'>
 				<AccountForm edit values={emp} onEditingDone={editingHandler} />
 			</CustomModal>
 		</Card>

@@ -24,6 +24,17 @@ const CustomTable = (props) => {
 				<th className='col-6'>Department Description</th>
 			</>
 		);
+	} else if (props.type === 'emp') {
+		headers = (
+			<>
+				<th className='col-1'>#</th>
+				<th className='col-2'>Name</th>
+				<th className='col-2'>Phone</th>
+				<th className='col-2'>ID Type</th>
+				<th className='col-2'>ID Proof</th>
+				<th className='col-2'>Role</th>
+			</>
+		);
 	}
 
 	return (
@@ -46,7 +57,7 @@ const CustomTable = (props) => {
 									<td className='col-1'>-</td>
 								</tr>
 							);
-						} else {
+						} else if (props.type === 'client') {
 							return (
 								<tr key={r + i} className='d-flex'>
 									<td className='col-1'>{i + 1}</td>
@@ -54,6 +65,17 @@ const CustomTable = (props) => {
 									<td className='col-4'>{r.orgType}</td>
 									<td className='col-2'>{r.contact}</td>
 									<td className='col-2'>{r.staffcount}</td>
+								</tr>
+							);
+						} else if (props.type === 'emp') {
+							return (
+								<tr className='d-flex'>
+									<td className='col-1'>{i + 1}</td>
+									<td className='col-2'>{r.firstName + ' ' + r.lastName}</td>
+									<td className='col-2'>{r.phone}</td>
+									<td className='col-2'>{r.idType}</td>
+									<td className='col-2'>{r.idProof}</td>
+									<td className='col-2'>{r.role}</td>
 								</tr>
 							);
 						}

@@ -33,7 +33,6 @@ const CustomForm = (props) => {
 					handleChange,
 					handleBlur,
 					handleSubmit,
-					isSubmitting,
 					isValid,
 					setFieldValue,
 				}) => (
@@ -43,8 +42,14 @@ const CustomForm = (props) => {
 								{elements.map(
 									(el, i) => {
 										if (el.type === 'file') {
+											const upFile = el.path.split('/');
 											return (
 												<Col md={12} key={el.name + i} className='my-3'>
+													<p className='text-primary'>
+														<a href={el.path} rel='noopener noreferrer' target='_blank'>
+															{'Current File: ' + upFile[upFile.length - 1]}
+														</a>
+													</p>
 													<Form.File custom>
 														<Form.File.Input
 															name={el.name}
@@ -54,17 +59,17 @@ const CustomForm = (props) => {
 																const file = e.target.files[0];
 																setFieldValue(el.name, file);
 															}}
-															isValid={touched[el.name] && !errors[el.name]}
-															isInvalid={touched[el.name] && errors[el.name]}
+															isValid={el.valid}
+															isInvalid={!el.valid}
 														/>
 														<Form.File.Label data-browse='Select File'>
-															{values[el.name] ? values[el.name].name : el.label}
+															{el.label}
 														</Form.File.Label>
 													</Form.File>
 
-													<p className='h7 text-danger'>
-														{touched[el.name] && errors[el.name]}
-													</p>
+													<Form.Control.Feedback type='invalid'>
+														{errors[el.name]}
+													</Form.Control.Feedback>
 												</Col>
 											);
 										}
@@ -110,13 +115,9 @@ const CustomForm = (props) => {
 										}
 
 										// console.log(values);
-										// console.log(errors);
+										console.log(errors);
 										return (
-											<Col
-												md={el.col ? el.col : 6}
-												key={el.name + i}
-												className='my-3'
-											>
+											<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>
 												<Form.Control
 													name={el.name}
 													type={el.type}

@@ -93,6 +93,8 @@ const OrganizationForm = (props) => {
 			type: 'file',
 			value: props.edit ? props.values.logo : '',
 			label: 'Organization Logo',
+			valid: props.values ? (props.values.logo ? true : false) : false,
+			path: props.values ? props.values.logo : '',
 		},
 	];
 
@@ -104,8 +106,15 @@ const OrganizationForm = (props) => {
 
 	return (
 		<div className='d-flex align-items-center flex-column'>
-			<h5 className='my-0'>Register Your Organization</h5>
-			<p className='text-secondary'>Access to our Dashboard</p>
+			{props.edit || props.add ? (
+				''
+			) : (
+				<>
+					<h5 className='my-0'>Register Your Organization</h5>
+					<p className='text-secondary'>Access to our Dashboard</p>
+				</>
+			)}
+
 			<CustomForm
 				elements={formElements}
 				validationSchema={organizationSchema}

@@ -17,11 +17,6 @@ import axios from '../axios-faceDet';
 import AccountForm from '../components/Forms/accountForm';
 import EmployeeCard from '../components/Cards/employeeCard';
 import { useSelector } from 'react-redux';
-import CustomForm from '../components/Forms/customForm';
-
-const dropdownElement = [
-	{ name: 'selectedOrg', type: 'select', value: 'All', options: [] },
-];
 
 const Employee = () => {
 	const [show, setShow] = useState(false);
@@ -205,11 +200,11 @@ const Employee = () => {
 				</Row>
 			)}
 
-			{/* {!showCard && (
+			{!showCard && (
 				<Row>
-					<CustomTable elements={tableElements} values={emps} type='client' />
+					<CustomTable values={emps} type='emp' />
 				</Row>
-			)} */}
+			)}
 
 			<CustomModal show={show} onClose={handleClose} heading='Add Employee'>
 				<AccountForm

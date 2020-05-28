@@ -6,9 +6,9 @@ import * as actions from '../../store/actions/index';
 import { Redirect } from 'react-router-dom';
 import axios from '../../axios-faceDet';
 
-const FILE_SIZE = 10485760;
+// const FILE_SIZE = 10485760;
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+// const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
 
 const RegisterSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
@@ -37,20 +37,26 @@ const accountSchema = Yup.object().shape({
 
 	phone: Yup.number().min(10, 'Invalid Number!').required('Required'),
 
-	profileImg: Yup.mixed()
-		.test(
-			'fileSize',
-			'File too large',
-			(value) => value && value.size <= FILE_SIZE
-		)
-		.test(
-			'fileFormat',
-			'Unsupported Format',
-			(value) => value && SUPPORTED_FORMATS.includes(value.type)
-		),
+	// profileImg: Yup.mixed()
+	// 	.test(
+	// 		'fileSize',
+	// 		'File too large',
+	// 		(value) => value && value.size <= FILE_SIZE
+	// 	)
+	// 	.test(
+	// 		'fileFormat',
+	// 		'Unsupported Format',
+	// 		(value) => value && SUPPORTED_FORMATS.includes(value.type)
+	// 	),
 });
 
 const AccountForm = (props) => {
+	const dispatch = useDispatch();
+	const account = useSelector((state) => state.acc);
+
+	const user = useSelector((state) => state.user);
+	const org = useSelector((state) => state.org);
+
 	let modifiedSchema;
 
 	const deptarments = useSelector((state) => state.acc.dept);
@@ -101,7 +107,14 @@ const AccountForm = (props) => {
 			placeholder: 'ID Proof',
 			helpText: 'ID Proof should be unique',
 		},
-		{ name: 'profileImg', type: 'file', value: '', label: 'Profile Photo' },
+		{
+			name: 'profileImg',
+			type: 'file',
+			value: '',
+			label: 'Profile Photo',
+			valid: props.values ? (props.values.profileImg ? true : false) : false,
+			path: props.values ? props.values.profileImg : '',
+		},
 
 		{
 			name: 'readEmp',
@@ -156,20 +169,25 @@ const AccountForm = (props) => {
 		formElements.unshift(...registerElements);
 	}
 
-	if (props.add || props.edit) {
-		// const roleElement = {name: 'role', type: 'select', value: 'employee', }
-		// const deptElement = {}
+	if ((props.add || props.edit) && user.user.is_superuser) {
+		const roleElement = {
+			name: 'role',
+			type: 'select',
+			value: props.values ? props.values.role : '',
+			options: ['Select Role', 'client', 'employee'],
+		};
+		const roleSchema = Yup.object().shape({
+			role: Yup.string().required('Required!'),
+		});
+		formElements.push(roleElement);
+		modifiedSchema
+			? modifiedSchema.concat(roleSchema)
+			: accountSchema.concat(roleSchema);
 	}
-
-	const dispatch = useDispatch();
-	const account = useSelector((state) => state.acc);
-
-	const user = useSelector((state) => state.user);
-	const org = useSelector((state) => state.org);
 
 	const onSubmitHandler = (values) => {
 		if (!props.edit && !props.add) {
-			// console.log(values);
+			console.log(values);
 			dispatch(actions.accountCreation(values, user, org));
 		} else {
 			var empData = new FormData();
@@ -191,15 +209,14 @@ const AccountForm = (props) => {
 			empData.append('idProof', values.idProof);
 			empData.append('profileImg', values.profileImg);
 
-			empData.append('deptId', '1');
-			empData.append('role', 'client');
-
 			// console.log(empData.entries);
 
 			if (props.edit) {
 				empData.append('empId', props.values.empId);
 				empData.append('emailId', props.values.emailId);
 				empData.append('orgId', props.values.orgId);
+				empData.append('deptId', props.values.deptId);
+				empData.append('role', values.role);
 				axios
 					.put('/attendance/api/accounts/' + props.values.empId + '/', empData)
 					.then((res) => {
@@ -216,11 +233,14 @@ const AccountForm = (props) => {
 					.then((res) => {
 						console.log(res);
 						empData.append('emailId', res.data.email);
+						empData.append('deptId', '1');
 						if (user.user.is_superuser) {
+							empData.append('role', values.role);
 							empData.append('empId', props.org.pk + res.data.id);
 							empData.append('orgId', props.org.pk);
 						} else {
 							empData.append('orgId', org.details.pk);
+							empData.append('role', 'employee');
 						}
 						axios
 							.post('/attendance/api/accounts/register', empData)
@@ -249,7 +269,11 @@ const AccountForm = (props) => {
 
 	return (
 		<div className='d-flex align-items-center flex-column'>
-			{props.edit ? '' : <h5 className='my-0'>Register Your Account</h5>}
+			{props.edit || props.add ? (
+				''
+			) : (
+				<h5 className='my-0'>Register Your Account</h5>
+			)}
 			<CustomForm
 				elements={formElements}
 				validationSchema={props.add ? modifiedSchema : accountSchema}

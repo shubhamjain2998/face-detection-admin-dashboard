@@ -87,7 +87,7 @@ const ClientCard = ({ client, onDelete }) => {
 					</Link>
 				</div>
 			</Card.Body>
-			<CustomModal show={show} onClose={handleClose}>
+			<CustomModal show={show} onClose={handleClose} heading='Edit Client Details'>
 				<OrganizationForm edit values={org} onEditingDone={editingHandler} />
 			</CustomModal>
 		</Card>
