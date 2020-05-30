@@ -48,7 +48,7 @@ const ClientCard = ({ client, onDelete }) => {
 	};
 
 	return (
-		<Card>
+		<Card className='profile-card'>
 			<div className='d-flex justify-content-center pt-3 pb-1'>
 				<Image src={org.src} alt='' fluid roundedCircle style={{ width: '20%' }} />
 			</div>

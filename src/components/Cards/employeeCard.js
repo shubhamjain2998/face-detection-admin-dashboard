@@ -34,7 +34,7 @@ const EmployeeCard = ({ employee, onDelete }) => {
 	};
 
 	return (
-		<Card>
+		<Card className='profile-card'>
 			<Card.Title className='mb-0'>
 				<span className='float-right text-secondary' style={{ cursor: 'pointer' }}>
 					<Dropdown>

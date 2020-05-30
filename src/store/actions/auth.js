@@ -78,6 +78,25 @@ export const removeOrg = () => {
 	};
 };
 
+export const setUsers = (users) => {
+	return {
+		type: actionTypes.SET_USERS,
+		data: users,
+	};
+};
+
+export const fetchUsers = () => {
+	return (dispatch) => {
+		axios
+			.get('/attendance/api/user/register')
+			.then((res) => {
+				console.log(res.data);
+				dispatch(setUsers(res.data));
+			})
+			.catch((err) => console.log(err));
+	};
+};
+
 export const registerUser = (userDetails) => {
 	return (dispatch) => {
 		dispatch(registerUserStarted());

@@ -10,6 +10,7 @@ const initialState = {
 		email: null,
 		is_superuser: false,
 	},
+	list: []
 };
 
 let newUser = {};
@@ -57,6 +58,9 @@ const userReducer = (state = initialState, action) => {
 
 		case actionTypes.REMOVE_USER:
 			return updateObject(state, user);
+
+		case actionTypes.SET_USERS:
+			return updateObject(state, {list: action.data})
 
 		default:
 			return state;

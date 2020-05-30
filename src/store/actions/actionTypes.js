@@ -6,6 +6,8 @@ export const LOGIN_STARTED = 'LOGIN_STARTED';
 export const LOGIN_COMPLETED = 'LOGIN_COMPLETED';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const REMOVE_USER = 'REMOVE_USER';
+export const SET_USERS_STARTED = 'SET_USERS_STARTED';
+export const SET_USERS = 'SET_USERS';
 
 export const LOGOUT = 'LOGOUT';
 
