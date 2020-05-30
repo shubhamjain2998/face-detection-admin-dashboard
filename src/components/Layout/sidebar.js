@@ -3,7 +3,6 @@ import { ListGroup } from 'react-bootstrap';
 import {
 	AiOutlineDashboard,
 	AiOutlineUser,
-	AiOutlineKey,
 	AiOutlineUserAdd,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
@@ -44,13 +43,10 @@ const Sidebar = (props) => {
 		routes = [
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
-			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
 			{
 				name: 'Attendance',
-				dropdown: [
-					{ name: 'employee', link: '/home' },
-				],
+				dropdown: [{ name: 'employee', link: '/home' }],
 			},
 		];
 	}

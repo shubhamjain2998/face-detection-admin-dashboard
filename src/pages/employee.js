@@ -201,8 +201,10 @@ const Employee = () => {
 			)}
 
 			{!showCard && (
-				<Row>
-					<CustomTable values={emps} type='emp' />
+				<Row className='mt-3'>
+					<Col md={{ span: 10, offset: 1 }} xs={12}>
+						<CustomTable values={emps} type='emp' />
+					</Col>
 				</Row>
 			)}
 

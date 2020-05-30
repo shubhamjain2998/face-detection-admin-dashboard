@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import * as actions from '../store/actions/index';
 import axios from '../axios-faceDet';
 import { useDispatch } from 'react-redux';
+import TrainingImages from '../components/trainingImages';
 
 const Dashboard = () => {
 	const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Dashboard = () => {
 			.catch((err) => console.log(err.message));
 	}, [dispatch]);
 
+	// return <TrainingImages />;
 	return <h4>Dashboard</h4>;
 };
 

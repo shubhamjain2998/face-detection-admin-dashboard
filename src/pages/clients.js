@@ -127,8 +127,10 @@ const Clients = () => {
 			)}
 
 			{!showCard && (
-				<Row>
-					<CustomTable elements={tableElements} values={orgs} type='client' />
+				<Row className='mt-3'>
+					<Col md={{ span: 10, offset: 1 }} xs={12}>
+						<CustomTable elements={tableElements} values={orgs} type='client' />
+					</Col>
 				</Row>
 			)}
 

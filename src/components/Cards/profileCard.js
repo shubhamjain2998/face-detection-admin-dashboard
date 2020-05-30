@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Image, Button, Container } from 'react-bootstrap';
-import john from '../../assets/avatar-02.jpg';
+// import john from '../../assets/avatar-02.jpg';
 
 const ProfileCard = ({ account, org }) => {
 	// console.log(props.location);
@@ -12,7 +12,7 @@ const ProfileCard = ({ account, org }) => {
 
 	return (
 		<Container fluid>
-			<Row className='profile-card py-3 mx-3 px-3'>
+			<Row className='py-3 mx-3 px-3'>
 				<Col xs={12} md={6} className='profile-card-left pb-4'>
 					<Row>
 						<Col

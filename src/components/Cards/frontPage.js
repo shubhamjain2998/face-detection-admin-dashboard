@@ -12,7 +12,7 @@ const FrontPage = (props) => {
 				<Logo />
 			</div>
 
-			<Card className='my-3 frontPageCard profile-card'>
+			<Card className='my-3 frontPageCard userTable'>
 				<Card.Body>{props.children}</Card.Body>
 			</Card>
 		</div>

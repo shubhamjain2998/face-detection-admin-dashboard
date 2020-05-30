@@ -39,7 +39,7 @@ const CustomTable = (props) => {
 	}
 
 	return (
-		<div className='px-4 table-responsive'>
+		<div className='px-4 table-responsive userTable'>
 			<Table striped>
 				<thead>
 					<tr className='d-flex'>
@@ -87,6 +87,8 @@ const CustomTable = (props) => {
 									</td>
 								</tr>
 							);
+						} else {
+							return '';
 						}
 					})}
 				</tbody>

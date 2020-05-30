@@ -65,10 +65,11 @@ export default App;
 // !DONE: Profile Page
 // !DONE: Employee Page
 
+// TODO: Dashboard
 
-//TODO: Users Page
-//TODO: Attendance Table Admin
-//TODO: Attendance Table Employee
-//TODO: Department Page CRUD
-//TODO: Designation Page
-//TODO: Dashboard
+// *CONFUSION: Step 1 - Delete Functionality for User Page
+//TODO: Step 2 - Departments DropDown Implementation
+//TODO: Step 3 - Uploading Images Functionality
+//TODO: Step 4 - Attendance Page Functionality For Admin
+//TODO: Step 5 - Attendance Page Functionality For Employee
+//TODO: Step 6 - Implementation Of the Attendance App

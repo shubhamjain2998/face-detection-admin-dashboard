@@ -59,7 +59,7 @@ const AccountForm = (props) => {
 
 	let modifiedSchema;
 
-	const deptarments = useSelector((state) => state.acc.dept);
+	const departments = useSelector((state) => state.acc.department);
 
 	const formElements = [
 		{
@@ -185,6 +185,18 @@ const AccountForm = (props) => {
 			: accountSchema.concat(roleSchema);
 	}
 
+	if (props.add || props.edit) {
+		const departmentElement = {
+			name: 'dept',
+			type: 'select',
+			value: props.values ? props.values.deptId : '',
+			options: departments.map((dep) => {
+				return { name: dep.DeptName, value: dep.id };
+			}),
+		};
+		formElements.push(departmentElement);
+	}
+
 	const onSubmitHandler = (values) => {
 		if (!props.edit && !props.add) {
 			console.log(values);
@@ -215,7 +227,7 @@ const AccountForm = (props) => {
 				empData.append('empId', props.values.empId);
 				empData.append('emailId', props.values.emailId);
 				empData.append('orgId', props.values.orgId);
-				empData.append('deptId', props.values.deptId);
+				empData.append('deptId', parseInt(values.dept));
 				empData.append('role', values.role);
 				axios
 					.put('/attendance/api/accounts/' + props.values.empId + '/', empData)

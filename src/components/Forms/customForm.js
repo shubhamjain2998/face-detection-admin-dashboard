@@ -42,7 +42,7 @@ const CustomForm = (props) => {
 								{elements.map(
 									(el, i) => {
 										if (el.type === 'file') {
-											const upFile = el.path.split('/');
+											const upFile = el.path ? el.path.split('/') : 'No file Uploaded';
 											return (
 												<Col md={12} key={el.name + i} className='my-3'>
 													<p className='text-primary'>
@@ -106,16 +106,24 @@ const CustomForm = (props) => {
 														onBlur={handleBlur}
 														value={values[el.name]}
 													>
-														{el.options.map((e, i) => (
-															<option key={e + i}>{e}</option>
-														))}
+														{el.options.map((e, i) => {
+															if (e.name) {
+																return (
+																	<option key={e + i} value={e.value}>
+																		{e.name}
+																	</option>
+																);
+															} else {
+																return <option key={e + i}>{e}</option>;
+															}
+														})}
 													</Form.Control>
 												</Col>
 											);
 										}
 
-										// console.log(values);
-										console.log(errors);
+										console.log(values);
+										// console.log(errors);
 										return (
 											<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>
 												<Form.Control

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Card, Button, Image, Dropdown } from 'react-bootstrap';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { Card, Image } from 'react-bootstrap';
 import CustomModal from '../modal';
 import AccountForm from '../Forms/accountForm';
 import defaultImg from '../../assets/avatar-02.jpg';
+import { MdEdit } from 'react-icons/md';
+import { BsTrash } from 'react-icons/bs';
 
 const EmployeeCard = ({ employee, onDelete }) => {
 	const [show, setShow] = useState(false);
@@ -11,22 +12,6 @@ const EmployeeCard = ({ employee, onDelete }) => {
 
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
-
-	const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-		<Button
-			ref={ref}
-			onClick={(e) => {
-				e.preventDefault();
-				onClick(e);
-			}}
-			variant='transparent'
-		>
-			{/* Render custom icon here */}
-			<BsThreeDotsVertical />
-			{/* &#x25bc; */}
-			{children}
-		</Button>
-	));
 
 	const editingHandler = (updatedEmp) => {
 		setEmp(updatedEmp);
@@ -36,14 +21,9 @@ const EmployeeCard = ({ employee, onDelete }) => {
 	return (
 		<Card className='profile-card'>
 			<Card.Title className='mb-0'>
-				<span className='float-right text-secondary' style={{ cursor: 'pointer' }}>
-					<Dropdown>
-						<Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components' />
-						<Dropdown.Menu>
-							<Dropdown.Item onClick={handleShow}>Edit</Dropdown.Item>
-							<Dropdown.Item onClick={() => onDelete(emp.pk)}>Delete</Dropdown.Item>
-						</Dropdown.Menu>
-					</Dropdown>
+				<span className='float-right mx-2 my-2' style={{ cursor: 'pointer' }}>
+					<MdEdit className='mx-1 text-primary' onClick={handleShow} />
+					<BsTrash className='mx-1 text-danger' onClick={() => onDelete(emp.pk)} />
 				</span>
 			</Card.Title>
 			<div className='d-flex justify-content-center py-1'>
@@ -65,7 +45,11 @@ const EmployeeCard = ({ employee, onDelete }) => {
 					{emp.role}
 				</p>
 			</Card.Body>
-			<CustomModal show={show} onClose={handleClose} heading='Edit Employee Details'>
+			<CustomModal
+				show={show}
+				onClose={handleClose}
+				heading='Edit Employee Details'
+			>
 				<AccountForm edit values={emp} onEditingDone={editingHandler} />
 			</CustomModal>
 		</Card>
