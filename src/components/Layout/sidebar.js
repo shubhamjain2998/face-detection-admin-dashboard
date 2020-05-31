@@ -34,7 +34,7 @@ const Sidebar = (props) => {
 			{
 				name: 'Attendance',
 				dropdown: [
-					{ name: 'admin', link: '/home' },
+					{ name: 'admin', link: '/attAdmin' },
 					{ name: 'employee', link: '/home' },
 				],
 			},

@@ -16,7 +16,8 @@ import CustomTable from '../components/table';
 import axios from '../axios-faceDet';
 import AccountForm from '../components/Forms/accountForm';
 import EmployeeCard from '../components/Cards/employeeCard';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../store/actions/index';
 
 const Employee = () => {
 	const [show, setShow] = useState(false);
@@ -27,6 +28,7 @@ const Employee = () => {
 	const user = useSelector((state) => state.user.user);
 	const account = useSelector((state) => state.acc.details);
 	const orgs = useSelector((state) => state.org.list);
+	const dispatch = useDispatch();
 
 	const [emps, setEmps] = useState(null);
 	const [fetchedEmps, setFetchedEmps] = useState(false);
@@ -64,6 +66,7 @@ const Employee = () => {
 							console.log(res.data);
 							setEmps(res.data);
 							setFetchedEmps(true);
+							dispatch(actions.setAccounts(res.data));
 						})
 						.catch((err) => console.log(err));
 				} else {
@@ -83,11 +86,12 @@ const Employee = () => {
 						console.log(res.data);
 						setEmps(res.data);
 						setFetchedEmps(true);
+						dispatch(actions.setAccounts(res.data));
 					})
 					.catch((err) => console.log(err));
 			}
 		}
-	}, [fetchedEmps, user, account, activeOrg, selectedOrg]);
+	}, [fetchedEmps, user, account, activeOrg, selectedOrg, dispatch]);
 
 	const onDeleteHandler = (id) => {
 		axios

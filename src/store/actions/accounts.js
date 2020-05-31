@@ -28,6 +28,13 @@ export const setDepartment = (departments) => {
 	};
 };
 
+export const setAccounts = (Accounts) => {
+	return {
+		type: actionTypes.SET_ACCOUNTS,
+		data: Accounts,
+	};
+};
+
 export const fetchDept = () => {
 	return (dispatch) => {
 		axios

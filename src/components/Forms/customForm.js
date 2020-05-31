@@ -42,7 +42,7 @@ const CustomForm = (props) => {
 								{elements.map(
 									(el, i) => {
 										if (el.type === 'file') {
-											const upFile = el.path ? el.path.split('/') : 'No file Uploaded';
+											const upFile = el.path ? el.path.split('/') : ['No file Uploaded'];
 											return (
 												<Col md={12} key={el.name + i} className='my-3'>
 													<p className='text-primary'>
@@ -63,7 +63,7 @@ const CustomForm = (props) => {
 															isInvalid={!el.valid}
 														/>
 														<Form.File.Label data-browse='Select File'>
-															{el.label}
+															{values[el.name] ? values[el.name].name : el.label}
 														</Form.File.Label>
 													</Form.File>
 
@@ -122,7 +122,7 @@ const CustomForm = (props) => {
 											);
 										}
 
-										console.log(values);
+										// console.log(values);
 										// console.log(errors);
 										return (
 											<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>

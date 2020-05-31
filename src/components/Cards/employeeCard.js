@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { Card, Image } from 'react-bootstrap';
+import { Card, Image, Button } from 'react-bootstrap';
 import CustomModal from '../modal';
 import AccountForm from '../Forms/accountForm';
 import defaultImg from '../../assets/avatar-02.jpg';
 import { MdEdit } from 'react-icons/md';
 import { BsTrash } from 'react-icons/bs';
+import TrainingImages from '../trainingImages';
 
 const EmployeeCard = ({ employee, onDelete }) => {
 	const [show, setShow] = useState(false);
+	const [showTraining, setShowTraining] = useState(false);
 	const [emp, setEmp] = useState(employee);
 
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
+
+	const handleShowTraining = () => setShowTraining(true);
+	const handleCloseTraining = () => setShowTraining(false);
 
 	const editingHandler = (updatedEmp) => {
 		setEmp(updatedEmp);
@@ -44,6 +49,10 @@ const EmployeeCard = ({ employee, onDelete }) => {
 				>
 					{emp.role}
 				</p>
+
+				<Button onClick={handleShowTraining} variant='outline-info' size='sm'>
+					Setup Face Detection
+				</Button>
 			</Card.Body>
 			<CustomModal
 				show={show}
@@ -51,6 +60,13 @@ const EmployeeCard = ({ employee, onDelete }) => {
 				heading='Edit Employee Details'
 			>
 				<AccountForm edit values={emp} onEditingDone={editingHandler} />
+			</CustomModal>
+			<CustomModal
+				show={showTraining}
+				onClose={handleCloseTraining}
+				heading='Train Images for Attendance'
+			>
+				<TrainingImages employee={emp} />
 			</CustomModal>
 		</Card>
 	);

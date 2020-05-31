@@ -14,6 +14,7 @@ import Logout from './pages/Registration/logout';
 import PrivateRoute from './components/privateRoute';
 import Department from './pages/department';
 import Users from './pages/users';
+import AttendanceAdmin from './pages/attAdmin';
 
 const App = () => {
 	
@@ -36,6 +37,7 @@ const App = () => {
 					<PrivateRoute path='/employee' component={Employee} />
 					<PrivateRoute path='/dept' component={Department} />
 					<PrivateRoute path='/user' component={Users} />
+					<PrivateRoute path='/attAdmin' component={AttendanceAdmin} />
 					<PrivateRoute path='/home' exact component={Dashboard} />
 					<PrivateRoute path='/' exact component={Login} />
 				</AnimatedSwitch>
@@ -68,8 +70,8 @@ export default App;
 // TODO: Dashboard
 
 // *CONFUSION: Step 1 - Delete Functionality for User Page
-//TODO: Step 2 - Departments DropDown Implementation
-//TODO: Step 3 - Uploading Images Functionality
-//TODO: Step 4 - Attendance Page Functionality For Admin
+// !DONE: Step 2 - Departments DropDown Implementation
+// !DONE: Step 3 - Uploading Images Functionality
+// !*PARTIAL DONE: Step 4 - Attendance Page Functionality For Admin
 //TODO: Step 5 - Attendance Page Functionality For Employee
 //TODO: Step 6 - Implementation Of the Attendance App

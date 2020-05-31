@@ -26,6 +26,7 @@ const acc = {
 		deptId: null,
 		role: null,
 	},
+	list: [],
 	department: [],
 };
 
@@ -56,6 +57,9 @@ const accReducer = (state = acc, action) => {
 				loading: false,
 				details: updatedDetails,
 			});
+
+		case actionTypes.SET_ACCOUNTS:
+			return updateObject(state, { list: action.data });
 
 		case actionTypes.REMOVE_ACCOUNT_DETAILS:
 			updatedDetails = updateObject(state.details, accounts.details);
