@@ -23,14 +23,14 @@ const Admin = (props) => {
 	};
 
 	return (
-		<>
+		<div>
 			<DashboardNavbar showSidebar={onToggleSidebar} />
 			<div className='admin-layout'>
 				<Sidebar show={sidebar} showSidebar={onToggleSidebar} />
 				<Backdrop show={sidebar} showSidebar={onToggleSidebar} />
 				<div className='admin-content'>{props.children}</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

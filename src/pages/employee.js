@@ -18,12 +18,14 @@ import AccountForm from '../components/Forms/accountForm';
 import EmployeeCard from '../components/Cards/employeeCard';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../store/actions/index';
+import Loader from '../components/loader';
 
 const Employee = () => {
 	const [show, setShow] = useState(false);
 	const [showCard, setShowCard] = useState(true);
 	const [activeOrg, setActiveOrg] = useState('All');
 	const [selectedOrg, setSelectedOrg] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	const user = useSelector((state) => state.user.user);
 	const account = useSelector((state) => state.acc.details);
@@ -60,47 +62,62 @@ const Employee = () => {
 		if (!fetchedEmps) {
 			if (user.is_superuser) {
 				if (activeOrg === 'All') {
+					setLoading(true);
 					axios
 						.get('attendance/api/accounts')
 						.then((res) => {
 							console.log(res.data);
 							setEmps(res.data);
 							setFetchedEmps(true);
+							setLoading(false);
 							dispatch(actions.setAccounts(res.data));
 						})
-						.catch((err) => console.log(err));
+						.catch((err) => {
+							console.log(err.response.data);
+							setLoading(false);
+						});
 				} else {
+					setLoading(true);
 					axios
 						.get('/attendance/api/accounts/filter?orgId=' + selectedOrg.pk)
 						.then((res) => {
 							console.log(res.data);
 							setEmps(res.data);
 							setFetchedEmps(true);
+							setLoading(false);
 						})
-						.catch((err) => console.log(err));
+						.catch((err) => {
+							console.log(err.response.data);
+							setLoading(false);
+						});
 				}
 			} else {
+				setLoading(true);
 				axios
 					.get('/attendance/api/accounts/filter?orgId=' + account.orgId)
 					.then((res) => {
 						console.log(res.data);
 						setEmps(res.data);
 						setFetchedEmps(true);
+						setLoading(false);
 						dispatch(actions.setAccounts(res.data));
 					})
-					.catch((err) => console.log(err));
+					.catch((err) => {
+						console.log(err.response.data);
+						setLoading(false);
+					});
 			}
 		}
 	}, [fetchedEmps, user, account, activeOrg, selectedOrg, dispatch]);
 
 	const onDeleteHandler = (id) => {
 		axios
-			.delete('/attendance/api/org/' + id + '/')
+			.delete('/attendance/api/accounts/' + id + '/')
 			.then((res) => {
 				console.log(res.data);
 				setFetchedEmps(false);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log(err.response.data));
 	};
 
 	const handleShow = () => setShow(true);
@@ -175,7 +192,7 @@ const Employee = () => {
 				</Row>
 			)}
 
-			<Form>
+			{/* <Form>
 				<Form.Row>
 					<Col className='my-2' xs={12} sm={6} md={3}>
 						<Form.Control type='text' placeholder='Employee ID'></Form.Control>
@@ -192,9 +209,11 @@ const Employee = () => {
 						</Button>
 					</Col>
 				</Form.Row>
-			</Form>
+			</Form> */}
 
-			{showCard && emps && (
+			{loading && <Loader loading={loading} />}
+
+			{!loading && showCard && emps && (
 				<Row>
 					{emps.map((emp, i) => (
 						<Col key={emp.empId} xs={12} sm={6} md={4} lg={3} className='my-3'>
@@ -204,7 +223,7 @@ const Employee = () => {
 				</Row>
 			)}
 
-			{!showCard && (
+			{!loading && !showCard && (
 				<Row className='mt-3'>
 					<Col md={{ span: 10, offset: 1 }} xs={12}>
 						<CustomTable values={emps} type='emp' />

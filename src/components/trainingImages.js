@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Button, Col } from 'react-bootstrap';
+import { Container, Row, Button, Col, Image } from 'react-bootstrap';
 import { css } from '@emotion/core';
 import Dropzone from 'react-dropzone';
 import axios from '../axios-faceDet';
@@ -15,8 +15,16 @@ const TrainingImages = (props) => {
 	const [files, setFiles] = useState(null);
 	const [uploadLoading, setUploadLoading] = useState(false);
 	const [message, setMessage] = useState(null);
+	const [error, setError] = useState(null);
 
-	const onDropHandler = (files) => setFiles(files);
+	const onDropHandler = (files) => {
+		if (files.length > 50) {
+			setError('Maximum 50 files are allowed for uploading.');
+			setFiles(null);
+		} else {
+			setFiles(files);
+		}
+	};
 
 	const onSubmitHandler = () => {
 		console.log(files);
@@ -34,7 +42,7 @@ const TrainingImages = (props) => {
 			})
 			.catch((err) => {
 				console.log(err);
-				setMessage(err.message);
+				setError(err.message);
 				setUploadLoading(false);
 			});
 	};
@@ -52,11 +60,28 @@ const TrainingImages = (props) => {
 						</div>
 					)}
 				</Dropzone>
+
+				{files &&
+					files.map((file, i) => {
+						const prev = URL.createObjectURL(file);
+						return (
+							<Col xs={4} md={3} key={file.name + i} className='my-2'>
+								<div className='position-relative'>
+									<Image src={prev} alt={file.name} fluid />
+								</div>
+							</Col>
+						);
+					})}
+
 				{files && (
-					<p className='my-2 text-info mx-2 w-100'>{files.length + ' files selected'}</p>
+					<p className='my-2 text-info mx-2 w-100'>
+						{files.length + ' files selected'}
+					</p>
 				)}
 
 				{message && <p className='my-2 text-info mx-2 w-100'>{message}</p>}
+
+				{error && <p className='my-2 text-danger mx-2 w-100'>{error}</p>}
 			</Row>
 
 			<div className='w-100 my-3'>
@@ -70,8 +95,14 @@ const TrainingImages = (props) => {
 				/>
 			</div>
 
-			<Row className='mt-3'>
-				<Col md={{ span: 6, offset: 3 }}>
+			<Row className='my-3'>
+				<Col xs={12} className='my-1 mx-3'>
+					<small className='text-secondary'>
+						<b>Note:</b> Image Uploading and Training may take time. Please wait for a
+						while.
+					</small>
+				</Col>
+				<Col md={{ span: 6, offset: 3 }} className='my-3'>
 					<Button
 						block
 						variant='outline-success'

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 import CustomForm from './customForm';
-import axios from '../../axios-faceDet';
+// import axios from '../../axios-faceDet';
 
 const departmentSchema = Yup.object().shape({
 	DeptName: Yup.string().required('Required'),

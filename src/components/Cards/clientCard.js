@@ -6,15 +6,20 @@ import CustomModal from '../modal';
 import OrganizationForm from '../Forms/orgForm';
 import { MdEdit } from 'react-icons/md';
 import { BsTrash } from 'react-icons/bs';
+import DeleteModal from '../deleteModal';
 
 const ClientCard = ({ client, onDelete }) => {
 	const [show, setShow] = useState(false);
 	const [org, setOrg] = useState(client);
+	const [showDelete, setShowDelete] = useState(false);
 
 	const [account, setAccount] = useState(null);
 
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
+
+	const handleShowDelete = () => setShowDelete(true);
+	const handleCloseDelete = () => setShowDelete(false);
 
 	useEffect(() => {
 		// TODO: Add User
@@ -32,6 +37,10 @@ const ClientCard = ({ client, onDelete }) => {
 		setShow(false);
 	};
 
+	const DeleteOrganization = () => {
+		onDelete(org.pk);
+	};
+
 	return (
 		<Card className='profile-card'>
 			<div className='d-flex justify-content-center pt-3 pb-1'>
@@ -40,7 +49,7 @@ const ClientCard = ({ client, onDelete }) => {
 			<Card.Title className='mb-0'>
 				<span className='float-right mx-2 my-2' style={{ cursor: 'pointer' }}>
 					<MdEdit className='mx-1 text-primary' onClick={handleShow} />
-					<BsTrash className='mx-1 text-danger' onClick={() => onDelete(org.pk)} />
+					<BsTrash className='mx-1 text-danger' onClick={handleShowDelete} />
 				</span>
 			</Card.Title>
 			<Card.Body className='d-flex flex-column align-items-center py-2'>
@@ -70,6 +79,11 @@ const ClientCard = ({ client, onDelete }) => {
 			<CustomModal show={show} onClose={handleClose} heading='Edit Client Details'>
 				<OrganizationForm edit values={org} onEditingDone={editingHandler} />
 			</CustomModal>
+			<DeleteModal
+				show={showDelete}
+				onDeleteHandler={DeleteOrganization}
+				handleClose={handleCloseDelete}
+			/>
 		</Card>
 	);
 };

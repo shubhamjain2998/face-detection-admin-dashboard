@@ -10,11 +10,13 @@ import CustomTable from '../components/table';
 import axios from '../axios-faceDet';
 import OrganizationForm from '../components/Forms/orgForm';
 import { useDispatch } from 'react-redux';
+import Loader from '../components/loader';
 import * as actions from '../store/actions/index';
 
 const Clients = () => {
 	const [show, setShow] = useState(false);
 	const [showCard, setShowCard] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -32,12 +34,20 @@ const Clients = () => {
 
 	useEffect(() => {
 		if (!fetchedOrgs) {
-			axios.get('attendance/api/org').then((res) => {
-				console.log(res.data);
-				dispatch(actions.fetchOrgs(res.data));
-				setOrgs(res.data);
-				setFetchedOrgs(true);
-			});
+			setLoading(true);
+			axios
+				.get('attendance/api/org')
+				.then((res) => {
+					console.log(res.data);
+					dispatch(actions.fetchOrgs(res.data));
+					setOrgs(res.data);
+					setFetchedOrgs(true);
+					setLoading(false);
+				})
+				.catch((err) => {
+					console.log(err.response.data);
+					setLoading(false);
+				});
 		}
 	}, [fetchedOrgs, dispatch]);
 
@@ -48,18 +58,8 @@ const Clients = () => {
 				console.log(res.data);
 				setFetchedOrgs(false);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log(err.response.data));
 	};
-
-	// let clients = [];
-
-	// if (orgs) {
-	// 	clients = orgs.map((org, i) => ({
-	// 		src: org.logo,
-	// 		title: org.Name,
-	// 		orgType: org.orgType,
-	// 	}));
-	// }
 
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
@@ -97,7 +97,7 @@ const Clients = () => {
 					</Button>
 				</Col>
 			</Row>
-			<Form>
+			{/* <Form>
 				<Form.Row>
 					<Col className='my-2' xs={12} sm={6} md={3}>
 						<Form.Control type='text' placeholder='Client ID'></Form.Control>
@@ -114,9 +114,11 @@ const Clients = () => {
 						</Button>
 					</Col>
 				</Form.Row>
-			</Form>
+			</Form> */}
 
-			{showCard && orgs && (
+			{loading && <Loader loading={loading} />}
+
+			{!loading && showCard && orgs && (
 				<Row>
 					{orgs.map((org, i) => (
 						<Col key={org.Name + i} xs={12} sm={6} md={4} lg={3} className='my-3'>
@@ -126,7 +128,7 @@ const Clients = () => {
 				</Row>
 			)}
 
-			{!showCard && (
+			{!loading && !showCard && (
 				<Row className='mt-3'>
 					<Col md={{ span: 10, offset: 1 }} xs={12}>
 						<CustomTable elements={tableElements} values={orgs} type='client' />

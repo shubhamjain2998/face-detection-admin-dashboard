@@ -10,7 +10,7 @@ const initialState = {
 		email: null,
 		is_superuser: false,
 	},
-	list: []
+	list: [],
 };
 
 let newUser = {};
@@ -19,6 +19,12 @@ const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.REGISTRATION_STARTED:
 			return updateObject(state, { loading: true });
+
+		case actionTypes.USER_DATA_FETCHING:
+			return updateObject(state, { loading: true });
+
+		case actionTypes.USER_DATA_FETCHING_FAILED:
+			return updateObject(state, { loading: false, error: action.error });
 
 		case actionTypes.REGISTRATION_COMPLETED:
 			newUser = {
@@ -60,7 +66,7 @@ const userReducer = (state = initialState, action) => {
 			return updateObject(state, user);
 
 		case actionTypes.SET_USERS:
-			return updateObject(state, {list: action.data})
+			return updateObject(state, { list: action.data, loading: false });
 
 		default:
 			return state;

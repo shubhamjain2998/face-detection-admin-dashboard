@@ -42,7 +42,9 @@ export const fetchDept = () => {
 			.then((res) => {
 				dispatch(setDepartment(res.data));
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err.response.data);
+			});
 	};
 };
 
@@ -78,8 +80,10 @@ export const accountCreation = (accountDetails, user, org) => {
 				dispatch(accountCreationCompleted(res.data));
 			})
 			.catch((err) => {
-				console.log(err);
-				dispatch(accountCreationFailed(err));
+				console.log(err.response.data);
+				dispatch(
+					accountCreationFailed(err.response.data.non_field_errors.join(' '))
+				);
 			});
 	};
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CustomForm from './customForm';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ const RegisterSchema = Yup.object().shape({
 	password: Yup.string()
 		.min(8, 'Password should contain more than 8 characters')
 		.required('Required'),
-	repeatPassword: Yup.string().oneOf(
+	confirmPassword: Yup.string().oneOf(
 		[Yup.ref('password'), null],
 		'Passwords must match'
 	),
@@ -51,6 +51,7 @@ const accountSchema = Yup.object().shape({
 });
 
 const AccountForm = (props) => {
+	const [error, setError] = useState(null);
 	const dispatch = useDispatch();
 	const account = useSelector((state) => state.acc);
 
@@ -245,12 +246,13 @@ const AccountForm = (props) => {
 					.then((res) => {
 						console.log(res);
 						empData.append('emailId', res.data.email);
-						empData.append('deptId', '1');
+						empData.append('deptId', parseInt(values.dept));
 						if (user.user.is_superuser) {
 							empData.append('role', values.role);
 							empData.append('empId', props.org.pk + res.data.id);
 							empData.append('orgId', props.org.pk);
 						} else {
+							empData.append('empId', org.details.pk + res.data.id);
 							empData.append('orgId', org.details.pk);
 							empData.append('role', 'employee');
 						}
@@ -260,10 +262,14 @@ const AccountForm = (props) => {
 								console.log(res.data);
 								props.onEditingDone(res.data);
 							})
-							.catch((err) => console.log(err));
+							.catch((err) => {
+								console.log(err);
+								setError(err.message);
+							});
 					})
 					.catch((err) => {
 						console.log(err.message);
+						setError(err.message);
 					});
 			}
 		}
@@ -296,6 +302,8 @@ const AccountForm = (props) => {
 			) : (
 				''
 			)}
+
+			{error ? <p className='py-2 text-danger'>{error}</p> : ''}
 		</div>
 	);
 };

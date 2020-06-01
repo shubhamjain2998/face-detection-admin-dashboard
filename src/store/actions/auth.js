@@ -43,6 +43,19 @@ export const loginFailed = (error) => {
 	};
 };
 
+export const userDataFetching = () => {
+	return {
+		type: actionTypes.USER_DATA_FETCHING,
+	};
+};
+
+export const userDataFetchingError = (error) => {
+	return {
+		type: actionTypes.USER_DATA_FETCHING_FAILED,
+		error: error,
+	};
+};
+
 export const removeUser = () => {
 	return {
 		type: actionTypes.REMOVE_USER,
@@ -87,13 +100,17 @@ export const setUsers = (users) => {
 
 export const fetchUsers = () => {
 	return (dispatch) => {
+		dispatch(userDataFetching());
 		axios
 			.get('/attendance/api/user/register')
 			.then((res) => {
 				console.log(res.data);
 				dispatch(setUsers(res.data));
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err.response.data.non_field_errors.join(' '));
+				dispatch(userDataFetchingError(err.response.data.non_field_errors.join(' ')));
+			});
 	};
 };
 
@@ -110,8 +127,8 @@ export const registerUser = (userDetails) => {
 				dispatch(registerUserCompleted(res.data));
 			})
 			.catch((err) => {
-				console.log(err.message);
-				dispatch(registerUserFailed(err));
+				console.log(err.response.data.non_field_errors.join(' '));
+				dispatch(registerUserFailed(err.response.data.non_field_errors.join(' ')));
 			});
 	};
 };
@@ -138,8 +155,8 @@ export const loginUser = (userDetails) => {
 									dispatch(setOrg(res.data));
 								})
 								.catch((err) => {
-									console.log(err.message);
-									dispatch(loginFailed(err));
+									console.log(err.response.data);
+									dispatch(loginFailed(err.response.data.non_field_errors.join(' ')));
 								});
 						} else {
 							dispatch(setAccount(accounts.details));
@@ -147,13 +164,13 @@ export const loginUser = (userDetails) => {
 						}
 					})
 					.catch((err) => {
-						console.log(err.message);
-						dispatch(loginFailed(err));
+						console.log(err.response.data);
+						dispatch(loginFailed(err.response.data.non_field_errors.join(' ')));
 					});
 			})
 			.catch((err) => {
-				console.log(err.message);
-				dispatch(loginFailed(err));
+				// console.log(err.response.data);
+				dispatch(loginFailed(err.response.data.non_field_errors.join(' ')));
 			});
 	};
 };

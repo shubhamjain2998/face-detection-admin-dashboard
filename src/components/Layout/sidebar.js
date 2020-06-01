@@ -44,10 +44,7 @@ const Sidebar = (props) => {
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Department', link: '/dept' },
-			{
-				name: 'Attendance',
-				dropdown: [{ name: 'employee', link: '/home' }],
-			},
+			{ name: 'Attendance', link: '/attAdmin' },
 		];
 	}
 

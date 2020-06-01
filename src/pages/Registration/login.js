@@ -29,8 +29,8 @@ const Login = () => {
 	return (
 		<FrontPage>
 			<LoginForm />
-			{user.error ? <p className='py-2 text-danger'>{user.error.message}</p> : ''}
-			{redirect ? redirect : ''}
+			{user.error ? <p className='py-2 text-danger'>{user.error}</p> : ''}
+			{!account.loading && redirect ? redirect : ''}
 
 			<div className='d-flex justify-content-center mt-3'>
 				<PropagateLoader
