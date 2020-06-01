@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical, BsTrash } from 'react-icons/bs';
+import { MdEdit } from 'react-icons/md';
 
 const CustomTable = (props) => {
 	let headers = null;
@@ -56,7 +57,16 @@ const CustomTable = (props) => {
 									<td className='col-4'>{r.DeptName}</td>
 									<td className='col-6'>{r.Description}</td>
 									<td>
-										<BsThreeDotsVertical />
+										<span style={{ cursor: 'pointer' }}>
+											<MdEdit
+												className='mx-2 text-primary'
+												onClick={() => props.onEdit(r)}
+											/>
+											<BsTrash
+												className='mx-2 text-danger'
+												onClick={() => props.onDelete(r)}
+											/>
+										</span>
 									</td>
 								</tr>
 							);
