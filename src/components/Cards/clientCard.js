@@ -6,6 +6,7 @@ import CustomModal from '../modal';
 import OrganizationForm from '../Forms/orgForm';
 import { MdEdit } from 'react-icons/md';
 import { BsTrash } from 'react-icons/bs';
+import { AiOutlineMessage } from 'react-icons/ai';
 import DeleteModal from '../deleteModal';
 
 const ClientCard = ({ client, onDelete }) => {
@@ -42,24 +43,29 @@ const ClientCard = ({ client, onDelete }) => {
 	};
 
 	return (
-		<Card className='profile-card'>
-			<div className='d-flex justify-content-center pt-3 pb-1'>
+		<Card className='client-card'>
+			<div className='d-flex justify-content-center pb-1'>
 				<Image src={org.src} alt='' fluid roundedCircle style={{ width: '20%' }} />
 			</div>
-			<Card.Title className='mb-0'>
+			{/* <Card.Title className='mb-0'>
 				<span className='float-right mx-2 my-2' style={{ cursor: 'pointer' }}>
 					<MdEdit className='mx-1 text-primary' onClick={handleShow} />
 					<BsTrash className='mx-1 text-danger' onClick={handleShowDelete} />
 				</span>
-			</Card.Title>
+			</Card.Title> */}
+			<div className='client-card-top'>
+				<AiOutlineMessage className='mx-1' />
+				<MdEdit className='mx-1 text-primary' onClick={handleShow} />
+				<BsTrash className='mx-1 text-danger' onClick={handleShowDelete} />
+			</div>
 			<Card.Body className='d-flex flex-column align-items-center py-2'>
 				<h6 className='mb-1 text-center'>{org.Name}</h6>
 				{/* <p className='my-0 pt-1'>{props.name} </p> */}
 				<p className='font-weight-light text-secondary'>{org.orgType}</p>
 				<div className='d-flex justify-content-center flex-wrap'>
-					<Button variant='outline-secondary' className='mx-1 my-1'>
+					{/* <Button variant='outline-primary' className='mx-1 my-1'>
 						Message
-					</Button>
+					</Button> */}
 					<Link
 						to={{
 							pathname: '/profile',
@@ -67,7 +73,7 @@ const ClientCard = ({ client, onDelete }) => {
 						}}
 					>
 						<Button
-							variant='outline-secondary'
+							variant='outline-primary'
 							className='mx-1 my-1'
 							disabled={account == null}
 						>

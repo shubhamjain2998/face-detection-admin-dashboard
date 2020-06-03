@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import './forms.scss';
 
 const LoginSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
@@ -54,8 +55,10 @@ const LoginForm = (props) => {
 
 	return (
 		<div className='d-flex align-items-center flex-column'>
-			<h5 className='my-0'>{props.register ? 'Register' : 'Login'}</h5>
-			<p className='text-secondary'>Access to our Dashboard</p>
+			<h5 className='mb-1 pb-1 w-100'>
+				{props.register ? 'Create a new account' : 'Sign in to your account'}
+			</h5>
+			{/* <p className='text-secondary'>Access to our Dashboard</p> */}
 
 			<Formik
 				initialValues={props.register ? RegisterInitial : loginInitial}
@@ -72,7 +75,7 @@ const LoginForm = (props) => {
 					isSubmitting,
 					isValid,
 				}) => (
-					<Form noValidate onSubmit={handleSubmit} className='w-100'>
+					<Form noValidate onSubmit={handleSubmit} className='w-100 mt-2 login-form'>
 						<Form.Group>
 							<Form.Label>Email Address</Form.Label>
 							<Form.Control
@@ -125,7 +128,7 @@ const LoginForm = (props) => {
 						)}
 
 						<Button
-							variant='primary'
+							variant='outline-primary mt-4'
 							type='submit'
 							disabled={!isValid}
 							className='w-100'
@@ -136,7 +139,7 @@ const LoginForm = (props) => {
 				)}
 			</Formik>
 			<div className='pt-2'>
-				{props.register ? (
+				{/* {props.register ? (
 					<p className='font-weight-light py-2'>
 						Already have an account?{' '}
 						<span className='text-primary'>
@@ -150,7 +153,7 @@ const LoginForm = (props) => {
 							<Link to='register'>Register</Link>
 						</span>
 					</p>
-				)}
+				)} */}
 			</div>
 		</div>
 	);

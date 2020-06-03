@@ -17,7 +17,7 @@ const Register = () => {
 	}
 
 	return (
-		<FrontPage>
+		<>
 			<LoginForm register />
 			<div className='d-flex justify-content-center mt-3'>
 				<PropagateLoader
@@ -27,7 +27,7 @@ const Register = () => {
 					// loading={true}
 				/>
 			</div>
-		</FrontPage>
+		</>
 	);
 };
 

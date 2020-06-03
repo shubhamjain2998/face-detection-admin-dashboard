@@ -1,8 +1,158 @@
 $theme-colors: (
-    // 'primary': #1e32fa,
+	'primary': #654aa1,
+	'warning': rgb(17, 30, 51),
 );
 
 $enable-responsive-font-sizes: true;
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
+
+$border-color: rgb(214, 214, 214);
+
+body {
+	font-family: 'Raleway', sans-serif;
+}
+
+.switch-wrapper {
+	position: relative;
+}
+
+.switch-wrapper > div {
+	position: absolute;
+	width: 100%;
+	// background-color: rgb(240, 240, 240);
+}
+
+.makeLink {
+	cursor: pointer;
+}
+
+.right-sidebar {
+	// position: fixed;
+	// height: 100%;
+	border-radius: 0 1rem 1rem 0;
+	background-color: rgb(243, 243, 243);
+}
+
+.client-filter {
+	.form-row > div {
+		padding: 0.5rem 0;
+	}
+
+	p {
+		text-transform: uppercase;
+		font-size: 0.8rem;
+		font-weight: bold;
+		letter-spacing: 0.1rem;
+		margin: 3rem 0 2rem;
+		padding: 0 1rem;
+	}
+
+	label {
+		font-size: 0.7rem;
+		font-weight: bold;
+	}
+
+	input {
+		border-radius: 1rem;
+	}
+}
+
+.client-card {
+	> div {
+		padding-top: 0;
+	}
+
+	background: #fff;
+	border-radius: 2px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+	transition: transform 0.2s ease-out;
+	overflow: hidden;
+
+	.client-card-top {
+		display: flex;
+		justify-content: flex-end;
+		padding: 0.5rem 0;
+		svg {
+			cursor: pointer;
+		}
+	}
+}
+
+.client-card:hover {
+	transform: scale(1.05);
+}
+
+.client-tabs {
+	margin: 1.5rem 0;
+
+	border-bottom: 2px solid $border-color;
+
+	.nav-item {
+		width: auto;
+
+		a {
+			padding-bottom: 0.4rem;
+			font-size: 0.8rem;
+			letter-spacing: 0.1rem;
+			font-weight: bold;
+			display: flex;
+			align-items: center;
+		}
+
+		.a:focus,
+		.a:active {
+			outline: none !important;
+			box-shadow: none;
+		}
+	}
+
+	.nav-link.active {
+		border-bottom: 2px solid rgb(17, 30, 51);
+		color: rgb(17, 30, 51);
+		margin-bottom: -2px;
+	}
+}
+
+.userTable {
+	margin-top: 2rem;
+
+	table tr:first-child td {
+		border-top: 0;
+		text-transform: uppercase;
+		font-size: 1rem;
+		letter-spacing: 0.08rem;
+		text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+		font-weight: 590;
+	}
+
+	table tr:first-child:hover {
+		transform: scale(1) !important;
+	}
+
+	.dataTable {
+		tr:not(:first-child) {
+			transition: transform 0.1s ease-out;
+			color: rgb(60, 75, 82);
+			font-size: 0.9rem;
+			letter-spacing: 0.05rem;
+			font-weight: 500;
+		}
+
+		tr:hover {
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			transform: scale(1.02);
+			font-size: 1rem;
+			color: warning;
+			font-weight: 590;
+		}
+
+		.badge-pill {
+			background-color: #664aa12a;
+			color: #654aa1;
+			border-color: #654aa1;
+			padding: 1rem;
+		}
+	}
+}

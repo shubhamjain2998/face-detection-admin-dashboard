@@ -111,7 +111,7 @@ const OrganizationForm = (props) => {
 			) : (
 				<>
 					<h5 className='my-0'>Register Your Organization</h5>
-					<p className='text-secondary'>Access to our Dashboard</p>
+					{/* <p className='text-secondary'>Access to our Dashboard</p> */}
 				</>
 			)}
 

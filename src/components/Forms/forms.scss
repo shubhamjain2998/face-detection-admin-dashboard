@@ -1,0 +1,29 @@
+$custom-color: rgb(17, 30, 51);
+
+.login-form {
+	.form-group {
+		margin-top: 1rem;
+		padding-top: 1rem;
+	}
+
+	button {
+		border-radius: 1rem;
+	}
+
+	label {
+		color: $custom-color;
+		letter-spacing: 0.1rem;
+	}
+
+	input {
+		border-radius: 1rem;
+	}
+
+	input:hover {
+		box-shadow: 0 0 5pt 0.5pt #d3d3d3;
+	}
+
+	input:active {
+		box-shadow: 0 0 5pt 2pt #d3d3d3;
+	}
+}

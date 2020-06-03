@@ -126,6 +126,7 @@ const CustomForm = (props) => {
 										// console.log(errors);
 										return (
 											<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>
+												<Form.Label>{el.label ? el.label : ''}</Form.Label>
 												<Form.Control
 													name={el.name}
 													type={el.type}
@@ -151,8 +152,8 @@ const CustomForm = (props) => {
 								)}
 							</Form.Row>
 						</Form.Group>
-						<Button variant='warning' type='submit' disabled={!isValid} block>
-							Submit
+						<Button variant='outline-primary' type='submit' disabled={!isValid} block>
+							{props.filters ? 'Apply' : 'Submit'}
 						</Button>
 					</Form>
 				)}

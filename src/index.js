@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './customBS.scss';
+// import './index.css';
 import { Provider } from 'react-redux';
 
 import App from './App';
@@ -12,6 +13,8 @@ import thunk from 'redux-thunk';
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import orgReducer from './store/reducers/org';
 import accReducer from './store/reducers/accounts';
+import Home from './pages/testHome/testhome';
+import Layout from './pages/testHome/layout';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -31,6 +34,8 @@ const app = (
 		<BrowserRouter>
 			<React.StrictMode>
 				<App />
+				{/* <Home /> */}
+				{/* <Layout/> */}
 			</React.StrictMode>
 		</BrowserRouter>
 	</Provider>

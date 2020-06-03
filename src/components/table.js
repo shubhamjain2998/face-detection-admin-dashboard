@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Badge } from 'react-bootstrap';
 import { BsThreeDotsVertical, BsTrash } from 'react-icons/bs';
 import { MdEdit } from 'react-icons/md';
 
@@ -10,12 +10,16 @@ const CustomTable = (props) => {
 		console.log(props.elements);
 		headers = (
 			<>
-				<th className='col-1'>#</th>
-				{props.elements.map((el, i) => (
+				{/* {props.elements.map((el, i) => (
+					// <th key={el + i} className={el === 'Type' ? 'col-4' : 'col-2'}>
 					<th key={el + i} className={el === 'Type' ? 'col-4' : 'col-2'}>
 						{el}
 					</th>
-				))}
+				))} */}
+				<td className='col-4'>Name</td>
+				<td className='col-4'>Type</td>
+				{/* <td className='col-2'>Contact</td> */}
+				<td className='col-3'>Staff Count</td>
 			</>
 		);
 	} else if (props.type === 'dept') {
@@ -41,14 +45,13 @@ const CustomTable = (props) => {
 
 	return (
 		<div className='px-4 table-responsive userTable'>
-			<Table striped>
-				<thead>
+			<Table>
+				<></>
+				<tbody className='dataTable'>
 					<tr className='d-flex'>
 						{headers}
-						<th className='col-1'></th>
+						<td className='col-1'></td>
 					</tr>
-				</thead>
-				<tbody className='dataTable'>
 					{props.values.map((r, i) => {
 						if (props.type === 'dept') {
 							return (
@@ -73,11 +76,15 @@ const CustomTable = (props) => {
 						} else if (props.type === 'client') {
 							return (
 								<tr key={r + i} className='d-flex'>
-									<td className='col-1'>{i + 1}</td>
-									<td className='col-2'>{r.Name}</td>
-									<td className='col-4'>{r.orgType}</td>
-									<td className='col-2'>{r.contact}</td>
-									<td className='col-2'>{r.staffcount}</td>
+									{/* <td className='col-1'>{i + 1}</td> */}
+									<td className='col-4'>{r.Name}</td>
+									<td className='col-4'>
+										<Badge pill variant='warning'>
+											{r.orgType}
+										</Badge>
+									</td>
+									{/* <td className='col-2'>{r.contact}</td> */}
+									<td className='col-3'>{r.staffcount}</td>
 									<td>
 										<BsThreeDotsVertical />
 									</td>

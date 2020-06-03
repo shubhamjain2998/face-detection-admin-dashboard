@@ -1,0 +1,88 @@
+$custom-color: rgb(17, 30, 51);
+$active: rgb(143, 143, 143);
+
+.layout-outer-div {
+	position: relative;
+	min-height: 100vh;
+	background-color: $custom-color;
+
+	.layout-sidebar {
+		position: absolute;
+		width: 10%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		a {
+			// background-color: white;
+			text-decoration: none;
+			width: 100%;
+			border-radius: 0 1rem 1rem 0;
+		}
+
+		.active-link {
+			background-color: white;
+			border-radius: 0;
+
+			.route {
+				color: $custom-color;
+			}
+		}
+
+		.profile {
+			margin: 2rem 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			.profile-image {
+				display: flex;
+				justify-content: center;
+			}
+
+			img {
+				max-width: 70%;
+			}
+
+			p {
+				color: white;
+				margin-bottom: 0;
+				margin-top: 0.5rem;
+			}
+		}
+
+		.route {
+			color: $active;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 1rem 0.5rem;
+
+			p {
+				padding-top: 0.5rem;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.layout-inner-div {
+	position: absolute;
+	width: 90%;
+	max-height: 100%;
+	right: 0;
+	top: 0;
+	// background-color: rgb(251, 249, 249);
+	z-index: 1000;
+    // border-radius: 1rem;
+    overflow: scroll;
+}
+
+.content {
+	// position: fixed;
+	// height: 100%;
+	background-color: rgb(251, 249, 249);
+	border-radius: 1rem 0 0 1rem;
+}
+

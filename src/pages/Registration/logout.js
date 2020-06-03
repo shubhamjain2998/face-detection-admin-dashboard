@@ -10,7 +10,7 @@ const Logout = () => {
 	if (token) {
 		dispatch(actions.logout());
 	} else {
-		return <Redirect to='/login' />;
+		return <Redirect to='/' />;
 	}
 
 	return <></>;

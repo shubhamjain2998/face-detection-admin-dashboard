@@ -15,12 +15,14 @@ import PrivateRoute from './components/privateRoute';
 import Department from './pages/department';
 import Users from './pages/users';
 import AttendanceAdmin from './pages/attAdmin';
+import Home from './pages/testHome/testhome';
+import Layout from './pages/testHome/layout';
 
 const App = () => {
 	
 	return (
 		<div>
-			<Admin>
+			<Layout>
 				<AnimatedSwitch
 					atEnter={{ opacity: 0 }}
 					atLeave={{ opacity: 0 }}
@@ -30,6 +32,7 @@ const App = () => {
 					<Route path='/login' component={Login} />
 					<Route path='/logout' component={Logout} />
 					<Route path='/register' component={Register} />
+					<Route path='/' exact component={Home} />
 					<PrivateRoute path='/account' component={AccRegister} />
 					<PrivateRoute path='/org' component={OrgRegister} />
 					<PrivateRoute path='/client' component={Clients} />
@@ -39,9 +42,10 @@ const App = () => {
 					<PrivateRoute path='/user' component={Users} />
 					<PrivateRoute path='/attAdmin' component={AttendanceAdmin} />
 					<PrivateRoute path='/home' exact component={Dashboard} />
-					<PrivateRoute path='/' exact component={Login} />
+					{/* <PrivateRoute path='/' exact component={Login} /> */}
+					
 				</AnimatedSwitch>
-			</Admin>
+			</Layout>
 		</div>
 	);
 };

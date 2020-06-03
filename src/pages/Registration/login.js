@@ -27,7 +27,7 @@ const Login = () => {
 	}
 
 	return (
-		<FrontPage>
+		<>
 			<LoginForm />
 			{user.error ? <p className='py-2 text-danger'>{user.error}</p> : ''}
 			{!account.loading && redirect ? redirect : ''}
@@ -35,12 +35,12 @@ const Login = () => {
 			<div className='d-flex justify-content-center mt-3'>
 				<PropagateLoader
 					size={15}
-					color={"#2e74ff"}
+					color={"#654aa1"}
 					loading={user.loading && org.loading && account.loading}
 					// loading={true}
 				/>
 			</div>
-		</FrontPage>
+		</>
 	);
 };
 

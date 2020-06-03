@@ -1,0 +1,141 @@
+.roleSelect {
+	margin-top: 2rem;
+	/* margin-bottom: 3rem; */
+}
+
+.outer-container {
+	background: #e0eafc; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to left,
+		#cfdef3,
+		#e0eafc
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to left,
+		#cfdef3,
+		#e0eafc
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.login {
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 1rem;
+	padding: 2rem;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.bg {
+	/* border: 4px solid rgb(230, 225, 225);
+    border-radius: 1rem; */
+	overflow: hidden;
+}
+
+.rightSide {
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 1rem;
+	margin-top: -2rem;
+	max-height: 90vh;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+	/* overflow: hidden; */
+
+	animation: down 2s 1 ease-in-out;
+}
+
+.formTabs {
+	margin-top: 4rem;
+}
+
+.nav-pills {
+	background-color: #dadff0;
+}
+
+.nav-item {
+	width: 100%;
+	border-radius: 10px;
+}
+
+.nav-item a {
+	color: #654aa1;
+}
+
+.nav-link {
+	padding: 1rem 1rem;
+	text-align: center;
+	max-height: 6rem;
+}
+
+.nav-pills .nav-link.active {
+	/* background-color: #2a50ce; */
+	background-color: #654aa1e6;
+}
+
+.radioButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #dadff0;
+	padding: 1.5rem 0;
+	border-radius: 1rem;
+	cursor: pointer;
+	max-width: 50%;
+
+	p {
+		margin-bottom: 0;
+		letter-spacing: 0.02rem;
+		text-align: center;
+	}
+}
+
+.radioButton-active {
+	background-color: #fcfbff;
+	border: 1px solid #654aa1;
+	color: #654aa1;
+}
+
+.tabContent {
+	margin-top: 2rem;
+	padding: 1rem;
+	height: 100%;
+	/* overflow-y: scroll; */
+}
+
+.login-tab {
+	margin-top: 4rem;
+	padding: 0 4rem;
+
+	.heading {
+		margin-bottom: 2rem;
+		margin-top: 2rem;
+		padding-bottom: 1rem;
+		padding-top: 1rem;
+
+		h3 {
+			// font-family: 'Roboto', sans-serif;
+			font-weight: 600;
+			font-size: 2.5rem;
+			color: rgb(17, 30, 51);
+			letter-spacing: 0.2rem;
+		}
+	}
+}
+
+.left-box {
+	h6 {
+		font-weight: 600;
+		color: rgb(17, 30, 51);
+		letter-spacing: 0.08rem;
+		font-size: 1rem;
+	}
+}
+
+@keyframes down {
+	from {
+		// margin-top: -9999px;
+		opacity: 0;
+	}
+	to {
+		// margin-top: 0;
+		opacity: 1;
+	}
+}

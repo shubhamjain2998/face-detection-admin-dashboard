@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import ClientCard from '../components/Cards/clientCard';
 import Heading from '../components/heading';
 // import john from '../assets/avatar-02.jpg';
-import { Row, Col, Button, Form, Container } from 'react-bootstrap';
+import {
+	Row,
+	Col,
+	Button,
+	Form,
+	Container,
+	Tabs,
+	Tab,
+	Nav,
+} from 'react-bootstrap';
 import { BsPlus, BsGrid3X3Gap } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa';
 import CustomModal from '../components/modal';
@@ -12,6 +21,7 @@ import OrganizationForm from '../components/Forms/orgForm';
 import { useDispatch } from 'react-redux';
 import Loader from '../components/loader';
 import * as actions from '../store/actions/index';
+import CustomForm from '../components/Forms/customForm';
 
 const Clients = () => {
 	const [show, setShow] = useState(false);
@@ -74,71 +84,132 @@ const Clients = () => {
 		setShow(false);
 	};
 
+	const filterElements = [
+		{
+			name: 'name',
+			type: 'text',
+			label: 'Organization Name',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'orgType',
+			type: 'text',
+			label: 'Organization Type',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'phone',
+			type: 'number',
+			label: 'Contact Number',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'staffCount',
+			type: 'text',
+			label: 'Total Staff',
+			value: '',
+			col: 12,
+		},
+	];
+
+	const onSubmitFilters = (values) => {
+		console.log(values);
+	};
+
 	const tableElements = ['Name', 'Type', 'Contact Number', 'Staff Count'];
 
 	return (
 		<Container fluid>
 			<Row>
-				<Col lg={9}>
-					<Heading name='Clients' link='client' />
+				<Col sm={10} className='pt-3'>
+					<Row>
+						<Col lg={9}>
+							<Heading name='Clients' link='client' />
+						</Col>
+						<Col lg={3} className='d-flex justify-content-center align-items-center'>
+							<Button variant='primary' className='px-2' onClick={handleShow}>
+								<span className='pr-1'>
+									<BsPlus />
+								</span>
+								Add Client
+							</Button>
+						</Col>
+					</Row>
+
+					<Tab.Container defaultActiveKey='card'>
+						<Row className='client-tabs'>
+							<Nav>
+								<Nav.Item>
+									<Nav.Link eventKey='card'>
+										<span className='px-2 makeLink' onClick={onShowCards}>
+											<BsGrid3X3Gap />
+										</span>
+										<span>Segment</span>
+									</Nav.Link>
+								</Nav.Item>
+
+								<Nav.Item>
+									<Nav.Link eventKey='table'>
+										<span className='px-2 makeLink' onClick={onShowTable}>
+											<FaBars />
+										</span>
+										<span>ListView</span>
+									</Nav.Link>
+								</Nav.Item>
+							</Nav>
+						</Row>
+						<Row>
+							<Col sm={12}>
+								<Tab.Content>
+									<Tab.Pane eventKey='card'>
+										{loading && <Loader loading={loading} />}
+										<Row>
+											{!loading &&
+												orgs &&
+												orgs.map((org, i) => (
+													<Col
+														key={org.Name + i}
+														xs={12}
+														sm={6}
+														md={4}
+														lg={3}
+														className='my-3'
+													>
+														<ClientCard client={org} onDelete={onDeleteHandler}></ClientCard>
+													</Col>
+												))}
+										</Row>
+									</Tab.Pane>
+									<Tab.Pane eventKey='table'>
+										{!loading && orgs && (
+											<CustomTable elements={tableElements} values={orgs} type='client' />
+										)}
+									</Tab.Pane>
+								</Tab.Content>
+							</Col>
+						</Row>
+					</Tab.Container>
+					<CustomModal show={show} onClose={handleClose} heading='Add Client'>
+						<OrganizationForm
+							add
+							values={clientTemplate}
+							onEditingDone={addingDone}
+						/>
+					</CustomModal>
 				</Col>
-				<Col lg={3} className='d-flex justify-content-center align-items-center'>
-					<span className='px-2 makeLink' onClick={onShowCards}>
-						<BsGrid3X3Gap />
-					</span>
-					<span className='px-2 makeLink' onClick={onShowTable}>
-						<FaBars />
-					</span>
-					<Button variant='warning' className='px-2' onClick={handleShow}>
-						<span className='pr-1'>
-							<BsPlus />
-						</span>
-						Add Client
-					</Button>
+				<Col sm={2} className='right-sidebar client-filter'>
+					<p>filters</p>
+
+					<CustomForm
+						filters
+						elements={filterElements}
+						handleSubmit={onSubmitFilters}
+					/>
 				</Col>
 			</Row>
-			{/* <Form>
-				<Form.Row>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Form.Control type='text' placeholder='Client ID'></Form.Control>
-					</Col>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Form.Control type='text' placeholder='Client Name'></Form.Control>
-					</Col>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Form.Control type='text' placeholder='Company'></Form.Control>
-					</Col>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Button variant='success' block type='submit'>
-							Search
-						</Button>
-					</Col>
-				</Form.Row>
-			</Form> */}
-
-			{loading && <Loader loading={loading} />}
-
-			{!loading && showCard && orgs && (
-				<Row>
-					{orgs.map((org, i) => (
-						<Col key={org.Name + i} xs={12} sm={6} md={4} lg={3} className='my-3'>
-							<ClientCard client={org} onDelete={onDeleteHandler}></ClientCard>
-						</Col>
-					))}
-				</Row>
-			)}
-
-			{!loading && !showCard && (
-				<Row className='mt-3'>
-					<Col md={{ span: 10, offset: 1 }} xs={12}>
-						<CustomTable elements={tableElements} values={orgs} type='client' />
-					</Col>
-				</Row>
-			)}
-
-			<CustomModal show={show} onClose={handleClose} heading='Add Client'>
-				<OrganizationForm add values={clientTemplate} onEditingDone={addingDone} />
-			</CustomModal>
 		</Container>
 	);
 };

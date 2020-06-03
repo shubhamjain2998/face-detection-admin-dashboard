@@ -13,7 +13,8 @@ const Admin = (props) => {
 		location.pathname === '/register' ||
 		location.pathname === '/org' ||
 		location.pathname === '/account' ||
-		location.pathname === '/logout'
+		location.pathname === '/logout' ||
+		location.pathname === '/'
 	) {
 		return <>{props.children}</>;
 	}
