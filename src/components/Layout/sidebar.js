@@ -74,7 +74,7 @@ const Sidebar = (props) => {
 						);
 					}
 					return (
-						<NavLink key={route.name + i} to={route.link}>
+						<NavLink key={route.name + i} to={route.link} activeClassName='active-link'>
 							<ListGroup.Item onClick={props.showSidebar}>
 								{route.icon ? route.icon : ''}
 								{route.name}

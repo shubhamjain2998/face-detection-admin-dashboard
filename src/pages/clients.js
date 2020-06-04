@@ -18,7 +18,7 @@ import CustomModal from '../components/modal';
 import CustomTable from '../components/table';
 import axios from '../axios-faceDet';
 import OrganizationForm from '../components/Forms/orgForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/loader';
 import * as actions from '../store/actions/index';
 import CustomForm from '../components/Forms/customForm';
@@ -27,11 +27,13 @@ const Clients = () => {
 	const [show, setShow] = useState(false);
 	const [showCard, setShowCard] = useState(true);
 	const [loading, setLoading] = useState(false);
-
-	const dispatch = useDispatch();
-
 	const [orgs, setOrgs] = useState(null);
 	const [fetchedOrgs, setFetchedOrgs] = useState(false);
+	const [filters, setFilters] = useState(null);
+
+	const storedOrgs = useSelector((state) => state.org.list);
+
+	const dispatch = useDispatch();
 
 	const clientTemplate = {
 		pk: '',
@@ -78,10 +80,11 @@ const Clients = () => {
 	const onShowTable = () => setShowCard(false);
 
 	const addingDone = (newOrg) => {
-		const temp = orgs;
-		temp.push(newOrg);
-		setOrgs(temp);
+		// const temp = orgs;
+		// temp.push(newOrg);
+		// setOrgs(temp);
 		setShow(false);
+		setFetchedOrgs(false);
 	};
 
 	const filterElements = [
@@ -117,6 +120,18 @@ const Clients = () => {
 
 	const onSubmitFilters = (values) => {
 		console.log(values);
+		setFilters(values);
+		if (storedOrgs) {
+			const filteredOrgs = storedOrgs.filter((org) => {
+				return (
+					org.Name.toLowerCase().includes(values.name.toLowerCase()) &&
+					org.orgType.toLowerCase().includes(values.orgType.toLowerCase()) &&
+					// parseInt(org.phone ) === values.phone &&
+					parseInt(org.staffcount) >= values.staffCount
+				);
+			});
+			setOrgs(filteredOrgs);
+		}
 	};
 
 	const tableElements = ['Name', 'Type', 'Contact Number', 'Staff Count'];
@@ -124,7 +139,7 @@ const Clients = () => {
 	return (
 		<Container fluid>
 			<Row>
-				<Col sm={10} className='pt-3'>
+				<Col xl={10} sm={9}>
 					<Row>
 						<Col lg={9}>
 							<Heading name='Clients' link='client' />
@@ -175,7 +190,7 @@ const Clients = () => {
 														xs={12}
 														sm={6}
 														md={4}
-														lg={3}
+														xl={3}
 														className='my-3'
 													>
 														<ClientCard client={org} onDelete={onDeleteHandler}></ClientCard>
@@ -200,8 +215,9 @@ const Clients = () => {
 						/>
 					</CustomModal>
 				</Col>
-				<Col sm={2} className='right-sidebar client-filter'>
+				<Col xl={2} sm={3} className='right-sidebar client-filter'>
 					<p>filters</p>
+					<div className='applied-filters'></div>
 
 					<CustomForm
 						filters

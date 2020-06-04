@@ -20,7 +20,7 @@ const Home = () => {
 	return (
 		<Container fluid className='outer-container'>
 			<Row className='innerContainer justify-content-around'>
-				<Col md={5} className='pt-4 px-4 roleSelect'>
+				<Col md={12} lg={5} className='pt-4 px-4 roleSelect'>
 					<Col xs={12} className='my-4 login'>
 						<div className='left-box'>
 							<h6 className='mt-2'>Select Your Role</h6>
@@ -59,7 +59,7 @@ const Home = () => {
 						</div>
 					</Col>
 				</Col>
-				<Col md={5} className='forms rightSide'>
+				<Col xs={10} lg={5} className='forms rightSide'>
 					{choice === 'login' ? (
 						<div className='login-tab'>
 							<div className='heading'>
@@ -74,7 +74,9 @@ const Home = () => {
 							<RegisterTab />
 						</div>
 					)}
+
 				</Col>
+				<div className='clearfix'></div>
 			</Row>
 		</Container>
 	);

@@ -1,22 +1,34 @@
-import React from 'react';
-import { Container, Row, Col, Image } from 'react-bootstrap';
-import './layout.scss';
+import React, { useState } from 'react';
+import {
+	Container,
+	Row,
+	Col,
+	Image,
+	FormControl,
+	Form,
+	Button,
+} from 'react-bootstrap';
 import john from '../../assets/avatar-02.jpg';
 import {
 	AiOutlineDashboard,
 	AiOutlineUser,
 	AiOutlineUserAdd,
 	AiOutlineLogout,
+	AiOutlineMenu,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { NavLink, useLocation } from 'react-router-dom';
+import Sidebar from '../../components/Layout/sidebar';
+import Backdrop from '../../components/Layout/backdrop';
+import moment from 'moment';
+import { RiSearch2Line, RiMenu3Line, RiMenu2Line } from 'react-icons/ri';
 
 const Layout = (props) => {
 	let routes = null;
 
 	console.log(props.children);
 	const location = useLocation();
-
+	const [sidebar, setSidebar] = useState(false);
 
 	routes = [
 		{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
@@ -33,7 +45,6 @@ const Layout = (props) => {
 		},
 	];
 
-
 	if (
 		location.pathname === '/login' ||
 		location.pathname === '/register' ||
@@ -45,6 +56,9 @@ const Layout = (props) => {
 		return <>{props.children}</>;
 	}
 
+	const onToggleSidebar = () => {
+		setSidebar(!sidebar);
+	};
 
 	return (
 		<div className='layout-outer-div'>
@@ -75,14 +89,35 @@ const Layout = (props) => {
 					</div>
 				</NavLink>
 			</div>
-			<Container fluid className='layout-inner-div'>
+			<div className='layout-inner-div'>
 				<Row style={{ minHeight: '100vh' }}>
 					<Col sm={12} className='content'>
+						<Sidebar show={sidebar} showSidebar={onToggleSidebar} />
+						<Backdrop show={sidebar} showSidebar={onToggleSidebar} />
+						<Col sm={12} xl={10} className='nav-bar'>
+							<div className='nav-menu-icon' onClick={onToggleSidebar}>
+								<RiMenu2Line size='1.5rem' />
+							</div>
+							<Form inline className='nav-form'>
+								<FormControl
+									type='text'
+									placeholder='Search here'
+									className='bg-transparent nav-search'
+								></FormControl>
+								<Button type='submit' variant='transparent'>
+									<RiSearch2Line />
+								</Button>
+							</Form>
+							<p>{moment().format('DD MMMM YYYY, dddd')}</p>
+							<div className='nav-menu-icon'>
+								<RiMenu3Line size='1.5rem' />
+							</div>
+						</Col>
 						{props.children}
 					</Col>
 					{/* <Col sm={2} className='right-sidebar'></Col> */}
 				</Row>
-			</Container>
+			</div>
 		</div>
 	);
 };
