@@ -56,43 +56,57 @@ const Department = () => {
 	return (
 		<Container fluid>
 			<Row>
-				<Col lg={9}>
-					<Heading name='Department' link='department' />
-				</Col>
-				<Col lg={3} className='d-flex justify-content-center align-items-center'>
-					<Button variant='warning' className='px-2' onClick={onAddHandler}>
-						<span className='pr-1'>
-							<BsPlus />
-						</span>
-						Add Department
-					</Button>
-				</Col>
-			</Row>
+				<Col xl={10} sm={9}>
+					<Row>
+						<Col lg={9}>
+							<Heading name='Department' link='department' />
+						</Col>
+						<Col lg={3} className='d-flex justify-content-center align-items-center'>
+							<Button variant='primary' className='px-2' onClick={onAddHandler}>
+								<span className='pr-1'>
+									<BsPlus />
+								</span>
+								Add Department
+							</Button>
+						</Col>
+					</Row>
 
-			<Row className='mt-3'>
-				<Col md={{ span: 10, offset: 1 }} xs={12}>
-					<CustomTable
-						values={department}
-						elements={tableElements}
-						type='dept'
-						onEdit={onEditHandler}
-						onDelete={onDeleteHandlerTable}
+					<Row className='mt-3'>
+						<Col xs={12}>
+							<CustomTable
+								values={department}
+								elements={tableElements}
+								type='dept'
+								onEdit={onEditHandler}
+								onDelete={onDeleteHandlerTable}
+							/>
+						</Col>
+					</Row>
+
+					<CustomModal show={show} onClose={handleClose} heading='Add Department'>
+						<DepartmentForm
+							mode={mode}
+							dept={activeDept}
+							onEditingDone={DepartmentReload}
+						/>
+					</CustomModal>
+					<DeleteModal
+						show={showDelete}
+						handleClose={handleCloseDelete}
+						onDeleteHandler={onDeleteHandler}
 					/>
 				</Col>
-			</Row>
+				<Col xl={2} sm={3} className='right-sidebar client-filter'>
+					<p>filters</p>
+					<div className='applied-filters'></div>
 
-			<CustomModal show={show} onClose={handleClose} heading='Add Department'>
-				<DepartmentForm
-					mode={mode}
-					dept={activeDept}
-					onEditingDone={DepartmentReload}
-				/>
-			</CustomModal>
-			<DeleteModal
-				show={showDelete}
-				handleClose={handleCloseDelete}
-				onDeleteHandler={onDeleteHandler}
-			/>
+					{/* <CustomForm
+					filters
+					elements={filterElements}
+					handleSubmit={onSubmitFilters}
+				/> */}
+				</Col>
+			</Row>
 		</Container>
 	);
 };

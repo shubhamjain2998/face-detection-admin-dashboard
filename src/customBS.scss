@@ -339,6 +339,44 @@ body {
 	background-color: rgb(243, 243, 243);
 	right: -0.9rem;
 	top: 0;
+
+	&.dashboard {
+		.dashboard-heading {
+			text-transform: uppercase;
+			font-size: 0.8rem;
+			font-weight: bold;
+			letter-spacing: 0.1rem;
+			margin: 3rem 0 2rem;
+			padding: 0 1rem;
+		}
+
+		.stats-card {
+			margin: 1rem 1rem 1rem 0;
+			padding: 1rem;
+			background-color: white;
+			border-radius: 1rem;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			p {
+				padding: 0 1rem;
+				text-align: center;
+				letter-spacing: 0.1rem;
+			}
+		}
+	}
+}
+
+.dashboard-header {
+	padding-top: 1rem;
+	img {
+		height: 10rem;
+		width: 100%;
+		border-radius: 1rem;
+	}
 }
 
 .client-filter {
@@ -361,18 +399,23 @@ body {
 		letter-spacing: 0.1rem;
 	}
 
-	input {
+	input,
+	select {
 		border-radius: 1rem;
 	}
 }
 
-.client-card {
+.card {
+	border-radius: 1rem;
+}
+
+.client-card,
+.emp-card {
 	> div {
 		padding-top: 0;
 	}
 
 	background: #fff;
-	border-radius: 2px;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 	transition: transform 0.2s ease-out;
 	overflow: hidden;
@@ -420,6 +463,17 @@ body {
 		color: rgb(17, 30, 51);
 		margin-bottom: -2px;
 	}
+}
+
+.uploadBox {
+	width: 100%;
+	min-height: 16rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid rgb(180, 179, 179);
+	border-radius: 1rem;
+	cursor: pointer;
 }
 
 .userTable {

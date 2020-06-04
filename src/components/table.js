@@ -7,7 +7,7 @@ const CustomTable = (props) => {
 	let headers = null;
 
 	if (props.type === 'client') {
-		console.log(props.elements);
+		// console.log(props.elements);
 		headers = (
 			<>
 				{/* {props.elements.map((el, i) => (
@@ -25,20 +25,20 @@ const CustomTable = (props) => {
 	} else if (props.type === 'dept') {
 		headers = (
 			<>
-				<th className='col-1'>#</th>
-				<th className='col-4'>Department Name</th>
-				<th className='col-6'>Department Description</th>
+				<td className='col-1'>#</td>
+				<td className='col-4'>Department Name</td>
+				<td className='col-6'>Department Description</td>
 			</>
 		);
 	} else if (props.type === 'emp') {
 		headers = (
 			<>
-				<th className='col-1'>#</th>
-				<th className='col-2'>Name</th>
-				<th className='col-2'>Phone</th>
-				<th className='col-2'>ID Type</th>
-				<th className='col-2'>ID Proof</th>
-				<th className='col-2'>Role</th>
+				<td className='col-1'>#</td>
+				<td className='col-2'>Name</td>
+				<td className='col-2'>Phone</td>
+				<td className='col-2'>ID Type</td>
+				<td className='col-2'>ID Proof</td>
+				<td className='col-2'>Role</td>
 			</>
 		);
 	}
@@ -46,7 +46,6 @@ const CustomTable = (props) => {
 	return (
 		<div className='px-4 table-responsive userTable'>
 			<Table>
-				<></>
 				<tbody className='dataTable'>
 					<tr className='d-flex'>
 						{headers}

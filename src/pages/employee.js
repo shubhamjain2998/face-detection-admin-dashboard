@@ -8,6 +8,8 @@ import {
 	Form,
 	Container,
 	FormControl,
+	Tab,
+	Nav,
 } from 'react-bootstrap';
 import { BsPlus, BsGrid3X3Gap } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa';
@@ -19,6 +21,7 @@ import EmployeeCard from '../components/Cards/employeeCard';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../store/actions/index';
 import Loader from '../components/loader';
+import CustomForm from '../components/Forms/customForm';
 
 const Employee = () => {
 	const [show, setShow] = useState(false);
@@ -30,6 +33,7 @@ const Employee = () => {
 	const user = useSelector((state) => state.user.user);
 	const account = useSelector((state) => state.acc.details);
 	const orgs = useSelector((state) => state.org.list);
+	const storedEmps = useSelector((state) => state.acc.list);
 	const dispatch = useDispatch();
 
 	const [emps, setEmps] = useState(null);
@@ -142,103 +146,172 @@ const Employee = () => {
 		setFetchedEmps(false);
 	};
 
+	const filterElements = [
+		{
+			name: 'name',
+			type: 'text',
+			label: 'Employee Name',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'emailId',
+			type: 'text',
+			label: 'Email ID',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'phone',
+			type: 'number',
+			label: 'Contact Number',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'gender',
+			type: 'select',
+			label: 'Gender',
+			value: '',
+			options: ['', 'Male', 'Female'],
+			col: 12,
+		},
+	];
+
+	const onSubmitFilters = (values) => {
+		console.log(values);
+		// setFilters(values);
+		if (storedEmps) {
+			const filteredOrgs = storedEmps.filter((emp) => {
+				return (
+					(emp.firstName.toLowerCase().includes(values.name.toLowerCase()) ||
+						emp.lastName.toLowerCase().includes(values.name.toLowerCase())) &&
+					emp.emailId.toLowerCase().includes(values.emailId.toLowerCase()) &&
+					emp.phone.includes(values.phone.toString()) &&
+					emp.gender.includes(values.gender)
+				);
+			});
+			setEmps(filteredOrgs);
+		}
+	};
+
 	return (
 		<Container fluid>
 			<Row>
-				<Col lg={9}>
-					<Heading name='Employees' link='employee' />
+				<Col xl={10} sm={9}>
+					<Row>
+						<Col lg={9}>
+							<Heading name='Employees' link='employee' />
+						</Col>
+						<Col lg={3} className='d-flex justify-content-center align-items-center'>
+							<Button
+								variant='primary'
+								className='px-2'
+								onClick={handleShow}
+								disabled={activeOrg === 'All' && user.is_superuser}
+							>
+								<span className='pr-1'>
+									<BsPlus />
+								</span>
+								Add Employee
+							</Button>
+						</Col>
+					</Row>
+
+					{user.is_superuser && (
+						<Row className='my-2'>
+							<Col md={6}>
+								<Form.Row>
+									<p className='text-primary mb-1 pl-3'>Select Organization</p>
+								</Form.Row>
+								<Form.Row>
+									<Col sm={10} xs={8}>
+										<FormControl
+											as='select'
+											name='selectedOrg'
+											onChange={onChangeHandler}
+										>
+											<option>All</option>
+											{orgs.map((e) => (
+												<option key={e.pk}>{e.Name}</option>
+											))}
+										</FormControl>
+									</Col>
+									<Col sm={2} xs={4}>
+										<Button>Submit</Button>
+									</Col>
+								</Form.Row>
+							</Col>
+						</Row>
+					)}
+
+					<Tab.Container defaultActiveKey='card'>
+						<Row className='client-tabs'>
+							<Nav>
+								<Nav.Item>
+									<Nav.Link eventKey='card'>
+										<span className='px-2 makeLink' onClick={onShowCards}>
+											<BsGrid3X3Gap />
+										</span>
+										<span>Segment</span>
+									</Nav.Link>
+								</Nav.Item>
+
+								<Nav.Item>
+									<Nav.Link eventKey='table'>
+										<span className='px-2 makeLink' onClick={onShowTable}>
+											<FaBars />
+										</span>
+										<span>ListView</span>
+									</Nav.Link>
+								</Nav.Item>
+							</Nav>
+						</Row>
+						<Row>
+							<Col sm={12}>
+								<Tab.Content>
+									<Tab.Pane eventKey='card'>
+										{loading && <Loader loading={loading} />}
+										<Row>
+											{!loading &&
+												emps &&
+												emps.map((emp, i) => (
+													<Col key={emp.empId} xs={12} sm={6} md={4} xl={3} className='my-3'>
+														<EmployeeCard
+															employee={emp}
+															onDelete={onDeleteHandler}
+														></EmployeeCard>
+													</Col>
+												))}
+										</Row>
+									</Tab.Pane>
+									<Tab.Pane eventKey='table'>
+										{!loading && emps && <CustomTable values={emps} type='emp' />}
+									</Tab.Pane>
+								</Tab.Content>
+							</Col>
+						</Row>
+					</Tab.Container>
+					<CustomModal show={show} onClose={handleClose} heading='Add Employee'>
+						<AccountForm
+							org={selectedOrg}
+							add
+							values={empTemplate}
+							onEditingDone={addingDone}
+						/>
+					</CustomModal>
 				</Col>
-				<Col lg={3} className='d-flex justify-content-center align-items-center'>
-					<span className='px-2 makeLink' onClick={onShowCards}>
-						<BsGrid3X3Gap />
-					</span>
-					<span className='px-2 makeLink' onClick={onShowTable}>
-						<FaBars />
-					</span>
-					<Button
-						variant='warning'
-						className='px-2'
-						onClick={handleShow}
-						disabled={activeOrg === 'All' && user.is_superuser}
-					>
-						<span className='pr-1'>
-							<BsPlus />
-						</span>
-						Add Employee
-					</Button>
+				<Col xl={2} sm={3} className='right-sidebar client-filter'>
+					<p>filters</p>
+					<div className='applied-filters'></div>
+
+					<CustomForm
+						filters
+						elements={filterElements}
+						handleSubmit={onSubmitFilters}
+					/>
 				</Col>
 			</Row>
-
-			{user.is_superuser && (
-				<Row className='my-2'>
-					<Col md={6}>
-						<Form.Row>
-							<p className='text-info mb-1 pl-3'>Select Organization</p>
-						</Form.Row>
-						<Form.Row>
-							<Col sm={10} xs={8}>
-								<FormControl as='select' name='selectedOrg' onChange={onChangeHandler}>
-									<option>All</option>
-									{orgs.map((e) => (
-										<option key={e.pk}>{e.Name}</option>
-									))}
-								</FormControl>
-							</Col>
-							<Col sm={2} xs={4}>
-								<Button>Submit</Button>
-							</Col>
-						</Form.Row>
-					</Col>
-				</Row>
-			)}
-
-			{/* <Form>
-				<Form.Row>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Form.Control type='text' placeholder='Employee ID'></Form.Control>
-					</Col>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Form.Control type='text' placeholder='Employee Name'></Form.Control>
-					</Col>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Form.Control type='text' placeholder='Company'></Form.Control>
-					</Col>
-					<Col className='my-2' xs={12} sm={6} md={3}>
-						<Button variant='success' block type='submit'>
-							Search
-						</Button>
-					</Col>
-				</Form.Row>
-			</Form> */}
-
-			{loading && <Loader loading={loading} />}
-
-			{!loading && showCard && emps && (
-				<Row>
-					{emps.map((emp, i) => (
-						<Col key={emp.empId} xs={12} sm={6} md={4} lg={3} className='my-3'>
-							<EmployeeCard employee={emp} onDelete={onDeleteHandler}></EmployeeCard>
-						</Col>
-					))}
-				</Row>
-			)}
-
-			{!loading && !showCard && (
-				<Row className='mt-3'>
-					<Col md={{ span: 10, offset: 1 }} xs={12}>
-						<CustomTable values={emps} type='emp' />
-					</Col>
-				</Row>
-			)}
-
-			<CustomModal show={show} onClose={handleClose} heading='Add Employee'>
-				<AccountForm
-					org={selectedOrg}
-					add
-					values={empTemplate}
-					onEditingDone={addingDone}
-				/>
-			</CustomModal>
 		</Container>
 	);
 };

@@ -105,7 +105,7 @@ const TrainingImages = (props) => {
 				<Col md={{ span: 6, offset: 3 }} className='my-3'>
 					<Button
 						block
-						variant='outline-success'
+						variant='outline-primary'
 						onClick={onSubmitHandler}
 						disabled={!files}
 					>

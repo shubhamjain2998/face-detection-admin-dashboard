@@ -94,7 +94,7 @@ const CustomForm = (props) => {
 
 										if (el.type === 'select') {
 											return (
-												<Col md={6} key={el.name + i} className='my-3'>
+												<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>
 													<Form.Label>{el.label}</Form.Label>
 													<Form.Control
 														as='select'

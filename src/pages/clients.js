@@ -126,11 +126,11 @@ const Clients = () => {
 				return (
 					org.Name.toLowerCase().includes(values.name.toLowerCase()) &&
 					org.orgType.toLowerCase().includes(values.orgType.toLowerCase()) &&
-					// parseInt(org.phone ) === values.phone &&
+					org.contact.includes(values.phone.toString()) &&
 					parseInt(org.staffcount) >= values.staffCount
 				);
 			});
-			setOrgs(filteredOrgs);
+			setOrgs(filteredOrgs);	
 		}
 	};
 
