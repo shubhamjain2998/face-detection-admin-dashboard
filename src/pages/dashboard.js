@@ -4,6 +4,8 @@ import headerBg from '../assets/test_Cropped.jpg';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import axios from '../axios-faceDet';
 import { useDispatch, useSelector } from 'react-redux';
+import CountUp from 'react-countup';
+
 
 const Dashboard = () => {
 	const dispatch = useDispatch();
@@ -54,15 +56,15 @@ const Dashboard = () => {
 				<Col xl={2} sm={3} className='right-sidebar dashboard'>
 					<p className='dashboard-heading'>Stats</p>
 					<div className='stats-card'>
-						<h2>{totalOrgs.length}</h2>
+						<h2><CountUp end={totalOrgs.length} duration={3} /></h2>
 						<p>Organizations registered</p>
 					</div>
 					<div className='stats-card'>
-						<h2>{totalAcc.length}</h2>
+						<h2><CountUp end={totalAcc.length} duration={3} /></h2>
 						<p>Employees registered</p>
 					</div>
 					<div className='stats-card'>
-						<h2>{totalUser.length}</h2>
+						<h2><CountUp end={totalUser.length} duration={3} /></h2>
 						<p>Active Users</p>
 					</div>
 				</Col>

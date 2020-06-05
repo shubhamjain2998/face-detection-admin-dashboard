@@ -68,25 +68,29 @@ const OrganizationForm = (props) => {
 			name: 'name',
 			type: 'text',
 			value: props.edit ? props.values.Name : '',
-			placeholder: 'Organization Name',
+			label: 'Organization Name',
+			col:12
 		},
 		{
 			name: 'orgType',
 			type: 'text',
 			value: props.edit ? props.values.orgType : '',
-			placeholder: 'Organization Type',
+			label: 'Organization Type',
+			col:12
 		},
 		{
 			name: 'phone',
 			type: 'number',
 			value: props.edit ? parseInt(props.values.contact) : '',
-			placeholder: 'Contact Number',
+			label: 'Contact Number',
+			col:12
 		},
 		{
 			name: 'staffCount',
 			type: 'number',
 			value: props.edit ? props.values.staffcount : '',
-			placeholder: 'Total Staff',
+			label: 'Total Staff',
+			col:12
 		},
 		{
 			name: 'logo',
@@ -110,7 +114,7 @@ const OrganizationForm = (props) => {
 				''
 			) : (
 				<>
-					<h5 className='my-0'>Register Your Organization</h5>
+					{/* <h5 className='my-0'>Register Your Organization</h5> */}
 					{/* <p className='text-secondary'>Access to our Dashboard</p> */}
 				</>
 			)}

@@ -114,7 +114,7 @@ const Users = () => {
 					{loading && <Loader loading={loading} />}
 
 					{!loading && (
-						<Row className='mt-3'>
+						<Row className='mt-3' style={{overflow: 'auto'}}>
 							<Col xs={12}>
 								<div className='table-responsive userTable px-3'>
 									<Table>

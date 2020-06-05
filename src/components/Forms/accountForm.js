@@ -26,12 +26,6 @@ const accountSchema = Yup.object().shape({
 	lastName: Yup.string().required('Required'),
 	username: Yup.string().required('Required'),
 	idProof: Yup.string().required('Required'),
-	readEmp: Yup.string().required('Required'),
-	writeEmp: Yup.string().required('Required'),
-	readAtt: Yup.string().required('Required'),
-	writeAtt: Yup.string().required('Required'),
-	readDept: Yup.string().required('Required'),
-	writeDept: Yup.string().required('Required'),
 	gender: Yup.string().required('Required'),
 	idType: Yup.string().required('Required'),
 
@@ -67,26 +61,26 @@ const AccountForm = (props) => {
 			name: 'firstName',
 			type: 'text',
 			value: props.values ? props.values.firstName : '',
-			placeholder: 'First Name',
+			label: 'First Name',
 		},
 		{
 			name: 'lastName',
 			type: 'text',
 			value: props.values ? props.values.lastName : '',
-			placeholder: 'Last Name',
+			label: 'Last Name',
 		},
 		{
 			name: 'username',
 			type: 'text',
 			value: props.values ? props.values.username : '',
-			placeholder: 'Username',
+			label: 'Username',
 			helpText: 'Username should be unique',
 		},
 		{
 			name: 'phone',
 			type: 'number',
 			value: props.values ? props.values.phone : '',
-			placeholder: 'Alternate Mobile Number',
+			label: 'Alternate Mobile Number',
 		},
 
 		{
@@ -105,7 +99,7 @@ const AccountForm = (props) => {
 			name: 'idProof',
 			type: 'text',
 			value: props.values ? props.values.idProof : '',
-			placeholder: 'ID Proof',
+			label: 'ID Proof',
 			helpText: 'ID Proof should be unique',
 		},
 		{
@@ -116,55 +110,18 @@ const AccountForm = (props) => {
 			valid: props.values ? (props.values.profileImg ? true : false) : false,
 			path: props.values ? props.values.profileImg : '',
 		},
-
-		{
-			name: 'readEmp',
-			type: 'checkbox',
-			value: props.values ? props.values.readEmp : false,
-			label: 'Read Employee',
-		},
-		{
-			name: 'writeEmp',
-			type: 'checkbox',
-			value: props.values ? props.values.addEmp : false,
-			label: 'Write Employee',
-		},
-		{
-			name: 'readAtt',
-			type: 'checkbox',
-			value: props.values ? props.values.readAtt : false,
-			label: 'Read Attendance',
-		},
-		{
-			name: 'writeAtt',
-			type: 'checkbox',
-			value: props.values ? props.values.addAtt : false,
-			label: 'Write Attendance',
-		},
-		{
-			name: 'readDept',
-			type: 'checkbox',
-			value: props.values ? props.values.readDept : false,
-			label: 'Read Department',
-		},
-		{
-			name: 'writeDept',
-			type: 'checkbox',
-			value: props.values ? props.values.addDept : false,
-			label: 'Write Department',
-		},
 	];
 
 	if (props.add) {
 		modifiedSchema = accountSchema.concat(RegisterSchema);
 		const registerElements = [
-			{ name: 'email', type: 'email', value: '', placeholder: 'Enter Your Email' },
-			{ name: 'password', type: 'password', value: '', placeholder: 'Password' },
+			{ name: 'email', type: 'email', value: '', label: 'Enter Your Email' },
+			{ name: 'password', type: 'password', value: '', label: 'Password' },
 			{
 				name: 'confirmPassword',
 				type: 'password',
 				value: '',
-				placeholder: 'Confirm Password',
+				label: 'Confirm Password',
 			},
 		];
 		formElements.unshift(...registerElements);
@@ -187,15 +144,53 @@ const AccountForm = (props) => {
 	}
 
 	if (props.add || props.edit) {
-		const departmentElement = {
-			name: 'dept',
-			type: 'select',
-			value: props.values ? props.values.deptId : '',
-			options: departments.map((dep) => {
-				return { name: dep.DeptName, value: dep.id };
-			}),
-		};
-		formElements.push(departmentElement);
+		const elements = [
+			{
+				name: 'dept',
+				type: 'select',
+				value: props.values ? props.values.deptId : '',
+				options: departments.map((dep) => {
+					return { name: dep.DeptName, value: dep.id };
+				}),
+			},
+			{
+				name: 'readEmp',
+				type: 'checkbox',
+				value: props.values ? props.values.readEmp : false,
+				label: 'Read Employee',
+			},
+			{
+				name: 'writeEmp',
+				type: 'checkbox',
+				value: props.values ? props.values.addEmp : false,
+				label: 'Write Employee',
+			},
+			{
+				name: 'readAtt',
+				type: 'checkbox',
+				value: props.values ? props.values.readAtt : false,
+				label: 'Read Attendance',
+			},
+			{
+				name: 'writeAtt',
+				type: 'checkbox',
+				value: props.values ? props.values.addAtt : false,
+				label: 'Write Attendance',
+			},
+			{
+				name: 'readDept',
+				type: 'checkbox',
+				value: props.values ? props.values.readDept : false,
+				label: 'Read Department',
+			},
+			{
+				name: 'writeDept',
+				type: 'checkbox',
+				value: props.values ? props.values.addDept : false,
+				label: 'Write Department',
+			},
+		];
+		formElements.push(...elements);
 	}
 
 	const onSubmitHandler = (values) => {
@@ -287,11 +282,10 @@ const AccountForm = (props) => {
 
 	return (
 		<div className='d-flex align-items-center flex-column'>
-			{props.edit || props.add ? (
-				''
-			) : (
-				<h5 className='my-0'>Register Your Account</h5>
-			)}
+			{props.edit || props.add
+				? ''
+				: // <h5 className='my-0'>Register Your Account</h5>
+				  ''}
 			<CustomForm
 				elements={formElements}
 				validationSchema={props.add ? modifiedSchema : accountSchema}

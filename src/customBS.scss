@@ -594,6 +594,25 @@ body {
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
+.custom-forms {
+	.form-control,
+	select,
+	button {
+		border-radius: 1rem !important;
+	}
+
+	label,
+	p {
+		font-size: 0.7rem;
+		font-weight: bold;
+		letter-spacing: 0.1rem;
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+}
+
 .clearfix {
 	clear: both;
 }

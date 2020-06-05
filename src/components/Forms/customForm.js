@@ -36,7 +36,7 @@ const CustomForm = (props) => {
 					isValid,
 					setFieldValue,
 				}) => (
-					<Form noValidate onSubmit={handleSubmit}>
+					<Form noValidate onSubmit={handleSubmit} className='custom-forms'>
 						<Form.Group>
 							<Form.Row>
 								{elements.map(
