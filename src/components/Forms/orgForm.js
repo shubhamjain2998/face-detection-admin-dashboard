@@ -98,11 +98,11 @@ const OrganizationForm = (props) => {
 		},
 	];
 
-	if (!props.edit) {
-		if (organization.details.pk && !organization.loading && !organization.error) {
-			return <Redirect to='/account' />;
-		}
-	}
+	// if (!props.edit) {
+	// 	if (organization.details.pk && !organization.loading && !organization.error) {
+	// 		return <Redirect to='/account' />;
+	// 	}
+	// }
 
 	return (
 		<div className='d-flex align-items-center flex-column'>

@@ -26,7 +26,7 @@ import { RiSearch2Line, RiMenu3Line, RiMenu2Line } from 'react-icons/ri';
 const Layout = (props) => {
 	let routes = null;
 
-	console.log(props.children);
+	// console.log(props.children);
 	const location = useLocation();
 	const [sidebar, setSidebar] = useState(false);
 
