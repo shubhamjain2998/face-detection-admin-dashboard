@@ -11,12 +11,16 @@ const initialState = {
 		is_superuser: false,
 	},
 	list: [],
+	rightSidebar: false,
 };
 
 let newUser = {};
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.TOGGLE_RIGHT_SIDEBAR:
+			return updateObject(state, { rightSidebar: !state.rightSidebar });
+
 		case actionTypes.REGISTRATION_STARTED:
 			return updateObject(state, { loading: true });
 

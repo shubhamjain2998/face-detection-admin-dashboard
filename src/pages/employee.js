@@ -31,6 +31,7 @@ const Employee = () => {
 	const [loading, setLoading] = useState(false);
 
 	const user = useSelector((state) => state.user.user);
+	const rightSidebar = useSelector((state) => state.user.rightSidebar);
 	const account = useSelector((state) => state.acc.details);
 	const orgs = useSelector((state) => state.org.list);
 	const storedEmps = useSelector((state) => state.acc.list);
@@ -146,6 +147,14 @@ const Employee = () => {
 		setFetchedEmps(false);
 	};
 
+	let rightSidebarClasses = 'right-sidebar client-filter ';
+
+	if (rightSidebar) {
+		rightSidebarClasses = rightSidebarClasses.concat('show-right-sidebar');
+	} else {
+		rightSidebarClasses = rightSidebarClasses.concat('hide-right-sidebar');
+	}
+
 	const filterElements = [
 		{
 			name: 'name',
@@ -197,8 +206,8 @@ const Employee = () => {
 
 	return (
 		<Container fluid>
-			<Row>
-				<Col xl={10} sm={9}>
+			<Row className='position-relative'>
+				<Col xl={10} md={12}>
 					<Row>
 						<Col lg={9}>
 							<Heading name='Employees' link='employee' />
@@ -301,7 +310,7 @@ const Employee = () => {
 						/>
 					</CustomModal>
 				</Col>
-				<Col xl={2} sm={3} className='right-sidebar client-filter'>
+				<Col xl={2} md={12} className={rightSidebarClasses}>
 					<p>filters</p>
 					<div className='applied-filters'></div>
 

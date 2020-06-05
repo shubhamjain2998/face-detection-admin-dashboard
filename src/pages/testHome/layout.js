@@ -22,12 +22,16 @@ import Sidebar from '../../components/Layout/sidebar';
 import Backdrop from '../../components/Layout/backdrop';
 import moment from 'moment';
 import { RiSearch2Line, RiMenu3Line, RiMenu2Line } from 'react-icons/ri';
+import * as actions from '../../store/actions/index';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Layout = (props) => {
 	let routes = null;
 
 	// console.log(props.children);
 	const location = useLocation();
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
 	const [sidebar, setSidebar] = useState(false);
 
 	routes = [
@@ -58,6 +62,9 @@ const Layout = (props) => {
 
 	const onToggleSidebar = () => {
 		setSidebar(!sidebar);
+	};
+	const onToggleRightSidebar = () => {
+		dispatch(actions.toggleRightSidebar());
 	};
 
 	return (
@@ -94,6 +101,7 @@ const Layout = (props) => {
 					<Col sm={12} className='content'>
 						<Sidebar show={sidebar} showSidebar={onToggleSidebar} />
 						<Backdrop show={sidebar} showSidebar={onToggleSidebar} />
+						<Backdrop show={user.rightSidebar} showSidebar={onToggleRightSidebar} />
 						<Col sm={12} xl={10} className='nav-bar'>
 							<div className='nav-menu-icon' onClick={onToggleSidebar}>
 								<RiMenu2Line size='1.5rem' />
@@ -109,7 +117,7 @@ const Layout = (props) => {
 								</Button>
 							</Form>
 							<p>{moment().format('DD MMMM YYYY, dddd')}</p>
-							<div className='nav-menu-icon'>
+							<div className='nav-sidebar-icon' onClick={onToggleRightSidebar}>
 								<RiMenu3Line size='1.5rem' />
 							</div>
 						</Col>

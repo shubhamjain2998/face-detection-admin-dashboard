@@ -20,6 +20,14 @@ const Users = () => {
 	// 	}
 	// }, [users, dispatch]);
 
+	let rightSidebarClasses = 'right-sidebar client-filter ';
+
+	if (users.rightSidebar) {
+		rightSidebarClasses = rightSidebarClasses.concat('show-right-sidebar');
+	} else {
+		rightSidebarClasses = rightSidebarClasses.concat('hide-right-sidebar');
+	}
+
 	const getRoles = (user) => {
 		if (user.is_superuser) {
 			return (
@@ -103,8 +111,8 @@ const Users = () => {
 
 	return (
 		<Container fluid>
-			<Row>
-				<Col xl={10} sm={9}>
+			<Row className='position-relative'>
+				<Col xl={10} md={12}>
 					<Row>
 						<Col lg={9}>
 							<Heading name='Users' link='users' />
@@ -150,7 +158,7 @@ const Users = () => {
 						</Row>
 					)}
 				</Col>
-				<Col xl={2} sm={3} className='right-sidebar client-filter'>
+				<Col xl={2} md={12} className={rightSidebarClasses}>
 					<p>filters</p>
 					<div className='applied-filters'></div>
 

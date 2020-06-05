@@ -77,7 +77,7 @@ const CustomTable = (props) => {
 								<tr key={r + i} className='d-flex'>
 									{/* <td className='col-1'>{i + 1}</td> */}
 									<td className='col-4'>{r.Name}</td>
-									<td className='col-4'>
+									<td className='col-4 text-truncate'>
 										<Badge pill variant='warning'>
 											{r.orgType}
 										</Badge>

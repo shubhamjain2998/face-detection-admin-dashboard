@@ -352,7 +352,8 @@ body {
 					}
 				}
 
-				.nav-menu-icon {
+				.nav-menu-icon,
+				.nav-sidebar-icon {
 					padding-left: 1rem;
 					width: 3rem;
 					cursor: pointer;
@@ -364,14 +365,13 @@ body {
 }
 
 .right-sidebar {
-	position: fixed;
-	height: 100%;
-	border-radius: 0 1rem 1rem 0;
-	background-color: rgb(243, 243, 243);
-	right: -0.9rem;
-	top: 0;
-
 	&.dashboard {
+		position: fixed;
+		height: 100%;
+		border-radius: 0 1rem 1rem 0;
+		background-color: rgb(243, 243, 243);
+		right: -0.9rem;
+		top: 0;
 		.dashboard-heading {
 			text-transform: uppercase;
 			font-size: 0.8rem;
@@ -438,6 +438,24 @@ body {
 
 .card {
 	border-radius: 1rem;
+}
+
+.show-right-sidebar {
+	position: absolute;
+	height: 100% !important;
+	width: 100% !important;
+	z-index: 100;
+	display: block;
+	background-color: $border-color;
+	margin-top: 0;
+}
+.hide-right-sidebar {
+	position: absolute;
+	height: 100% !important;
+	width: 100% !important;
+	z-index: 100;
+	display: none;
+	margin-bottom: -9999px;
 }
 
 .client-card,
@@ -657,6 +675,22 @@ body {
 }
 
 @include media-breakpoint-down(md) {
+	.layout-outer-div {
+		.layout-inner-div {
+			.content {
+				.nav-bar {
+					.nav-sidebar-icon {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.right-sidebar {
+		&.dashboard {
+			position: relative;
+		}
+	}
 	.bg {
 		display: none;
 	}

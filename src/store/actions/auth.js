@@ -2,6 +2,12 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios-faceDet';
 import { user, accounts, organization } from '../reducers/utility';
 
+export const toggleRightSidebar = () => {
+	return {
+		type: actionTypes.TOGGLE_RIGHT_SIDEBAR,
+	};
+};
+
 export const registerUserStarted = () => {
 	return {
 		type: actionTypes.REGISTRATION_STARTED,
@@ -109,7 +115,9 @@ export const fetchUsers = () => {
 			})
 			.catch((err) => {
 				console.log(err.response.data.non_field_errors.join(' '));
-				dispatch(userDataFetchingError(err.response.data.non_field_errors.join(' ')));
+				dispatch(
+					userDataFetchingError(err.response.data.non_field_errors.join(' '))
+				);
 			});
 	};
 };

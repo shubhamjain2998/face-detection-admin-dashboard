@@ -23,7 +23,7 @@ import Loader from '../components/loader';
 import * as actions from '../store/actions/index';
 import CustomForm from '../components/Forms/customForm';
 
-const Clients = () => {
+const Clients = (props) => {
 	const [show, setShow] = useState(false);
 	const [showCard, setShowCard] = useState(true);
 	const [loading, setLoading] = useState(false);
@@ -31,6 +31,7 @@ const Clients = () => {
 	const [fetchedOrgs, setFetchedOrgs] = useState(false);
 	const [filters, setFilters] = useState(null);
 
+	const user = useSelector((state) => state.user);
 	const storedOrgs = useSelector((state) => state.org.list);
 
 	const dispatch = useDispatch();
@@ -63,9 +64,18 @@ const Clients = () => {
 		}
 	}, [fetchedOrgs, dispatch]);
 
+	let rightSidebarClasses = 'right-sidebar client-filter ';
+
+	if (user.rightSidebar) {
+		rightSidebarClasses = rightSidebarClasses.concat('show-right-sidebar');
+	} else {
+		rightSidebarClasses = rightSidebarClasses.concat('hide-right-sidebar');
+	}
+	// console.log(rightSidebarClasses);
+
 	const onDeleteHandler = (id) => {
 		axios
-			.delete('/attendance/api/org/' + id + '/')
+			// .delete('/attendance/api/org/' + id + '/')
 			.then((res) => {
 				console.log(res.data);
 				setFetchedOrgs(false);
@@ -130,7 +140,7 @@ const Clients = () => {
 					parseInt(org.staffcount) >= values.staffCount
 				);
 			});
-			setOrgs(filteredOrgs);	
+			setOrgs(filteredOrgs);
 		}
 	};
 
@@ -138,8 +148,8 @@ const Clients = () => {
 
 	return (
 		<Container fluid>
-			<Row>
-				<Col xl={10} sm={9}>
+			<Row className='position-relative'>
+				<Col xl={10} md={12}>
 					<Row>
 						<Col lg={9}>
 							<Heading name='Clients' link='client' />
@@ -215,7 +225,7 @@ const Clients = () => {
 						/>
 					</CustomModal>
 				</Col>
-				<Col xl={2} sm={3} className='right-sidebar client-filter'>
+				<Col xl={2} md={12} className={rightSidebarClasses}>
 					<p>filters</p>
 					<div className='applied-filters'></div>
 

@@ -48,12 +48,12 @@ const Dashboard = () => {
 	return (
 		<Container fluid>
 			<Row>
-				<Col xl={10} sm={9}>
-					<Row className='px-5 dashboard-header'>
+				<Col xl={10} lg={9} className='order-2'>
+					<Row className='px-5 dashboard-header '>
 						<Image src={headerBg} alt='' />
 					</Row>
 				</Col>
-				<Col xl={2} sm={3} className='right-sidebar dashboard'>
+				<Col xl={2} lg={3} className='right-sidebar dashboard order-1'>
 					<p className='dashboard-heading'>Stats</p>
 					<div className='stats-card'>
 						<h2><CountUp end={totalOrgs.length} duration={3} /></h2>

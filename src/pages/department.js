@@ -21,6 +21,7 @@ const Department = () => {
 	const handleCloseDelete = () => setShowDelete(false);
 
 	const department = useSelector((state) => state.acc.department);
+	const user = useSelector((state) => state.user);
 
 	const tableElements = ['Department Name', 'Description'];
 
@@ -53,10 +54,18 @@ const Department = () => {
 		});
 	};
 
+	let rightSidebarClasses = 'right-sidebar client-filter ';
+
+	if (user.rightSidebar) {
+		rightSidebarClasses = rightSidebarClasses.concat('show-right-sidebar');
+	} else {
+		rightSidebarClasses = rightSidebarClasses.concat('hide-right-sidebar');
+	}
+
 	return (
 		<Container fluid>
 			<Row>
-				<Col xl={10} sm={9}>
+				<Col xl={10} md={12}>
 					<Row>
 						<Col lg={9}>
 							<Heading name='Department' link='department' />
@@ -96,7 +105,7 @@ const Department = () => {
 						onDeleteHandler={onDeleteHandler}
 					/>
 				</Col>
-				<Col xl={2} sm={3} className='right-sidebar client-filter'>
+				<Col xl={2} md={12} className={rightSidebarClasses}>
 					<p>filters</p>
 					<div className='applied-filters'></div>
 
