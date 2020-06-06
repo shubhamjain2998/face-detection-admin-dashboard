@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import Login from './pages/Registration/login';
 import Register from './pages/Registration/register';
@@ -19,7 +19,6 @@ import Home from './pages/testHome/testhome';
 import Layout from './pages/testHome/layout';
 
 const App = () => {
-	
 	return (
 		<div>
 			<Layout>
@@ -29,12 +28,7 @@ const App = () => {
 					atActive={{ opacity: 1 }}
 					className='switch-wrapper'
 				>
-					<Route path='/login' component={Login} />
 					<Route path='/logout' component={Logout} />
-					<Route path='/register' component={Register} />
-					<Route path='/' exact component={Home} />
-					<PrivateRoute path='/account' component={AccRegister} />
-					<PrivateRoute path='/org' component={OrgRegister} />
 					<PrivateRoute path='/client' component={Clients} />
 					<PrivateRoute path='/profile' component={Profile} />
 					<PrivateRoute path='/employee' component={Employee} />
@@ -42,8 +36,8 @@ const App = () => {
 					<PrivateRoute path='/user' component={Users} />
 					<PrivateRoute path='/attAdmin' component={AttendanceAdmin} />
 					<PrivateRoute path='/home' exact component={Dashboard} />
-					{/* <PrivateRoute path='/' exact component={Login} /> */}
-					
+					<Route path='/' exact component={Home} />
+					<Redirect to='/' />
 				</AnimatedSwitch>
 			</Layout>
 		</div>

@@ -13,7 +13,6 @@ const Home = () => {
 	const user = useSelector((state) => state.user);
 	const org = useSelector((state) => state.org);
 	const acc = useSelector((state) => state.acc);
-	let redirect = null;
 
 	const onLogin = () => {
 		setChoice('login');
@@ -30,10 +29,15 @@ const Home = () => {
 	}, [user.error, user.loading, user.user.pk]);
 
 	useEffect(() => {
-		if (!user.user.is_superuser && user.token && !org.details.pk) {
+		if (
+			!user.user.is_superuser &&
+			user.token &&
+			!org.details.pk &&
+			!org.loading
+		) {
 			setChoice('register');
 		}
-	}, [user.token, user.user.is_superuser, org.details.pk]);
+	}, [user.token, user.user.is_superuser, org.details.pk, org.loading]);
 
 	return (
 		<Container fluid className='outer-container'>

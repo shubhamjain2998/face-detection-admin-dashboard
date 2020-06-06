@@ -4,6 +4,7 @@ import {
 	AiOutlineDashboard,
 	AiOutlineUser,
 	AiOutlineUserAdd,
+	AiOutlineLogout,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
@@ -31,13 +32,9 @@ const Sidebar = (props) => {
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
-			{
-				name: 'Attendance',
-				dropdown: [
-					{ name: 'admin', link: '/attAdmin' },
-					{ name: 'employee', link: '/home' },
-				],
-			},
+			{ name: 'Attendance admin', link: '/attAdmin' },
+			{ name: 'Attendance employee', link: '/home' },
+			{ name: 'Logout', link: '/logout', icon: <AiOutlineLogout /> },
 		];
 	} else {
 		routes = [
@@ -45,16 +42,21 @@ const Sidebar = (props) => {
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Department', link: '/dept' },
 			{ name: 'Attendance', link: '/attAdmin' },
+			{ name: 'Logout', link: '/logout', icon: <AiOutlineLogout /> },
 		];
 	}
-
 	return (
 		<div className={attachedClass.join(' ')}>
 			<ListGroup variant='flush'>
 				{routes.map((route, i) => {
 					if (!route.link) {
 						const dropDownItems = route.dropdown.map((route, i) => (
-							<NavLink key={route.name + i} to={route.link}>
+							<NavLink
+								key={route.name + i}
+								to={route.link}
+								activeClassName='active-link'
+								className='link'
+							>
 								<ListGroup.Item className='sidebar-dropdown-item'>
 									{route.icon ? route.icon : ''}
 									{route.name}
@@ -74,7 +76,12 @@ const Sidebar = (props) => {
 						);
 					}
 					return (
-						<NavLink key={route.name + i} to={route.link} activeClassName='active-link'>
+						<NavLink
+							key={route.name + i}
+							to={route.link}
+							activeClassName='active-link'
+							className='link'
+						>
 							<ListGroup.Item onClick={props.showSidebar}>
 								{route.icon ? route.icon : ''}
 								{route.name}

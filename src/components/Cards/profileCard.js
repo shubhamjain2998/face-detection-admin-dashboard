@@ -11,7 +11,7 @@ const ProfileCard = ({ account, org }) => {
 	const values = [account.phone, account.emailId, account.gender];
 
 	return (
-		<Row className='py-3 mx-3 px-3 my-3 userTable'>
+		<Row className='py-3 mx-3 px-3 my-3 profile-card'>
 			<Col xs={12} md={6} className='profile-card-left pb-4'>
 				<Row>
 					<Col

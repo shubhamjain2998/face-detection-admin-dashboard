@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import {
 	Container,
 	Row,
@@ -33,30 +33,30 @@ const Layout = (props) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 	const [sidebar, setSidebar] = useState(false);
+	const [authDropdown, setAuthDropdown] = useState(false);
 
-	routes = [
-		{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
-		{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
-		{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
-		{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
-		{ name: 'Department', link: '/dept', icon: <AiOutlineDashboard /> },
-		{
-			name: 'Attendance',
-			dropdown: [
-				{ name: 'admin', link: '/attAdmin' },
-				{ name: 'employee', link: '/home' },
-			],
-		},
-	];
+	const authDropdownHandler = () => setAuthDropdown(!authDropdown);
 
-	if (
-		location.pathname === '/login' ||
-		location.pathname === '/register' ||
-		location.pathname === '/org' ||
-		location.pathname === '/account' ||
-		location.pathname === '/logout' ||
-		location.pathname === '/'
-	) {
+	if (user.user.is_superuser) {
+		routes = [
+			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
+			{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
+			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
+			{ name: 'Department', link: '/dept' },
+			{ name: 'Attendance admin', link: '/attAdmin' },
+			{ name: 'Attendance employee', link: '/home' },
+		];
+	} else {
+		routes = [
+			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
+			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Department', link: '/dept' },
+			{ name: 'Attendance', link: '/attAdmin' },
+		];
+	}
+
+	if (location.pathname === '/logout' || location.pathname === '/') {
 		return <>{props.children}</>;
 	}
 
@@ -77,17 +77,22 @@ const Layout = (props) => {
 					<p>Admin</p>
 				</div>
 
-				{routes.map((route) => {
+				{routes.map((route, i) => {
 					if (route.link) {
 						return (
-							<NavLink to={route.link} activeClassName='active-link' className='link'>
+							<NavLink
+								key={route.name + i}
+								to={route.link}
+								activeClassName='active-link'
+								className='link'
+							>
 								<div className='route'>
 									{route.icon}
 									<p>{route.name}</p>
 								</div>
 							</NavLink>
 						);
-					} else return '';
+					}
 				})}
 				<NavLink to='/logout' activeClassName='active-link' className='link logout'>
 					<div className='route'>
