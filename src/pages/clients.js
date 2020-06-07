@@ -6,9 +6,9 @@ import {
 	Row,
 	Col,
 	Button,
-	Form,
+	
 	Container,
-	Tabs,
+	
 	Tab,
 	Nav,
 } from 'react-bootstrap';
@@ -25,7 +25,6 @@ import CustomForm from '../components/Forms/customForm';
 
 const Clients = (props) => {
 	const [show, setShow] = useState(false);
-	const [showCard, setShowCard] = useState(true);
 	const [loading, setLoading] = useState(false);
 	const [orgs, setOrgs] = useState(null);
 	const [fetchedOrgs, setFetchedOrgs] = useState(false);
@@ -75,7 +74,7 @@ const Clients = (props) => {
 
 	const onDeleteHandler = (id) => {
 		axios
-			// .delete('/attendance/api/org/' + id + '/')
+			.delete('/attendance/api/org/' + id + '/')
 			.then((res) => {
 				console.log(res.data);
 				setFetchedOrgs(false);
@@ -86,8 +85,7 @@ const Clients = (props) => {
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
-	const onShowCards = () => setShowCard(true);
-	const onShowTable = () => setShowCard(false);
+	
 
 	const addingDone = (newOrg) => {
 		// const temp = orgs;
@@ -169,7 +167,7 @@ const Clients = (props) => {
 							<Nav>
 								<Nav.Item>
 									<Nav.Link eventKey='card'>
-										<span className='px-2 makeLink' onClick={onShowCards}>
+										<span className='px-2 makeLink' >
 											<BsGrid3X3Gap />
 										</span>
 										<span>Segment</span>
@@ -178,7 +176,7 @@ const Clients = (props) => {
 
 								<Nav.Item>
 									<Nav.Link eventKey='table'>
-										<span className='px-2 makeLink' onClick={onShowTable}>
+										<span className='px-2 makeLink' >
 											<FaBars />
 										</span>
 										<span>ListView</span>

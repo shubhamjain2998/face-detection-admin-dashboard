@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Tab, Row, Col, Nav } from 'react-bootstrap';
 import OrganizationForm from '../../components/Forms/orgForm';
 import AccountForm from '../../components/Forms/accountForm';
-import Register from '../Registration/register';
 import { useSelector } from 'react-redux';
 import LoginForm from '../../components/Forms/loginForm';
 import PropagateLoader from 'react-spinners/PropagateLoader';
@@ -69,13 +68,14 @@ const RegisterTab = (props) => {
 					<Tab.Content className='tabContent'>
 						<Tab.Pane eventKey='user'>
 							<LoginForm register />
-							<div className='d-flex justify-content-center mt-3'>
+							<div className='d-flex justify-content-center my-3'>
 								<PropagateLoader
 									size={15}
 									color={'#654aa1'}
 									loading={user.loading}
 									// loading={true}
 								/>
+								{user.error && <p className='text-danger text-capitalize'>{user.error}</p>}
 							</div>
 						</Tab.Pane>
 						<Tab.Pane eventKey='org'>
@@ -87,6 +87,7 @@ const RegisterTab = (props) => {
 									loading={org.loading}
 									// loading={true}
 								/>
+								{org.error && <p className='text-danger text-capitalize'>{org.error}</p>}
 							</div>
 						</Tab.Pane>
 						<Tab.Pane eventKey='acc'>
@@ -98,6 +99,7 @@ const RegisterTab = (props) => {
 									loading={account.loading}
 									// loading={true}
 								/>
+								{account.error && <p className='text-danger text-capitalize'>{account.error}</p>}
 							</div>
 						</Tab.Pane>
 					</Tab.Content>

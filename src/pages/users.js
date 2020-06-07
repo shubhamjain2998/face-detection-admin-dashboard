@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Container, Row, Col, Table, Badge } from 'react-bootstrap';
 import Heading from '../components/heading';
-import * as actions from '../store/actions/index';
-import { useDispatch, useSelector } from 'react-redux';
+// import * as actions from '../store/actions/index';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import Loader from '../components/loader';
-import CustomForm from '../components/Forms/customForm';
+// import CustomForm from '../components/Forms/customForm';
 // import CustomToggle from '../components/customToggle';
 // import axios from '../axios-faceDet';
 
 const Users = () => {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	const users = useSelector((state) => state.user);
 	const loading = useSelector((state) => state.user.loading);
 
@@ -31,14 +31,22 @@ const Users = () => {
 	const getRoles = (user) => {
 		if (user.is_superuser) {
 			return (
-				<Badge variant='warning' className>
+				<Badge variant='warning' className='user-badge'>
 					Super Admin
 				</Badge>
 			);
 		} else if (user.is_staff && !user.is_superuser) {
-			return <Badge variant='primary'>Client</Badge>;
+			return (
+				<Badge variant='primary' className='user-badge'>
+					Client
+				</Badge>
+			);
 		} else {
-			return <Badge variant='success'>Employee</Badge>;
+			return (
+				<Badge variant='success' className='user-badge'>
+					Employee
+				</Badge>
+			);
 		}
 	};
 
@@ -122,7 +130,7 @@ const Users = () => {
 					{loading && <Loader loading={loading} />}
 
 					{!loading && (
-						<Row className='mt-3' style={{overflow: 'auto'}}>
+						<Row className='mt-3' style={{ overflow: 'auto' }}>
 							<Col xs={12}>
 								<div className='table-responsive userTable px-3'>
 									<Table>

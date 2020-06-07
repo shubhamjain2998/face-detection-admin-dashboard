@@ -45,7 +45,7 @@ const userReducer = (state = initialState, action) => {
 			});
 
 		case actionTypes.REGISTRATION_FAILED:
-			return updateObject(state, { error: action.error, loading: true });
+			return updateObject(state, { error: action.error, loading: false });
 
 		case actionTypes.LOGIN_STARTED:
 			return updateObject(state, { loading: true });

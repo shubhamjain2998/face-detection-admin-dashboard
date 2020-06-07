@@ -1,20 +1,12 @@
-import React, { useState, Fragment } from 'react';
-import {
-	Container,
-	Row,
-	Col,
-	Image,
-	FormControl,
-	Form,
-	Button,
-} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Row, Col, Image, FormControl, Form, Button } from 'react-bootstrap';
 import john from '../../assets/avatar-02.jpg';
+import user_default from '../../assets/user.svg';
 import {
 	AiOutlineDashboard,
 	AiOutlineUser,
 	AiOutlineUserAdd,
 	AiOutlineLogout,
-	AiOutlineMenu,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -32,10 +24,8 @@ const Layout = (props) => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
+	const acc = useSelector((state) => state.acc);
 	const [sidebar, setSidebar] = useState(false);
-	const [authDropdown, setAuthDropdown] = useState(false);
-
-	const authDropdownHandler = () => setAuthDropdown(!authDropdown);
 
 	if (user.user.is_superuser) {
 		routes = [
@@ -45,7 +35,7 @@ const Layout = (props) => {
 			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
 			{ name: 'Attendance admin', link: '/attAdmin' },
-			{ name: 'Attendance employee', link: '/home' },
+			// { name: 'Attendance employee', link: '/home' },
 		];
 	} else {
 		routes = [
@@ -72,9 +62,20 @@ const Layout = (props) => {
 			<div className='layout-sidebar'>
 				<div className='profile'>
 					<div className='profile-image'>
-						<Image fluid src={john} alt='' rounded />
+						<Image
+							fluid
+							src={
+								user.user.is_superuser
+									? john
+									: acc.details.profileImg
+									? acc.details.profileImg
+									: user_default
+							}
+							alt=''
+							rounded
+						/>
 					</div>
-					<p>Admin</p>
+					<p>{user.user.is_superuser ? 'Admin' : '@' + acc.details.username}</p>
 				</div>
 
 				{routes.map((route, i) => {
@@ -93,6 +94,7 @@ const Layout = (props) => {
 							</NavLink>
 						);
 					}
+					return '';
 				})}
 				<NavLink to='/logout' activeClassName='active-link' className='link logout'>
 					<div className='route'>
@@ -107,7 +109,7 @@ const Layout = (props) => {
 						<Sidebar show={sidebar} showSidebar={onToggleSidebar} />
 						<Backdrop show={sidebar} showSidebar={onToggleSidebar} />
 						<Backdrop show={user.rightSidebar} showSidebar={onToggleRightSidebar} />
-						<Col sm={12} xl={10} className='nav-bar'>
+						<Col sm={12} lg={10} className='nav-bar'>
 							<div className='nav-menu-icon' onClick={onToggleSidebar}>
 								<RiMenu2Line size='1.5rem' />
 							</div>

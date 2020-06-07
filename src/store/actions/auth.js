@@ -1,8 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-faceDet';
-import { user, accounts, organization } from '../reducers/utility';
-import { orgCreation } from './org';
-import { accountCreationStarted } from './accounts';
+import { user, accounts, organization, showErrors } from '../reducers/utility';
 
 export const toggleRightSidebar = () => {
 	return {
@@ -116,9 +114,8 @@ export const fetchUsers = () => {
 				dispatch(setUsers(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data.non_field_errors.join(' '));
 				dispatch(
-					userDataFetchingError(err.response.data.non_field_errors.join(' '))
+					userDataFetchingError(showErrors(err))
 				);
 			});
 	};
@@ -137,8 +134,9 @@ export const registerUser = (userDetails) => {
 				dispatch(registerUserCompleted(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data.non_field_errors.join(' '));
-				dispatch(registerUserFailed(err.response.data.non_field_errors.join(' ')));
+				// console.log(err.response.data);
+				// const error_key = Object.keys(err.response.data);
+				dispatch(registerUserFailed(showErrors(err)));
 			});
 	};
 };
@@ -166,7 +164,7 @@ export const loginUser = (userDetails) => {
 								})
 								.catch((err) => {
 									console.log(err.response.data);
-									dispatch(loginFailed(err.response.data.non_field_errors.join(' ')));
+									dispatch(loginFailed(showErrors(err)));
 								});
 						} else {
 							dispatch(setAccount(accounts.details));
@@ -174,13 +172,13 @@ export const loginUser = (userDetails) => {
 						}
 					})
 					.catch((err) => {
-						console.log(err.response.data);
-						dispatch(loginFailed(err.response.data.non_field_errors.join(' ')));
+						// console.log(err.response.data);
+						dispatch(loginFailed(showErrors(err)));
 					});
 			})
 			.catch((err) => {
 				// console.log(err.response.data);
-				dispatch(loginFailed(err.response.data.non_field_errors.join(' ')));
+				dispatch(loginFailed(showErrors(err)));
 			});
 	};
 };

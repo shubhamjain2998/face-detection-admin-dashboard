@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import * as actions from '../store/actions/index';
 import headerBg from '../assets/test_Cropped.jpg';
-import { Container, Row, Col, Image, Card } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import axios from '../axios-faceDet';
 import { useDispatch, useSelector } from 'react-redux';
 import CountUp from 'react-countup';

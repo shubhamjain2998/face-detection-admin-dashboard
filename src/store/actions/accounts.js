@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-faceDet';
+import { showErrors } from '../reducers/utility';
 
 export const accountCreationStarted = () => {
 	return {
@@ -43,7 +44,7 @@ export const fetchDept = () => {
 				dispatch(setDepartment(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				// console.log(err.response.data);
 			});
 	};
 };
@@ -80,9 +81,9 @@ export const accountCreation = (accountDetails, user, org) => {
 				dispatch(accountCreationCompleted(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				// console.log(err.response.data);
 				dispatch(
-					accountCreationFailed(err.response.data.non_field_errors.join(' '))
+					accountCreationFailed(showErrors(err))
 				);
 			});
 	};

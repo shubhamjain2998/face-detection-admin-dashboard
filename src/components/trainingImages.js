@@ -88,7 +88,7 @@ const TrainingImages = (props) => {
 				<BarLoader
 					height={4}
 					width={100}
-					color={'#1565C0'}
+					color={'#654aa1'}
 					loading={uploadLoading}
 					// loading={true}
 					css={override}

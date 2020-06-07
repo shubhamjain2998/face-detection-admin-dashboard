@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginForm from '../../components/Forms/loginForm';
-import FrontPage from '../../components/Cards/frontPage';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropagateLoader from 'react-spinners/PropagateLoader'

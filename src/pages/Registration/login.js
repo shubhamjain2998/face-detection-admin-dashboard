@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginForm from '../../components/Forms/loginForm';
-import FrontPage from '../../components/Cards/frontPage';
 import { useSelector } from 'react-redux';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 
@@ -12,8 +11,8 @@ const Login = () => {
 	return (
 		<>
 			<LoginForm />
-			{user.error ? <p className='py-2 text-danger'>{user.error}</p> : ''}
-			<div className='d-flex justify-content-center mt-3'>
+			{user.error ? <p className='py-2 text-danger text-capitalize'>{user.error}</p> : ''}
+			<div className='d-flex justify-content-center my-3'>
 				<PropagateLoader
 					size={15}
 					color={"#654aa1"}

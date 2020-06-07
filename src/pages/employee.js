@@ -25,7 +25,6 @@ import CustomForm from '../components/Forms/customForm';
 
 const Employee = () => {
 	const [show, setShow] = useState(false);
-	const [showCard, setShowCard] = useState(true);
 	const [activeOrg, setActiveOrg] = useState('All');
 	const [selectedOrg, setSelectedOrg] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -128,8 +127,7 @@ const Employee = () => {
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
-	const onShowCards = () => setShowCard(true);
-	const onShowTable = () => setShowCard(false);
+	
 
 	const addingDone = (newEmployee) => {
 		const temp = emps;
@@ -259,7 +257,7 @@ const Employee = () => {
 							<Nav>
 								<Nav.Item>
 									<Nav.Link eventKey='card'>
-										<span className='px-2 makeLink' onClick={onShowCards}>
+										<span className='px-2 makeLink'>
 											<BsGrid3X3Gap />
 										</span>
 										<span>Segment</span>
@@ -268,7 +266,7 @@ const Employee = () => {
 
 								<Nav.Item>
 									<Nav.Link eventKey='table'>
-										<span className='px-2 makeLink' onClick={onShowTable}>
+										<span className='px-2 makeLink'>
 											<FaBars />
 										</span>
 										<span>ListView</span>

@@ -1,15 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
-import Login from './pages/Registration/login';
-import Register from './pages/Registration/register';
 import Clients from './pages/clients';
 import Dashboard from './pages/dashboard';
-import Admin from './pages/admin';
 import Profile from './pages/profile';
 import Employee from './pages/employee';
-import OrgRegister from './pages/Registration/orgRegister';
-import AccRegister from './pages/Registration/accRegister';
 import Logout from './pages/Registration/logout';
 import PrivateRoute from './components/privateRoute';
 import Department from './pages/department';

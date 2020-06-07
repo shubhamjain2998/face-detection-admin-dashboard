@@ -7,3 +7,4 @@ export {
 } from './auth';
 export { orgCreation, setCurrentOrg, fetchOrgs } from './org';
 export { accountCreation, fetchDept, setAccounts } from './accounts';
+export { serviceWorkerInit, serviceWorkerUpdate } from './sw';

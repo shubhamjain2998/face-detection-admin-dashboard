@@ -5,6 +5,16 @@ export const updateObject = (oldObject, updatedProperties) => {
 	};
 };
 
+export const showErrors = (err) => {
+	const errors = err.response.data;
+	let msg = '';
+	for (let error in errors) {
+		// console.log(errors[error].join(' '));
+		msg = msg.concat(' ', errors[error].join(' '));
+	}
+	return msg;
+};
+
 export const organization = {
 	error: null,
 	loading: false,

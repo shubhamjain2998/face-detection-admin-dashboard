@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { Redirect } from 'react-router-dom';
 import axios from '../../axios-faceDet';
+import { showErrors } from '../../store/reducers/utility';
+import Loader from '../loader';
 
 // const FILE_SIZE = 10485760;
 
@@ -46,6 +48,7 @@ const accountSchema = Yup.object().shape({
 
 const AccountForm = (props) => {
 	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 	const account = useSelector((state) => state.acc);
 
@@ -195,7 +198,7 @@ const AccountForm = (props) => {
 
 	const onSubmitHandler = (values) => {
 		if (!props.edit && !props.add) {
-			console.log(values);
+			// console.log(values);
 			dispatch(actions.accountCreation(values, user, org));
 		} else {
 			var empData = new FormData();
@@ -225,14 +228,21 @@ const AccountForm = (props) => {
 				empData.append('orgId', props.values.orgId);
 				empData.append('deptId', parseInt(values.dept));
 				empData.append('role', values.role);
+				setLoading(true);
 				axios
 					.put('/attendance/api/accounts/' + props.values.empId + '/', empData)
 					.then((res) => {
 						// console.log(res.data);
+						setLoading(false);
 						props.onEditingDone(res.data);
 					})
-					.catch((err) => console.log(err));
+					.catch((err) => {
+						// console.log(err);
+						setError(showErrors(err));
+						setLoading(false);
+					});
 			} else {
+				setLoading(true);
 				axios
 					.post('/attendance/api/user/register', {
 						email: values.email,
@@ -254,17 +264,20 @@ const AccountForm = (props) => {
 						axios
 							.post('/attendance/api/accounts/register', empData)
 							.then((res) => {
-								console.log(res.data);
+								// console.log(res.data);
+								setLoading(false);
 								props.onEditingDone(res.data);
 							})
 							.catch((err) => {
 								console.log(err);
-								setError(err.message);
+								setLoading(false);
+								setError(showErrors(err));
 							});
 					})
 					.catch((err) => {
 						console.log(err.message);
-						setError(err.message);
+						setLoading(false);
+						setError(showErrors(err));
 					});
 			}
 		}
@@ -281,11 +294,7 @@ const AccountForm = (props) => {
 	}
 
 	return (
-		<div className='d-flex align-items-center flex-column'>
-			{props.edit || props.add
-				? ''
-				: // <h5 className='my-0'>Register Your Account</h5>
-				  ''}
+		<div className='d-flex align-items-center flex-column mb-2'>
 			<CustomForm
 				elements={formElements}
 				validationSchema={props.add ? modifiedSchema : accountSchema}
@@ -296,8 +305,10 @@ const AccountForm = (props) => {
 			) : (
 				''
 			)}
-
-			{error ? <p className='py-2 text-danger'>{error}</p> : ''}
+			<div className='w-100'>
+				{loading && <Loader loading={loading} />}
+				{error && <p className='text-danger text-capitalize'>{error}</p>}
+			</div>
 		</div>
 	);
 };

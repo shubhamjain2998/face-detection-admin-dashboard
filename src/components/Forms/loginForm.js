@@ -1,8 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import './forms.scss';
@@ -28,9 +27,9 @@ const LoginForm = (props) => {
 
 	const loginRef = useRef(null);
 
-	useEffect(() => {
-		loginRef.current.focus();
-	}, []);
+	// useEffect(() => {
+	// 	loginRef.current.focus();
+	// }, []);
 
 	const onSubmitHandler = (values) => {
 		console.log(values);
