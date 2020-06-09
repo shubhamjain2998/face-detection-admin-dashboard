@@ -137,9 +137,9 @@ const Users = () => {
 										<tbody className='dataTable'>
 											<tr className='d-flex'>
 												{/* <td>#</td> */}
-												<td className='col-4'>Active Users</td>
+												<td className='col-4'>User</td>
 												<td className='col-2'>Role</td>
-												<td className='col-3'>Date Joined</td>
+												<td className='col-3'>Joined</td>
 												<td className='col-3'>Last Login</td>
 											</tr>
 											{users.list.map((r, i) => (

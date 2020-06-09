@@ -75,7 +75,7 @@ const Layout = (props) => {
 							rounded
 						/>
 					</div>
-					<p>{user.user.is_superuser ? 'Admin' : '@' + acc.details.username}</p>
+					<p>{user.user.is_superuser ? '@Admin' : '@' + acc.details.username}</p>
 				</div>
 
 				{routes.map((route, i) => {

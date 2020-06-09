@@ -26,8 +26,8 @@ const CustomTable = (props) => {
 		headers = (
 			<>
 				<td className='col-1'>#</td>
-				<td className='col-4'>Department Name</td>
-				<td className='col-6'>Department Description</td>
+				<td className='col-4'>Name</td>
+				<td className='col-6'>Description</td>
 			</>
 		);
 	} else if (props.type === 'emp') {

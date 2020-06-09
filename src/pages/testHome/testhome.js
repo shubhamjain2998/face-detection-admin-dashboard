@@ -49,7 +49,7 @@ const Home = () => {
 	}, [user.token, user.user.is_superuser, org.details.pk, org.loading]);
 
 	useEffect(() => {
-		console.log(sw.updated);
+		// console.log(sw.updated);
 		if (sw.updated) {
 			setShowError(true);
 		}
