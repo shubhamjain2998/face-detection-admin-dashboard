@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Image } from 'react-bootstrap';
 import {
 	AiOutlineDashboard,
 	AiOutlineUser,
@@ -7,12 +7,16 @@ import {
 	AiOutlineLogout,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import john from '../../assets/avatar-02.jpg';
+import user_default from '../../assets/user.svg';
 
 const Sidebar = (props) => {
 	let attachedClass = ['sidebar', 'sidebarOpen'];
 	const user = useSelector((state) => state.user.user);
+	const acc = useSelector((state) => state.acc);
+	const org = useSelector((state) => state.org);
 
 	const [authDropdown, setAuthDropdown] = useState(false);
 
@@ -48,6 +52,37 @@ const Sidebar = (props) => {
 	return (
 		<div className={attachedClass.join(' ')}>
 			<ListGroup variant='flush'>
+				<ListGroup.Item>
+					<div className='profile'>
+						<div className='profile-image'>
+							<Image
+								fluid
+								src={
+									user.is_superuser
+										? john
+										: acc.details.profileImg
+										? acc.details.profileImg
+										: user_default
+								}
+								alt=''
+								rounded
+							/>
+						</div>
+
+						{user.is_superuser ? (
+							'@Admin'
+						) : (
+							<Link
+								to={{
+									pathname: '/profile',
+									state: { acc: acc.details, org: org.details },
+								}}
+							>
+								<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
+							</Link>
+						)}
+					</div>
+				</ListGroup.Item>
 				{routes.map((route, i) => {
 					if (!route.link) {
 						const dropDownItems = route.dropdown.map((route, i) => (

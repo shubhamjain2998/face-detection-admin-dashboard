@@ -20,7 +20,7 @@ const Dashboard = () => {
 			axios
 				.get('attendance/api/accounts')
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(actions.setAccounts(res.data));
 				})
 				.catch((err) => console.log(err.response.data));

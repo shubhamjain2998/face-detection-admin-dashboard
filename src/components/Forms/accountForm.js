@@ -90,13 +90,15 @@ const AccountForm = (props) => {
 			name: 'gender',
 			type: 'select',
 			value: props.values ? props.values.gender : '',
-			options: ['Gender', 'Male', 'Female'],
+			options: ['', 'Male', 'Female'],
+			label: 'Gender',
 		},
 		{
 			name: 'idType',
 			type: 'select',
 			value: props.values ? props.values.idType : '',
-			options: ['ID Type', 'Passport'],
+			options: ['', 'Passport'],
+			label: 'ID Type',
 		},
 		{
 			name: 'idProof',
@@ -118,7 +120,13 @@ const AccountForm = (props) => {
 	if (props.add) {
 		modifiedSchema = accountSchema.concat(RegisterSchema);
 		const registerElements = [
-			{ name: 'email', type: 'email', value: '', label: 'Enter Your Email' },
+			{
+				name: 'email',
+				type: 'email',
+				value: '',
+				label: 'Enter Your Email',
+				col: 12,
+			},
 			{ name: 'password', type: 'password', value: '', label: 'Password' },
 			{
 				name: 'confirmPassword',
@@ -130,22 +138,6 @@ const AccountForm = (props) => {
 		formElements.unshift(...registerElements);
 	}
 
-	if ((props.add || props.edit) && user.user.is_superuser) {
-		const roleElement = {
-			name: 'role',
-			type: 'select',
-			value: props.values ? props.values.role : '',
-			options: ['Select Role', 'client', 'employee'],
-		};
-		const roleSchema = Yup.object().shape({
-			role: Yup.string().required('Required!'),
-		});
-		formElements.push(roleElement);
-		modifiedSchema
-			? modifiedSchema.concat(roleSchema)
-			: accountSchema.concat(roleSchema);
-	}
-
 	if (props.add || props.edit) {
 		const elements = [
 			{
@@ -155,6 +147,7 @@ const AccountForm = (props) => {
 				options: departments.map((dep) => {
 					return { name: dep.DeptName, value: dep.id };
 				}),
+				label: 'Department',
 			},
 			{
 				name: 'readEmp',
@@ -193,7 +186,25 @@ const AccountForm = (props) => {
 				label: 'Write Department',
 			},
 		];
-		formElements.push(...elements);
+		formElements.splice(formElements.length - 1, 0, ...elements);
+	}
+
+	if ((props.add || props.edit) && user.user.is_superuser) {
+		const roleElement = {
+			name: 'role',
+			type: 'select',
+			value: props.values ? props.values.role : '',
+			options: ['', 'client', 'employee'],
+			label: 'Select Role',
+			col: 12,
+		};
+		const roleSchema = Yup.object().shape({
+			role: Yup.string().required('Required!'),
+		});
+		formElements.splice(formElements.length - 1, 0, roleElement);
+		modifiedSchema
+			? modifiedSchema.concat(roleSchema)
+			: accountSchema.concat(roleSchema);
 	}
 
 	const onSubmitHandler = (values) => {
@@ -249,7 +260,7 @@ const AccountForm = (props) => {
 						password: values.password,
 					})
 					.then((res) => {
-						console.log(res);
+						// console.log(res);
 						empData.append('emailId', res.data.email);
 						empData.append('deptId', parseInt(values.dept));
 						if (user.user.is_superuser) {
@@ -269,13 +280,13 @@ const AccountForm = (props) => {
 								props.onEditingDone(res.data);
 							})
 							.catch((err) => {
-								console.log(err);
+								// console.log(err);
 								setLoading(false);
 								setError(showErrors(err));
 							});
 					})
 					.catch((err) => {
-						console.log(err.message);
+						// console.log(err.message);
 						setLoading(false);
 						setError(showErrors(err));
 					});

@@ -9,7 +9,7 @@ import {
 	AiOutlineLogout,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import Sidebar from '../../components/Layout/sidebar';
 import Backdrop from '../../components/Layout/backdrop';
 import moment from 'moment';
@@ -19,12 +19,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Layout = (props) => {
 	let routes = null;
-
 	// console.log(props.children);
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 	const acc = useSelector((state) => state.acc);
+	const org = useSelector((state) => state.org);
 	const [sidebar, setSidebar] = useState(false);
 
 	if (user.user.is_superuser) {
@@ -75,7 +75,19 @@ const Layout = (props) => {
 							rounded
 						/>
 					</div>
-					<p>{user.user.is_superuser ? '@Admin' : '@' + acc.details.username}</p>
+
+					{user.user.is_superuser ? (
+						'@Admin'
+					) : (
+						<Link
+							to={{
+								pathname: '/profile',
+								state: { acc: acc.details, org: org.details },
+							}}
+						>
+							<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
+						</Link>
+					)}
 				</div>
 
 				{routes.map((route, i) => {
@@ -90,6 +102,8 @@ const Layout = (props) => {
 								<div className='route'>
 									{route.icon}
 									<p>{route.name}</p>
+									<span className='upper-curve'></span>
+									<span className='lower-curve'></span>
 								</div>
 							</NavLink>
 						);
@@ -110,7 +124,10 @@ const Layout = (props) => {
 						<Backdrop show={sidebar} showSidebar={onToggleSidebar} />
 						<Backdrop show={user.rightSidebar} showSidebar={onToggleRightSidebar} />
 						<Col sm={12} lg={10} className='nav-bar'>
-							<div className='nav-menu-icon' onClick={onToggleSidebar}>
+							<div
+								className={sidebar ? 'nav-menu-icon light' : 'nav-menu-icon dark'}
+								onClick={onToggleSidebar}
+							>
 								<RiMenu2Line size='1.5rem' />
 							</div>
 							<Form inline className='nav-form'>

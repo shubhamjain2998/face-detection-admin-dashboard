@@ -32,7 +32,7 @@ const LoginForm = (props) => {
 	// }, []);
 
 	const onSubmitHandler = (values) => {
-		console.log(values);
+		// console.log(values);
 		dispatch(actions.fetchDept());
 		if (props.register) {
 			dispatch(actions.registerUser(values));

@@ -20,7 +20,7 @@ const Profile = (props) => {
 			<ProfileCard account={orgAccount} org={org} />
 			<hr></hr>
 			<Row className='my-2'>
-				<Col sm={{ span: 10, offset: 1 }} xs={12}>
+				<Col sm={{ span: 10, offset: 1 }} xs={12} className='profile-tabs'>
 					<Tabs
 						defaultActiveKey='employee'
 						id='uncontrolled-tab-example'

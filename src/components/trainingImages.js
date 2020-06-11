@@ -27,7 +27,7 @@ const TrainingImages = (props) => {
 	};
 
 	const onSubmitHandler = () => {
-		console.log(files);
+		// console.log(files);
 		setUploadLoading(true);
 		const formData = new FormData();
 		formData.append('EmpId', props.employee.empId);
@@ -36,12 +36,12 @@ const TrainingImages = (props) => {
 		axios
 			.post('attendance/train_dataset/', formData)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				setMessage(res.data.status);
 				setUploadLoading(false);
 			})
 			.catch((err) => {
-				console.log(err);
+				// console.log(err);
 				setError(err.message);
 				setUploadLoading(false);
 			});

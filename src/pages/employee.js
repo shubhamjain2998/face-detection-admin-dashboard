@@ -70,14 +70,14 @@ const Employee = () => {
 					axios
 						.get('attendance/api/accounts')
 						.then((res) => {
-							console.log(res.data);
+							// console.log(res.data);
 							setEmps(res.data);
 							setFetchedEmps(true);
 							setLoading(false);
 							dispatch(actions.setAccounts(res.data));
 						})
 						.catch((err) => {
-							console.log(err.response.data);
+							// console.log(err.response.data);
 							setLoading(false);
 						});
 				} else {
@@ -85,13 +85,13 @@ const Employee = () => {
 					axios
 						.get('/attendance/api/accounts/filter?orgId=' + selectedOrg.pk)
 						.then((res) => {
-							console.log(res.data);
+							// console.log(res.data);
 							setEmps(res.data);
 							setFetchedEmps(true);
 							setLoading(false);
 						})
 						.catch((err) => {
-							console.log(err.response.data);
+							// console.log(err.response.data);
 							setLoading(false);
 						});
 				}
@@ -100,14 +100,14 @@ const Employee = () => {
 				axios
 					.get('/attendance/api/accounts/filter?orgId=' + account.orgId)
 					.then((res) => {
-						console.log(res.data);
+						// console.log(res.data);
 						setEmps(res.data);
 						setFetchedEmps(true);
 						setLoading(false);
 						dispatch(actions.setAccounts(res.data));
 					})
 					.catch((err) => {
-						console.log(err.response.data);
+						// console.log(err.response.data);
 						setLoading(false);
 					});
 			}
@@ -118,7 +118,7 @@ const Employee = () => {
 		axios
 			.delete('/attendance/api/accounts/' + id + '/')
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				setFetchedEmps(false);
 			})
 			.catch((err) => console.log(err.response.data));
@@ -186,7 +186,7 @@ const Employee = () => {
 	];
 
 	const onSubmitFilters = (values) => {
-		console.log(values);
+		// console.log(values);
 		// setFilters(values);
 		if (storedEmps) {
 			const filteredOrgs = storedEmps.filter((emp) => {
@@ -244,9 +244,9 @@ const Employee = () => {
 											))}
 										</FormControl>
 									</Col>
-									<Col sm={2} xs={4}>
+									{/* <Col sm={2} xs={4}>
 										<Button>Submit</Button>
-									</Col>
+									</Col> */}
 								</Form.Row>
 							</Col>
 						</Row>

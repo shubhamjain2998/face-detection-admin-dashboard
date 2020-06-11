@@ -50,14 +50,14 @@ const Clients = (props) => {
 			axios
 				.get('attendance/api/org')
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(actions.fetchOrgs(res.data));
 					setOrgs(res.data);
 					setFetchedOrgs(true);
 					setLoading(false);
 				})
 				.catch((err) => {
-					console.log(err.response.data);
+					// console.log(err.response.data);
 					setLoading(false);
 				});
 		}
@@ -76,7 +76,7 @@ const Clients = (props) => {
 		axios
 			.delete('/attendance/api/org/' + id + '/')
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				setFetchedOrgs(false);
 			})
 			.catch((err) => console.log(err.response.data));
@@ -127,7 +127,7 @@ const Clients = (props) => {
 	];
 
 	const onSubmitFilters = (values) => {
-		console.log(values);
+		// console.log(values);
 		setFilters(values);
 		if (storedOrgs) {
 			const filteredOrgs = storedOrgs.filter((org) => {
@@ -195,8 +195,7 @@ const Clients = (props) => {
 												orgs.map((org, i) => (
 													<Col
 														key={org.Name + i}
-														xs={12}
-														sm={6}
+														xs={6}
 														md={4}
 														xl={3}
 														className='my-3'

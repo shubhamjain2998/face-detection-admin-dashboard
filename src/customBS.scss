@@ -31,16 +31,6 @@ body {
 	}
 }
 
-.switch-wrapper {
-	position: relative;
-}
-
-.switch-wrapper > div {
-	position: absolute;
-	width: 100%;
-	// background-color: rgb(240, 240, 240);
-}
-
 .makeLink {
 	cursor: pointer;
 }
@@ -233,7 +223,7 @@ body {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		overflow-y: scroll;
+		// overflow-y: scroll;
 
 		&::-webkit-scrollbar-track {
 			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -256,12 +246,91 @@ body {
 			border-radius: 0 1rem 1rem 0;
 		}
 
+		.route {
+			color: $active;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 1rem 0.5rem;
+			position: relative;
+
+			.upper-curve {
+				position: absolute;
+				bottom: -15px;
+				right: 0;
+				height: 15px;
+				width: 15px;
+				background-color: white;
+				visibility: hidden;
+				&::before {
+					content: '';
+					background-color: $custom-color;
+					position: absolute;
+					top: 0;
+					right: 0;
+					height: 15px;
+					width: 15px;
+				}
+			}
+			.lower-curve {
+				position: absolute;
+				top: -15px;
+				right: 0;
+				height: 15px;
+				width: 15px;
+				background-color: white;
+				visibility: hidden;
+				&::before {
+					content: '';
+					background-color: $custom-color;
+					position: absolute;
+					top: 0;
+					right: 0;
+					height: 15px;
+					width: 15px;
+				}
+			}
+
+			p {
+				padding-top: 0.5rem;
+				margin-bottom: 0;
+				text-align: center;
+			}
+		}
+
 		.active-link {
 			background-color: white;
 			border-radius: 0;
 
 			.route {
 				color: $custom-color;
+
+				.upper-curve {
+					visibility: visible;
+					&::before {
+						content: '';
+						background-color: $custom-color;
+						position: absolute;
+						top: 0;
+						right: 0;
+						height: 15px;
+						width: 15px;
+						clip-path: circle(100% at 0 100%);
+					}
+				}
+				.lower-curve {
+					visibility: visible;
+					&::before {
+						content: '';
+						background-color: $custom-color;
+						position: absolute;
+						top: 0;
+						right: 0;
+						height: 15px;
+						width: 15px;
+						clip-path: circle(100% at 0 0);
+					}
+				}
 			}
 		}
 
@@ -286,20 +355,6 @@ body {
 				margin-top: 0.5rem;
 			}
 		}
-
-		.route {
-			color: $active;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			padding: 1rem 0.5rem;
-
-			p {
-				padding-top: 0.5rem;
-				margin-bottom: 0;
-				text-align: center;
-			}
-		}
 	}
 
 	.layout-inner-div {
@@ -310,14 +365,14 @@ body {
 		top: 0;
 		// background-color: rgb(251, 249, 249);
 		z-index: 1000;
-		// border-radius: 1rem;
+		border-radius: 0.8rem 0 0 0.8rem;
 		overflow-x: hidden;
 		// overflow-y: scroll;
 
 		.content {
 			// position: fixed;
 			// height: 100%;
-			background-color: rgb(251, 249, 249);
+			background-color: rgb(255, 255, 255);
 			border-radius: 1rem 0 0 1rem;
 			overflow-y: scroll;
 
@@ -401,9 +456,11 @@ body {
 		position: fixed;
 		height: 100%;
 		border-radius: 0 1rem 1rem 0;
-		background-color: rgb(243, 243, 243);
+		background-color: rgb(255, 252, 252);
 		right: -0.9rem;
 		top: 0;
+		display: flex;
+		flex-direction: column;
 		.dashboard-heading {
 			text-transform: uppercase;
 			font-size: 0.8rem;
@@ -415,9 +472,10 @@ body {
 
 		.stats-card {
 			margin: 1rem 1rem 1rem 0;
+			height: 12rem;
 			padding: 1rem;
 			background-color: white;
-			border-radius: 1rem;
+			border-radius: 0.4rem;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			display: flex;
 			flex-direction: column;
@@ -449,7 +507,7 @@ body {
 
 .client-filter {
 	.form-row > div {
-		padding: 0.5rem 0;
+		padding: 0.1rem 0;
 	}
 
 	p {
@@ -457,7 +515,7 @@ body {
 		font-size: 0.8rem;
 		font-weight: bold;
 		letter-spacing: 0.1rem;
-		margin: 3rem 0 2rem;
+		margin: 1rem 0;
 		padding: 0 1rem;
 	}
 
@@ -485,12 +543,24 @@ body {
 
 	background: #fff;
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-	transition: transform 0.2s ease-out;
+	transition: all 0.2s ease-out;
 	overflow: hidden;
+	position: relative;
 
 	&:hover {
 		transform: scale(1.05);
 	}
+
+	// &::before {
+	// 	position: absolute;
+	// 	content: '';
+	// 	background-color: rgba(17, 30, 51, .9);
+	// 	clip-path: circle(25% at 0 0);
+	// 	z-index: 1;
+	// 	height: 100%;
+	// 	width: 100%;
+	// 	transition: clip-path .5s ease-in-out;
+	// }
 
 	.client-card-top {
 		display: flex;
@@ -499,6 +569,23 @@ body {
 		svg {
 			cursor: pointer;
 		}
+	}
+}
+
+.profile-tabs {
+	nav {
+		flex-wrap: nowrap !important;
+		margin-bottom: 1rem;
+	}
+
+	.nav-tabs .nav-link {
+		border-color: white white $custom-color;
+		border-radius: unset !important;
+	}
+
+	.nav-tabs .nav-link.active {
+		border-color: $custom-color $custom-color white;
+		border-radius: unset !important;
 	}
 }
 
@@ -638,6 +725,10 @@ body {
 		border-radius: 1rem !important;
 	}
 
+	.form-check-inline .form-check-input {
+		transform: scale(1.5);
+	}
+
 	label,
 	p {
 		font-size: 0.7rem;
@@ -688,6 +779,10 @@ body {
 			.content {
 				.sidebar {
 					display: block;
+					.profile {
+						width: 25%;
+						display: inline-block;
+					}
 				}
 
 				.nav-bar {
@@ -701,6 +796,14 @@ body {
 
 					.nav-menu-icon {
 						display: block;
+						z-index: 1000;
+
+						&.dark {
+							color: $custom-color;
+						}
+						&.light {
+							color: white;
+						}
 					}
 					.nav-sidebar-icon {
 						display: block;
@@ -731,6 +834,15 @@ body {
 		&.dashboard {
 			position: relative !important;
 			z-index: 0 !important;
+			flex-direction: row;
+			flex-wrap: wrap;
+			.stats-card {
+				width: 45%;
+				margin: 0.5rem;
+			}
+			p {
+				width: 100%;
+			}
 		}
 	}
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { AnimatedSwitch } from 'react-router-transition';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Clients from './pages/clients';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
@@ -17,12 +16,7 @@ const App = () => {
 	return (
 		<div>
 			<Layout>
-				<AnimatedSwitch
-					atEnter={{ opacity: 0 }}
-					atLeave={{ opacity: 0 }}
-					atActive={{ opacity: 1 }}
-					className='switch-wrapper'
-				>
+				<Switch>
 					<Route path='/logout' component={Logout} />
 					<PrivateRoute path='/client' component={Clients} />
 					<PrivateRoute path='/profile' component={Profile} />
@@ -33,7 +27,7 @@ const App = () => {
 					<PrivateRoute path='/home' exact component={Dashboard} />
 					<Route path='/' exact component={Home} />
 					<Redirect to='/' />
-				</AnimatedSwitch>
+				</Switch>
 			</Layout>
 		</div>
 	);

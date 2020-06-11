@@ -37,7 +37,7 @@ const OrganizationForm = (props) => {
 	const [loading, setLoading] = useState(false);
 
 	const onSubmitHandler = (values) => {
-		console.log(values);
+		// console.log(values);
 		if (!props.edit && !props.add) {
 			dispatch(actions.orgCreation(values));
 		} else {
@@ -52,7 +52,7 @@ const OrganizationForm = (props) => {
 				axios
 					.put('/attendance/api/org/' + props.values.pk + '/', orgdata)
 					.then((res) => {
-						console.log(res.data);
+						// console.log(res.data);
 						setLoading(false);
 						props.onEditingDone(res.data);
 					})
@@ -66,7 +66,7 @@ const OrganizationForm = (props) => {
 				axios
 					.post('/attendance/api/org', orgdata)
 					.then((res) => {
-						console.log(res.data);
+						// console.log(res.data);
 						setLoading(false);
 						props.onEditingDone(res.data);
 					})

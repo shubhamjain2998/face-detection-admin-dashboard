@@ -106,6 +106,7 @@ const CustomForm = (props) => {
 														onBlur={handleBlur}
 														value={values[el.name]}
 													>
+														<option></option>
 														{el.options.map((e, i) => {
 															if (e.name) {
 																return (

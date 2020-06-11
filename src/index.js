@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './customBS.scss';
 // import './index.css';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -29,8 +29,6 @@ const store = createStore(
 	rootReducer,
 	composeEnhancers(applyMiddleware(thunk))
 );
-
-// const dispatch = useDispatch();
 
 const app = (
 	<Provider store={store}>

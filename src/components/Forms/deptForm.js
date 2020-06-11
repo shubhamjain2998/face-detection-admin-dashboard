@@ -18,7 +18,7 @@ const DepartmentForm = (props) => {
 	const [error, setError] = useState(null);
 
 	const onSubmitHandler = (values) => {
-		console.log(values);
+		// console.log(values);
 		let data;
 		if (props.mode === 'add') {
 			if (user.is_superuser) {
@@ -47,7 +47,7 @@ const DepartmentForm = (props) => {
 			axios
 				.post('/attendance/api/dept', data)
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					setLoading(false);
 					props.onEditingDone();
 				})
@@ -61,12 +61,12 @@ const DepartmentForm = (props) => {
 			axios
 				.put('/attendance/api/dept/' + props.dept.id + '/', data)
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					setLoading(false)
 					props.onEditingDone();
 				})
 				.catch((err) => {
-					console.log(err.response.data);
+					// console.log(err.response.data);
 					setLoading(false)
 					setError(showErrors(err));
 				});

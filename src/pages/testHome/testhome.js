@@ -96,6 +96,20 @@ const Home = () => {
 				</Row>
 			)}
 			<Row className='innerContainer justify-content-around'>
+				<Col xs={12} lg={5} className='forms rightSide'>
+					{choice === 'login' ? (
+						<div className='login-tab'>
+							<div className='heading'>
+								<h3>
+									Hello, <br></br>Welcome Back
+								</h3>
+							</div>
+							<Login />
+						</div>
+					) : (
+						<RegisterTab registered={onLogin} />
+					)}
+				</Col>
 				<Col xs={12} lg={5} className='pt-4 px-4 roleSelect'>
 					<Col xs={12} className='my-4 login'>
 						<div className='left-box'>
@@ -134,20 +148,6 @@ const Home = () => {
 							<Image fluid src={bgImg} alt=''></Image>
 						</div>
 					</Col>
-				</Col>
-				<Col xs={12} lg={5} className='forms rightSide'>
-					{choice === 'login' ? (
-						<div className='login-tab'>
-							<div className='heading'>
-								<h3>
-									Hello, <br></br>Welcome Back
-								</h3>
-							</div>
-							<Login />
-						</div>
-					) : (
-						<RegisterTab registered={onLogin} />
-					)}
 				</Col>
 			</Row>
 		</Container>
