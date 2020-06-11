@@ -27,7 +27,7 @@ const TrainingImages = (props) => {
 	};
 
 	const onSubmitHandler = () => {
-		console.log(files);
+		// console.log(files);
 		setUploadLoading(true);
 		const formData = new FormData();
 		formData.append('EmpId', props.employee.empId);
@@ -36,12 +36,12 @@ const TrainingImages = (props) => {
 		axios
 			.post('attendance/train_dataset/', formData)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				setMessage(res.data.status);
 				setUploadLoading(false);
 			})
 			.catch((err) => {
-				console.log(err);
+				// console.log(err);
 				setError(err.message);
 				setUploadLoading(false);
 			});
@@ -88,7 +88,7 @@ const TrainingImages = (props) => {
 				<BarLoader
 					height={4}
 					width={100}
-					color={'#1565C0'}
+					color={'#654aa1'}
 					loading={uploadLoading}
 					// loading={true}
 					css={override}
@@ -105,7 +105,7 @@ const TrainingImages = (props) => {
 				<Col md={{ span: 6, offset: 3 }} className='my-3'>
 					<Button
 						block
-						variant='outline-success'
+						variant='outline-primary'
 						onClick={onSubmitHandler}
 						disabled={!files}
 					>

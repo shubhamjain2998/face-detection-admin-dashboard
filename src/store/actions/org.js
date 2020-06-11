@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-faceDet';
+import { showErrors } from '../reducers/utility';
 
 export const orgCreationStarted = () => {
 	return {
@@ -55,8 +56,8 @@ export const orgCreation = (orgDetails) => {
 				dispatch(orgCreationCompleted(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data);
-				dispatch(orgCreationFailed(err.response.data.non_field_errors.join(' ')));
+				// console.log(err.response.data);
+				dispatch(orgCreationFailed(showErrors(err)));
 			});
 	};
 };

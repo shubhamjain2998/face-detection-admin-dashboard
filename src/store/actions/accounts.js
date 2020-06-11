@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-faceDet';
+import { showErrors } from '../reducers/utility';
 
 export const accountCreationStarted = () => {
 	return {
@@ -43,7 +44,7 @@ export const fetchDept = () => {
 				dispatch(setDepartment(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				// console.log(err.response.data);
 			});
 	};
 };
@@ -57,12 +58,12 @@ export const accountCreation = (accountDetails, user, org) => {
 	formData.append('lastName', accountDetails.lastName);
 	formData.append('gender', accountDetails.gender);
 	formData.append('phone', accountDetails.phone);
-	formData.append('readEmp', accountDetails.readEmp);
-	formData.append('addEmp', accountDetails.writeEmp);
-	formData.append('readAtt', accountDetails.readAtt);
-	formData.append('addAtt', accountDetails.writeAtt);
-	formData.append('readDept', accountDetails.readDept);
-	formData.append('addDept', accountDetails.writeDept);
+	formData.append('readEmp', true);
+	formData.append('addEmp', true);
+	formData.append('readAtt', true);
+	formData.append('addAtt', true);
+	formData.append('readDept', true);
+	formData.append('addDept', true);
 	formData.append('idType', accountDetails.idType);
 	formData.append('idProof', accountDetails.idProof);
 	formData.append('profileImg', accountDetails.profileImg);
@@ -80,9 +81,9 @@ export const accountCreation = (accountDetails, user, org) => {
 				dispatch(accountCreationCompleted(res.data));
 			})
 			.catch((err) => {
-				console.log(err.response.data);
+				// console.log(err.response.data);
 				dispatch(
-					accountCreationFailed(err.response.data.non_field_errors.join(' '))
+					accountCreationFailed(showErrors(err))
 				);
 			});
 	};

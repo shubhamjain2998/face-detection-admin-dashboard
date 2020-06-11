@@ -1,3 +1,10 @@
-export { registerUser, loginUser, fetchUsers, logout } from './auth';
+export {
+	registerUser,
+	loginUser,
+	fetchUsers,
+	logout,
+	toggleRightSidebar,
+} from './auth';
 export { orgCreation, setCurrentOrg, fetchOrgs } from './org';
 export { accountCreation, fetchDept, setAccounts } from './accounts';
+export { serviceWorkerInit, serviceWorkerUpdate } from './sw';

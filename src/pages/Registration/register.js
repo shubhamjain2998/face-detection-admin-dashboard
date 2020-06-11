@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginForm from '../../components/Forms/loginForm';
-import FrontPage from '../../components/Cards/frontPage';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropagateLoader from 'react-spinners/PropagateLoader'
@@ -17,7 +16,7 @@ const Register = () => {
 	}
 
 	return (
-		<FrontPage>
+		<>
 			<LoginForm register />
 			<div className='d-flex justify-content-center mt-3'>
 				<PropagateLoader
@@ -27,7 +26,7 @@ const Register = () => {
 					// loading={true}
 				/>
 			</div>
-		</FrontPage>
+		</>
 	);
 };
 

@@ -33,7 +33,7 @@ const EmployeeCard = ({ employee, onDelete }) => {
 	};
 
 	return (
-		<Card className='profile-card position-relative'>
+		<Card className='emp-card position-relative'>
 			<Card.Title className='mb-0 position-absolute w-100'>
 				<span className='float-right mx-2 my-2' style={{ cursor: 'pointer' }}>
 					<MdEdit className='mx-1 text-primary' onClick={handleShow} />
@@ -59,7 +59,7 @@ const EmployeeCard = ({ employee, onDelete }) => {
 					{emp.role}
 				</p>
 
-				<Button onClick={handleShowTraining} variant='outline-info' size='sm'>
+				<Button onClick={handleShowTraining} variant='outline-primary' size='sm'>
 					Setup Face Detection
 				</Button>
 			</Card.Body>

@@ -1,37 +1,23 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { AnimatedSwitch } from 'react-router-transition';
-import Login from './pages/Registration/login';
-import Register from './pages/Registration/register';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Clients from './pages/clients';
 import Dashboard from './pages/dashboard';
-import Admin from './pages/admin';
 import Profile from './pages/profile';
 import Employee from './pages/employee';
-import OrgRegister from './pages/Registration/orgRegister';
-import AccRegister from './pages/Registration/accRegister';
 import Logout from './pages/Registration/logout';
 import PrivateRoute from './components/privateRoute';
 import Department from './pages/department';
 import Users from './pages/users';
 import AttendanceAdmin from './pages/attAdmin';
+import Home from './pages/testHome/testhome';
+import Layout from './pages/testHome/layout';
 
 const App = () => {
-	
 	return (
 		<div>
-			<Admin>
-				<AnimatedSwitch
-					atEnter={{ opacity: 0 }}
-					atLeave={{ opacity: 0 }}
-					atActive={{ opacity: 1 }}
-					className='switch-wrapper'
-				>
-					<Route path='/login' component={Login} />
+			<Layout>
+				<Switch>
 					<Route path='/logout' component={Logout} />
-					<Route path='/register' component={Register} />
-					<PrivateRoute path='/account' component={AccRegister} />
-					<PrivateRoute path='/org' component={OrgRegister} />
 					<PrivateRoute path='/client' component={Clients} />
 					<PrivateRoute path='/profile' component={Profile} />
 					<PrivateRoute path='/employee' component={Employee} />
@@ -39,9 +25,10 @@ const App = () => {
 					<PrivateRoute path='/user' component={Users} />
 					<PrivateRoute path='/attAdmin' component={AttendanceAdmin} />
 					<PrivateRoute path='/home' exact component={Dashboard} />
-					<PrivateRoute path='/' exact component={Login} />
-				</AnimatedSwitch>
-			</Admin>
+					<Route path='/' exact component={Home} />
+					<Redirect to='/' />
+				</Switch>
+			</Layout>
 		</div>
 	);
 };

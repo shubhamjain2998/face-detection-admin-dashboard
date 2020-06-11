@@ -11,12 +11,16 @@ const initialState = {
 		is_superuser: false,
 	},
 	list: [],
+	rightSidebar: false,
 };
 
 let newUser = {};
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.TOGGLE_RIGHT_SIDEBAR:
+			return updateObject(state, { rightSidebar: !state.rightSidebar });
+
 		case actionTypes.REGISTRATION_STARTED:
 			return updateObject(state, { loading: true });
 
@@ -41,7 +45,7 @@ const userReducer = (state = initialState, action) => {
 			});
 
 		case actionTypes.REGISTRATION_FAILED:
-			return updateObject(state, { error: action.error, loading: true });
+			return updateObject(state, { error: action.error, loading: false });
 
 		case actionTypes.LOGIN_STARTED:
 			return updateObject(state, { loading: true });

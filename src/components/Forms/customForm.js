@@ -36,7 +36,7 @@ const CustomForm = (props) => {
 					isValid,
 					setFieldValue,
 				}) => (
-					<Form noValidate onSubmit={handleSubmit}>
+					<Form noValidate onSubmit={handleSubmit} className='custom-forms'>
 						<Form.Group>
 							<Form.Row>
 								{elements.map(
@@ -94,7 +94,7 @@ const CustomForm = (props) => {
 
 										if (el.type === 'select') {
 											return (
-												<Col md={6} key={el.name + i} className='my-3'>
+												<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>
 													<Form.Label>{el.label}</Form.Label>
 													<Form.Control
 														as='select'
@@ -106,6 +106,7 @@ const CustomForm = (props) => {
 														onBlur={handleBlur}
 														value={values[el.name]}
 													>
+														<option></option>
 														{el.options.map((e, i) => {
 															if (e.name) {
 																return (
@@ -126,6 +127,7 @@ const CustomForm = (props) => {
 										// console.log(errors);
 										return (
 											<Col md={el.col ? el.col : 6} key={el.name + i} className='my-3'>
+												<Form.Label>{el.label ? el.label : ''}</Form.Label>
 												<Form.Control
 													name={el.name}
 													type={el.type}
@@ -151,8 +153,8 @@ const CustomForm = (props) => {
 								)}
 							</Form.Row>
 						</Form.Group>
-						<Button variant='warning' type='submit' disabled={!isValid} block>
-							Submit
+						<Button variant='outline-primary' type='submit' disabled={!isValid} block>
+							{props.filters ? 'Apply' : 'Submit'}
 						</Button>
 					</Form>
 				)}
