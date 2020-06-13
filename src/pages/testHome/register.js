@@ -33,7 +33,7 @@ const RegisterTab = (props) => {
 			<Row className='formTabs'>
 				<>
 					<Nav variant='pills'>
-						<Col sm={4}>
+						<Col xs={4}>
 							<Nav.Item>
 								<Nav.Link eventKey='user' disabled={user.token}>
 									<small>Step 1</small>
@@ -41,7 +41,7 @@ const RegisterTab = (props) => {
 								</Nav.Link>
 							</Nav.Item>
 						</Col>
-						<Col sm={4}>
+						<Col xs={4}>
 							<Nav.Item>
 								<Nav.Link eventKey='org' disabled={!user.token}>
 									<small>Step 2</small>
@@ -49,7 +49,7 @@ const RegisterTab = (props) => {
 								</Nav.Link>
 							</Nav.Item>
 						</Col>
-						<Col sm={4}>
+						<Col xs={4}>
 							<Nav.Item>
 								<Nav.Link
 									eventKey='acc'

@@ -66,11 +66,11 @@ const AttendanceAdmin = () => {
 			</Form.Row>
 			<Row>
 				<Col>
-					<div className='table-responsive'>
+					<div className='table-responsive attendance-table'>
 						<Table>
 							<thead>
 								<tr>
-									<th>Employee</th>
+									<td>Employee</td>
 									{daysInMonth(month + 1, moment().year()).map((d) => (
 										<td key={d}>{d}</td>
 									))}

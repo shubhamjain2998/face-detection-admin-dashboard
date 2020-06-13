@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import './forms.scss';
 
 const LoginSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid Email').required('Required'),
@@ -54,7 +53,7 @@ const LoginForm = (props) => {
 
 	return (
 		<div className='d-flex align-items-center flex-column'>
-			<h5 className='mb-1 pb-1 w-100'>
+			<h5 className='login-heading w-100'>
 				{props.register ? 'Create a new account' : 'Sign in to your account'}
 			</h5>
 			{/* <p className='text-secondary'>Access to our Dashboard</p> */}
@@ -127,12 +126,12 @@ const LoginForm = (props) => {
 						)}
 
 						<Button
-							variant='outline-primary mt-4'
+							variant='primary mt-4 py-2'
 							type='submit'
 							disabled={!isValid}
-							className='w-100'
+							className='w-50'
 						>
-							{props.register ? 'Register' : 'login'}
+							Submit
 						</Button>
 					</Form>
 				)}

@@ -283,7 +283,7 @@ const Employee = () => {
 											{!loading &&
 												emps &&
 												emps.map((emp, i) => (
-													<Col key={emp.empId} xs={12} sm={6} md={4} xl={3} className='my-3'>
+													<Col key={emp.empId} xs={6} md={4} xl={3} className='my-3'>
 														<EmployeeCard
 															employee={emp}
 															onDelete={onDeleteHandler}
