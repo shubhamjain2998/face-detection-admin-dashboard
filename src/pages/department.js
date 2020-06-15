@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Heading from '../components/heading';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CustomTable from '../components/table';
@@ -9,21 +9,46 @@ import DepartmentForm from '../components/Forms/deptForm';
 import DeleteModal from '../components/deleteModal';
 import * as actions from '../store/actions/index';
 import axios from '../axios-faceDet';
+import CustomForm from '../components/Forms/customForm';
 
 const Department = () => {
 	const [show, setShow] = useState(false);
 	const [showDelete, setShowDelete] = useState(false);
 	const [activeDept, setActiveDept] = useState(null);
 	const [mode, setMode] = useState('add');
+	const [department, setDepartment] = useState(null);
 	const dispatch = useDispatch();
 
 	const handleClose = () => setShow(false);
 	const handleCloseDelete = () => setShowDelete(false);
 
-	const department = useSelector((state) => state.acc.department);
+	const storedDepartment = useSelector((state) => state.acc.department);
 	const user = useSelector((state) => state.user);
 
+	useEffect(() => {
+		if (storedDepartment) {
+			setDepartment(storedDepartment);
+		}
+	}, [storedDepartment]);
+
 	const tableElements = ['Department Name', 'Description'];
+
+	const filterElements = [
+		{
+			name: 'DeptName',
+			type: 'text',
+			label: 'Department Name',
+			value: '',
+			col: 12,
+		},
+		{
+			name: 'Description',
+			type: 'text',
+			label: 'Description',
+			value: '',
+			col: 12,
+		},
+	];
 
 	const DepartmentReload = () => {
 		setShow(false);
@@ -54,6 +79,18 @@ const Department = () => {
 		});
 	};
 
+	const onSubmitFilters = (values) => {
+		const filteredDept = storedDepartment.filter(
+			(dept) =>
+				dept.DeptName.toLowerCase().includes(values.DeptName.toLowerCase()) &&
+				dept.Description.toLowerCase().includes(values.Description.toLowerCase())
+		);
+		if (user.rightSidebar) {
+			dispatch(actions.toggleRightSidebar());
+		}
+		setDepartment(filteredDept);
+	};
+
 	let rightSidebarClasses = 'right-sidebar client-filter ';
 
 	if (user.rightSidebar) {
@@ -82,13 +119,15 @@ const Department = () => {
 
 					<Row className='mt-3'>
 						<Col xs={12}>
-							<CustomTable
-								values={department}
-								elements={tableElements}
-								type='dept'
-								onEdit={onEditHandler}
-								onDelete={onDeleteHandlerTable}
-							/>
+							{department && (
+								<CustomTable
+									values={department}
+									elements={tableElements}
+									type='dept'
+									onEdit={onEditHandler}
+									onDelete={onDeleteHandlerTable}
+								/>
+							)}
 						</Col>
 					</Row>
 
@@ -109,11 +148,11 @@ const Department = () => {
 					<p>filters</p>
 					<div className='applied-filters'></div>
 
-					{/* <CustomForm
-					filters
-					elements={filterElements}
-					handleSubmit={onSubmitFilters}
-				/> */}
+					<CustomForm
+						filters
+						elements={filterElements}
+						handleSubmit={onSubmitFilters}
+					/>
 				</Col>
 			</Row>
 		</Container>

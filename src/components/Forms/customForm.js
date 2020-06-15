@@ -76,7 +76,12 @@ const CustomForm = (props) => {
 
 										if (el.type === 'checkbox') {
 											return (
-												<Col md={6} lg={4} key={el.name + i} className='my-3'>
+												<Col
+													md={el.col ? el.col : 6}
+													lg={el.col ? el.col : 4}
+													key={el.name + i}
+													className='my-3'
+												>
 													<Form.Check
 														label={el.label}
 														inline

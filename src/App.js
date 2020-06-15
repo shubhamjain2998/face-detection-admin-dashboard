@@ -56,9 +56,9 @@ export default App;
 
 // TODO: Dashboard
 
-// *CONFUSION: Step 1 - Delete Functionality for User Page
+// !DONE: Step 1 - Delete Functionality for User Page
 // !DONE: Step 2 - Departments DropDown Implementation
 // !DONE: Step 3 - Uploading Images Functionality
-// !*PARTIAL DONE: Step 4 - Attendance Page Functionality For Admin
-//TODO: Step 5 - Attendance Page Functionality For Employee
-//TODO: Step 6 - Implementation Of the Attendance App
+// !DONE: Step 4 - Attendance Page Functionality For Admin
+// TODO: Step 5 - Attendance Page Functionality For Employee
+// !DONE: Step 6 - Implementation Of the Attendance App

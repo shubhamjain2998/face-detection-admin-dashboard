@@ -127,8 +127,6 @@ const Employee = () => {
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
-	
-
 	const addingDone = (newEmployee) => {
 		const temp = emps;
 		temp.push(newEmployee);
@@ -198,6 +196,9 @@ const Employee = () => {
 					emp.gender.includes(values.gender)
 				);
 			});
+			if (rightSidebar) {
+				dispatch(actions.toggleRightSidebar());
+			}
 			setEmps(filteredOrgs);
 		}
 	};
