@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './testhome.scss';
 import {
 	Container,
 	Row,

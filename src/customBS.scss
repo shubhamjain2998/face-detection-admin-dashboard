@@ -502,7 +502,7 @@ body {
 .dashboard-header {
 	padding-top: 1em;
 	img {
-		height: 10em;
+		height: 13em;
 		width: 100%;
 		border-radius: 1em;
 	}
@@ -828,6 +828,17 @@ body {
 	font-size: 1.4em;
 }
 
+.graph {
+	min-height: 20em;
+}
+
+.graph-header {
+	font-size: 1.5em;
+	margin-top: 1em;
+	margin-bottom: 0.8em;
+	border-bottom: 1px solid #ccc;
+}
+
 @include media-breakpoint-down(lg) {
 	.layout-outer-div {
 		.layout-sidebar {
@@ -922,13 +933,6 @@ body {
 	.rightSide {
 		margin-top: 2em;
 	}
-
-	.profile-card {
-		.profile-card-left {
-			border-right: none;
-			border-bottom: 2px dashed rgb(180, 179, 179);
-		}
-	}
 }
 
 @include media-breakpoint-down(sm) {
@@ -946,6 +950,12 @@ body {
 					}
 				}
 			}
+		}
+	}
+	.profile-card {
+		.profile-card-left {
+			border-right: none;
+			border-bottom: 2px dashed rgb(180, 179, 179);
 		}
 	}
 }

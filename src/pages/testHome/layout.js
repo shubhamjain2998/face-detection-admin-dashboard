@@ -7,6 +7,7 @@ import {
 	AiOutlineUser,
 	AiOutlineUserAdd,
 	AiOutlineLogout,
+	AiOutlineProfile,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { NavLink, useLocation, Link } from 'react-router-dom';
@@ -43,6 +44,7 @@ const Layout = (props) => {
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Department', link: '/dept' },
 			{ name: 'Attendance', link: '/attAdmin' },
+			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 		];
 	}
 
@@ -77,21 +79,32 @@ const Layout = (props) => {
 					</div>
 
 					{user.user.is_superuser ? (
-						'@Admin'
+						<p style={{ textAlign: 'center' }}>@Admin</p>
 					) : (
-						<Link
-							to={{
-								pathname: '/profile',
-								state: { acc: acc.details, org: org.details },
-							}}
-						>
-							<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
-						</Link>
+						<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
 					)}
 				</div>
 
 				{routes.map((route, i) => {
 					if (route.link) {
+						if (route.name === 'My Profile') {
+							return (
+								<NavLink
+									key={route.name + i}
+									to={{
+										pathname: '/profile',
+										state: { acc: acc.details, org: org.details },
+									}}
+								>
+									<div className='route'>
+										{route.icon}
+										<p>{route.name}</p>
+										<span className='upper-curve'></span>
+										<span className='lower-curve'></span>
+									</div>
+								</NavLink>
+							);
+						}
 						return (
 							<NavLink
 								key={route.name + i}

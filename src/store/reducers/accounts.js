@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject, accounts } from './utility';
+import { act } from 'react-dom/test-utils';
 
 const acc = {
 	error: null,
@@ -28,6 +29,8 @@ const acc = {
 	},
 	list: [],
 	department: [],
+	maxAttendanceEmployee: null,
+	minAttendanceEmployee: null,
 };
 
 let updatedDetails = {};
@@ -67,6 +70,12 @@ const accReducer = (state = acc, action) => {
 
 		case actionTypes.FETCH_DEPARTMENTS:
 			return updateObject(state, { department: action.data });
+
+		case actionTypes.SET_MAX_ATTENDANCE_EMPLOYEE:
+			return updateObject(state, { maxAttendanceEmployee: action.data });
+
+		case actionTypes.SET_MIN_ATTENDANCE_EMPLOYEE:
+			return updateObject(state, { minAttendanceEmployee: action.data });
 
 		default:
 			return state;

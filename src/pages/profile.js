@@ -1,7 +1,7 @@
 import React from 'react';
 import Heading from '../components/heading';
 import ProfileCard from '../components/Cards/profileCard';
-import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Container, Row, Col, Tabs, Tab, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import EmployeeCard from '../components/Cards/employeeCard';
 
@@ -17,6 +17,11 @@ const Profile = (props) => {
 	return (
 		<Container fluid>
 			<Heading name='Profile' link='profile' />
+			<Row className='my-2 justify-content-end'>
+				<Col xs={6} sm={4} lg={2}>
+					<Button variant='outline-danger' block>Reset Password</Button>
+				</Col>
+			</Row>
 			<ProfileCard account={orgAccount} org={org} />
 			<hr></hr>
 			<Row className='my-2'>

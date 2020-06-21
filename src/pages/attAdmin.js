@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Row, Table, Form, FormControl } from 'react-bootstrap';
+import {
+	Container,
+	Col,
+	Row,
+	Table,
+	Form,
+	FormControl,
+	Button,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import axios from '../axios-faceDet';
 import { TiTick, TiDeleteOutline } from 'react-icons/ti';
@@ -60,9 +68,6 @@ const AttendanceAdmin = () => {
 						))}
 					</FormControl>
 				</Col>
-				{/* <Col sm={2} xs={4}>
-					<Button>Submit</Button>
-				</Col> */}
 			</Form.Row>
 			<Row>
 				<Col>
@@ -106,6 +111,13 @@ const AttendanceAdmin = () => {
 					</div>
 				</Col>
 			</Row>
+			{/* <Row>
+				<Col xs={{span: 8, offset: 2}} sm={4}>
+					<Button className='mt-3' variant='outline-primary' block>
+						Download Report
+					</Button>
+				</Col>
+			</Row> */}
 		</Container>
 	);
 };

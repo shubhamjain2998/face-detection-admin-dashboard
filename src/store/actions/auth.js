@@ -114,9 +114,7 @@ export const fetchUsers = () => {
 				dispatch(setUsers(res.data));
 			})
 			.catch((err) => {
-				dispatch(
-					userDataFetchingError(showErrors(err))
-				);
+				dispatch(userDataFetchingError(showErrors(err)));
 			});
 	};
 };
@@ -148,6 +146,7 @@ export const loginUser = (userDetails) => {
 			.post('/attendance/auth/login/', {
 				email: userDetails.email,
 				password: userDetails.password,
+				is_staff: true,
 			})
 			.then((res) => {
 				console.log(res);
