@@ -1,36 +1,32 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { useSelector } from 'react-redux';
 
-const EmployeeStat = (props) => {
-	const maxData = useSelector((state) => state.acc.maxAttendanceEmployee);
-	const minData = useSelector((state) => state.acc.minAttendanceEmployee);
-
+const OrgStat = (props) => {
 	const data = {
 		labels: ['Status'],
 		datasets: [
 			{
-				label: 'Present',
+				label: 'Organizations',
 				backgroundColor: 'rgba(37, 79, 180, 0.8)',
 				borderColor: 'rgba(37, 79, 180, 1)',
 				borderWidth: 1,
-				data: maxData ? (props.type === 'max' ? [maxData[1]] : [minData[1]]) : [0],
+				data: [props.org.length],
 				maxBarThickness: 25,
 			},
 			{
-				label: 'Absent',
+				label: 'Active Users',
 				backgroundColor: 'rgba(60, 200, 210, 0.8)',
 				borderColor: 'rgba(60, 200, 210, 1)',
 				borderWidth: 1,
-				data: maxData ? (props.type === 'max' ? [maxData[2]] : [minData[2]]) : [0],
+				data: [props.users.filter((user) => user.is_active).length],
 				maxBarThickness: 25,
 			},
 			{
-				label: 'Leaves',
+				label: 'Inactive Users',
 				backgroundColor: 'rgba(255, 224, 30, 0.8)',
 				borderColor: 'rgba(255, 224, 30, 1)',
 				borderWidth: 1,
-				data: maxData ? (props.type === 'max' ? [maxData[3]] : [minData[3]]) : [0],
+				data: [props.users.filter((user) => !user.is_active).length],
 				maxBarThickness: 25,
 			},
 		],
@@ -47,21 +43,21 @@ const EmployeeStat = (props) => {
 						display: true,
 						position: 'bottom',
 					},
-					scales: {
-						yAxes: [
-							{
-								ticks: {
-									beginAtZero: true,
-									min: 0,
-									max: 35,
-								},
-							},
-						],
-					},
+					// scales: {
+					// 	yAxes: [
+					// 		{
+					// 			ticks: {
+					// 				beginAtZero: true,
+					// 				min: 0,
+					// 				max: 35,
+					// 			},
+					// 		},
+					// 	],
+					// },
 				}}
 			/>
 		</div>
 	);
 };
 
-export default EmployeeStat;
+export default OrgStat;

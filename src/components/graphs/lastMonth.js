@@ -7,6 +7,8 @@ import * as actions from '../../store/actions/index';
 
 const LastMonthStat = (props) => {
 	const employees = useSelector((state) => state.acc.list);
+	const [maxAtt, setMaxAtt] = useState(null);
+	const [minAtt, setMinAtt] = useState(null);
 	const org = useSelector((state) => state.org);
 	const [data, setData] = useState(null);
 
@@ -18,6 +20,9 @@ const LastMonthStat = (props) => {
 	let leave = [];
 
 	useEffect(() => {
+		const CancelToken = axios.CancelToken;
+		const source = CancelToken.source();
+
 		axios
 			.get(
 				'attendance/api/report?orgId=' +
@@ -25,22 +30,35 @@ const LastMonthStat = (props) => {
 					'&month=' +
 					moment().subtract(1, 'M').format('M')
 			)
+
 			.then((res) => {
-				setData(res.data);
+				if (!data) {
+					// console.log(res.data)
+					setData(res.data);
+				}
 			})
 			.catch((err) => console.log(err));
-	}, [org.details]);
+
+		return () => {
+			source.cancel();
+		};
+	}, [org.details, data]);
+
+	useEffect(() => {
+		if (maxAtt && minAtt) {
+			dispatch(actions.setMaxAttendance(maxAtt));
+			dispatch(actions.setMinAttendance(minAtt));
+		}
+	}, [maxAtt, minAtt, dispatch]);
+
+	let maxAttendance = [0, 0, 0, 0];
+	let minAttendance = [0, 0, 0, 0];
 
 	if (data) {
 		let deltaPresent = 0;
 		let deltaAbsent = 0;
 		let deltaLeave = 0;
-		let maxPresent = 0;
-		let maxAbsent = 0;
-		let maxLeave = 0;
-		let minPresent = 0;
-		let minAbsent = 0;
-		let minLeave = 0;
+
 		for (let i in data) {
 			const temp = data[i];
 			for (let j = 0; j < temp.length; j++) {
@@ -52,14 +70,19 @@ const LastMonthStat = (props) => {
 					deltaLeave += 1;
 				}
 			}
-			maxPresent = maxPresent < deltaPresent ? deltaPresent : maxPresent;
-			maxAbsent = maxAbsent < deltaAbsent ? deltaAbsent : maxAbsent;
-			maxLeave = maxLeave < deltaLeave ? deltaLeave : maxLeave;
-			minPresent =
-				minPresent > deltaPresent || minPresent === 0 ? deltaPresent : minPresent;
-			minAbsent =
-				minAbsent > deltaAbsent || minAbsent === 0 ? deltaAbsent : minAbsent;
-			minLeave = minLeave > deltaLeave || minLeave === 0 ? deltaLeave : minLeave;
+
+			if (maxAttendance[1] < deltaPresent || maxAttendance[1] === 0) {
+				maxAttendance[0] = parseInt(i);
+				maxAttendance[1] = deltaPresent;
+				maxAttendance[2] = deltaAbsent;
+				maxAttendance[3] = deltaLeave;
+			}
+			if (minAttendance[1] > deltaPresent || minAttendance[1] === 0) {
+				minAttendance[0] = parseInt(i);
+				minAttendance[1] = deltaPresent;
+				minAttendance[2] = deltaAbsent;
+				minAttendance[3] = deltaLeave;
+			}
 			present.push(deltaPresent);
 			absent.push(deltaAbsent);
 			leave.push(deltaLeave);
@@ -67,8 +90,15 @@ const LastMonthStat = (props) => {
 			deltaAbsent = 0;
 			deltaLeave = 0;
 		}
-		dispatch(actions.setMaxAttendance([maxPresent, maxAbsent, maxLeave]));
-		dispatch(actions.setMinAttendance([minPresent, minAbsent, minLeave]));
+	}
+
+	// console.log(maxAttendance);
+
+	if (data && !maxAtt) {
+		setMaxAtt(maxAttendance);
+	}
+	if (data && !minAtt) {
+		setMinAtt(minAttendance);
 	}
 
 	for (let i = 0; i < employees.length; i++) {
@@ -80,24 +110,24 @@ const LastMonthStat = (props) => {
 		datasets: [
 			{
 				label: 'Present',
-				backgroundColor: 'rgba(75, 192, 192, 0.8)',
-				borderColor: 'rgba(75, 192, 192, 1)',
+				backgroundColor: 'rgba(37, 79, 180, 0.8)',
+				borderColor: 'rgba(37, 79, 180, 1)',
 				borderWidth: 1,
 				data: present,
 				maxBarThickness: 25,
 			},
 			{
 				label: 'Absent',
-				backgroundColor: 'rgba(255, 99, 132, 0.8)',
-				borderColor: 'rgba(255, 99, 132, 1)',
+				backgroundColor: 'rgba(60, 200, 210, 0.8)',
+				borderColor: 'rgba(60, 200, 210, 1)',
 				borderWidth: 1,
 				data: absent,
 				maxBarThickness: 25,
 			},
 			{
 				label: 'Leaves',
-				backgroundColor: 'rgba(255, 206, 86, 0.8)',
-				borderColor: 'rgba(255, 206, 86, 1)',
+				backgroundColor: 'rgba(255, 224, 30, 0.8)',
+				borderColor: 'rgba(255, 224, 30, 1)',
 				borderWidth: 1,
 				data: leave,
 				maxBarThickness: 25,

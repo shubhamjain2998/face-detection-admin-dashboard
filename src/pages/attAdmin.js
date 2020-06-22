@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-	Container,
-	Col,
-	Row,
-	Table,
-	Form,
-	FormControl,
-	Button,
-} from 'react-bootstrap';
+import { Container, Col, Row, Table, Form, FormControl } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import axios from '../axios-faceDet';
 import { TiTick, TiDeleteOutline } from 'react-icons/ti';

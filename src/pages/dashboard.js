@@ -8,6 +8,8 @@ import CountUp from 'react-countup';
 import DailyStat from '../components/graphs/dailyStat';
 import LastMonthStat from '../components/graphs/lastMonth';
 import EmployeeStat from '../components/graphs/employee';
+import defaultImg from '../assets/user.svg';
+import OrgStat from '../components/graphs/org';
 
 const Dashboard = () => {
 	const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const Dashboard = () => {
 	const totalAcc = useSelector((state) => state.acc.list);
 	const totalUser = useSelector((state) => state.user.list);
 	const account = useSelector((state) => state.acc.details);
+	const maxData = useSelector((state) => state.acc.maxAttendanceEmployee);
+	const minData = useSelector((state) => state.acc.minAttendanceEmployee);
 
 	useEffect(() => {
 		if (user.is_superuser) {
@@ -46,7 +50,18 @@ const Dashboard = () => {
 		}
 	}, [dispatch, account.orgId, user.is_superuser]);
 
-	// return <TrainingImages />;
+	let mostProductiveEmp = null;
+	let leastProductiveEmp = null;
+
+	if (maxData) {
+		mostProductiveEmp = totalAcc.filter((emp) => emp.empId === maxData[0])[0];
+		console.log(mostProductiveEmp);
+	}
+
+	if (minData) {
+		leastProductiveEmp = totalAcc.filter((emp) => emp.empId === minData[0])[0];
+	}
+
 	return (
 		<Container fluid>
 			<Row>
@@ -57,12 +72,14 @@ const Dashboard = () => {
 				</Col>
 				<Col xl={2} lg={3} className='right-sidebar dashboard order-2'>
 					<p className='dashboard-heading'>Stats</p>
-					<div className='stats-card'>
-						<h2>
-							<CountUp end={totalOrgs.length} duration={3} />
-						</h2>
-						<p>Organizations registered</p>
-					</div>
+					{user.is_superuser && (
+						<div className='stats-card'>
+							<h2>
+								<CountUp end={totalOrgs.length} duration={3} />
+							</h2>
+							<p>Organizations registered</p>
+						</div>
+					)}
 					<div className='stats-card'>
 						<h2>
 							<CountUp end={totalAcc.length} duration={3} />
@@ -77,7 +94,7 @@ const Dashboard = () => {
 					</div>
 				</Col>
 			</Row>
-			{!user.is_superuser && user.is_staff && (
+			{!user.is_superuser && (
 				<Row className='my-4 mx-2'>
 					<Col sm={12} lg={5} className='my-1'>
 						<h3 className='graph-header'>Today's Statistics</h3>
@@ -89,19 +106,75 @@ const Dashboard = () => {
 					</Col>
 					<Col sm={12} lg={5} className='my-1'>
 						<h3 className='graph-header'>Most Productive Employee</h3>
-						<Row>
-							<Col xs={6}>
-								<EmployeeStat type='max' />
-							</Col>
-						</Row>
+						{maxData && totalAcc && (
+							<Row>
+								<Col xs={6}>
+									<Row className='justify-content-center align-items-center'>
+										<Col xs={6} className='my-2'>
+											<Image
+												src={
+													mostProductiveEmp.profileImg
+														? mostProductiveEmp.profileImg
+														: defaultImg
+												}
+												alt=''
+												fluid
+												roundedCircle
+												// style={{ width: '50%' }}
+											/>
+										</Col>
+										<Col xs={12} className='my-2'>
+											<h6 className='text-center'>
+												{mostProductiveEmp.firstName + ' ' + mostProductiveEmp.lastName}
+											</h6>
+										</Col>
+									</Row>
+								</Col>
+								<Col xs={6}>
+									<EmployeeStat type='max' />
+								</Col>
+							</Row>
+						)}
 					</Col>
 					<Col sm={12} lg={5} className='my-1'>
 						<h3 className='graph-header'>Least Productive Employee</h3>
-						<Row>
-							<Col xs={6}>
-								<EmployeeStat type='min' />
-							</Col>
-						</Row>
+						{minData && totalAcc && (
+							<Row>
+								<Col xs={6}>
+									<Row className='justify-content-center align-items-center'>
+										<Col xs={6} className='my-2'>
+											<Image
+												src={
+													leastProductiveEmp.profileImg
+														? leastProductiveEmp.profileImg
+														: defaultImg
+												}
+												alt=''
+												fluid
+												roundedCircle
+												// style={{ width: '20%' }}
+											/>
+										</Col>
+										<Col xs={12} className='my-2'>
+											<h6 className='text-center'>
+												{leastProductiveEmp.firstName + ' ' + leastProductiveEmp.lastName}
+											</h6>
+										</Col>
+									</Row>
+								</Col>
+								<Col xs={6}>
+									<EmployeeStat type='min' />
+								</Col>
+							</Row>
+						)}
+					</Col>
+				</Row>
+			)}
+			{user.is_superuser && (
+				<Row className='my-4 mx-2'>
+					<Col sm={12} lg={5} className='my-1'>
+						<h3 className='graph-header'>Organizations Registered</h3>
+						<OrgStat org={totalOrgs} users={totalUser} />
 					</Col>
 				</Row>
 			)}

@@ -1,6 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject, accounts } from './utility';
-import { act } from 'react-dom/test-utils';
 
 const acc = {
 	error: null,

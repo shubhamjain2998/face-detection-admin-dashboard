@@ -162,7 +162,7 @@ export const loginUser = (userDetails) => {
 									dispatch(setOrg(res.data));
 								})
 								.catch((err) => {
-									console.log(err.response.data);
+									console.log(err);
 									dispatch(loginFailed(showErrors(err)));
 								});
 						} else {

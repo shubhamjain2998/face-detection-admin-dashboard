@@ -10,7 +10,7 @@ import {
 	AiOutlineProfile,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { NavLink, useLocation, Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Sidebar from '../../components/Layout/sidebar';
 import Backdrop from '../../components/Layout/backdrop';
 import moment from 'moment';
@@ -41,10 +41,11 @@ const Layout = (props) => {
 	} else {
 		routes = [
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
+			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
 			{ name: 'Attendance', link: '/attAdmin' },
-			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 		];
 	}
 
@@ -95,6 +96,8 @@ const Layout = (props) => {
 										pathname: '/profile',
 										state: { acc: acc.details, org: org.details },
 									}}
+									activeClassName='active-link'
+									className='link'
 								>
 									<div className='route'>
 										{route.icon}

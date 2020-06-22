@@ -12,6 +12,9 @@ const DailyStat = () => {
 	let leave = 0;
 
 	useEffect(() => {
+		const CancelToken = axios.CancelToken;
+		const source = CancelToken.source();
+
 		axios
 			.get(
 				'/attendance/api/daily_report?orgId=' +
@@ -23,6 +26,10 @@ const DailyStat = () => {
 				setData(res.data);
 			})
 			.catch((err) => console.log(err));
+
+		return () => {
+			source.cancel();
+		};
 	}, [org.details]);
 
 	if (data) {
@@ -39,14 +46,14 @@ const DailyStat = () => {
 				// data: [100, 20, 5],
 				data: [present, absent, leave],
 				backgroundColor: [
-					'rgba(75, 192, 192, 0.8)',
-					'rgba(255, 99, 132, 0.8)',
-					'rgba(255, 206, 86, 0.8)',
+					'rgba(37, 79, 180, 0.8)',
+					'rgba(60, 200, 210, 0.8)',
+					'rgba(255, 224, 30, 0.8)',
 				],
 				borderColor: [
-					'rgba(75, 192, 192, 1)',
-					'rgba(255, 99, 132, 1)',
-					'rgba(255, 206, 86, 1)',
+					'rgba(37, 79, 180, 1)',
+					'rgba(60, 200, 210, 1)',
+					'rgba(255, 224, 30, 1)',
 				],
 				borderWidth: 1,
 			},
