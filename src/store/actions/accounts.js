@@ -36,6 +36,20 @@ export const setAccounts = (Accounts) => {
 	};
 };
 
+export const setMaxAttendance = (data) => {
+	return {
+		type: actionTypes.SET_MAX_ATTENDANCE_EMPLOYEE,
+		data: data,
+	};
+};
+
+export const setMinAttendance = (data) => {
+	return {
+		type: actionTypes.SET_MIN_ATTENDANCE_EMPLOYEE,
+		data: data,
+	};
+};
+
 export const fetchDept = () => {
 	return (dispatch) => {
 		axios
@@ -82,9 +96,7 @@ export const accountCreation = (accountDetails, user, org) => {
 			})
 			.catch((err) => {
 				// console.log(err.response.data);
-				dispatch(
-					accountCreationFailed(showErrors(err))
-				);
+				dispatch(accountCreationFailed(showErrors(err)));
 			});
 	};
 };

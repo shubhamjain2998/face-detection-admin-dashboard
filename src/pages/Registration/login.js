@@ -14,7 +14,7 @@ const Login = () => {
 			{user.error ? <p className='py-2 text-danger text-capitalize'>{user.error}</p> : ''}
 			<div className='d-flex justify-content-center my-3'>
 				<PropagateLoader
-					size={15}
+					size={10}
 					color={"#654aa1"}
 					loading={user.loading && org.loading && account.loading}
 					// loading={true}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './testhome.scss';
 import {
 	Container,
 	Row,
@@ -95,59 +94,51 @@ const Home = () => {
 					</Col>
 				</Row>
 			)}
-			<Row className='innerContainer justify-content-around'>
-				<Col xs={12} lg={5} className='forms rightSide'>
+			<Row className='inner-container justify-content-center'>
+				<Col xs={12} lg={5} className='pt-4 px-4 roleSelect'>
+					<Col xs={12} className='mt-4'>
+						<div className='bg'>
+							<Image fluid src={bgImg} alt=''></Image>
+						</div>
+					</Col>
+				</Col>
+				<Col xs={10} lg={5} className='forms rightSide'>
 					{choice === 'login' ? (
 						<div className='login-tab'>
 							<div className='heading'>
-								<h3>
+								<p>
 									Hello, <br></br>Welcome Back
-								</h3>
+								</p>
 							</div>
 							<Login />
 						</div>
 					) : (
 						<RegisterTab registered={onLogin} />
 					)}
-				</Col>
-				<Col xs={12} lg={5} className='pt-4 px-4 roleSelect'>
-					<Col xs={12} className='my-4 login'>
-						<div className='left-box'>
-							<h6 className='mt-2'>Select Your Role</h6>
-							<small className='text-secondary'>
-								Choose a role that better defines you.
-							</small>
-							<Form className='my-3 py-3'>
-								<Form.Row className='justify-content-around'>
-									<Col
-										xs={4}
-										className={
-											choice === 'login' ? 'radioButton radioButton-active' : 'radioButton'
-										}
-										onClick={onLogin}
-									>
-										<p>Registered User</p>
-									</Col>
-									<Col
-										xs={4}
-										className={
-											choice === 'register'
-												? 'radioButton radioButton-active'
-												: 'radioButton'
-										}
-										onClick={onRegister}
-									>
-										<p>New User</p>
-									</Col>
-								</Form.Row>
-							</Form>
-						</div>
-					</Col>
-					<Col xs={12} className='mt-4'>
-						<div className='bg'>
-							<Image fluid src={bgImg} alt=''></Image>
-						</div>
-					</Col>
+					<Form className='mb-3 pb-3'>
+						<Form.Row className='justify-content-around'>
+							<Col
+								xs={4}
+								className={
+									choice === 'login' ? 'radioButton radioButton-active' : 'radioButton'
+								}
+								onClick={onLogin}
+							>
+								<p>Login</p>
+							</Col>
+							<Col
+								xs={4}
+								className={
+									choice === 'register'
+										? 'radioButton radioButton-active'
+										: 'radioButton'
+								}
+								onClick={onRegister}
+							>
+								<p>Register</p>
+							</Col>
+						</Form.Row>
+					</Form>
 				</Col>
 			</Row>
 		</Container>

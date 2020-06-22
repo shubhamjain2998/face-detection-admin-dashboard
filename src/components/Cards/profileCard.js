@@ -46,7 +46,11 @@ const ProfileCard = ({ account, org }) => {
 					</Col>
 					<Col xs={8}>
 						{values.map((f, i) => (
-							<p key={f + i} className='mb-1 py-1 text-secondary h7'>
+							<p
+								key={f + i}
+								className='mb-1 py-1 text-secondary h7'
+								style={{ overflowWrap: 'anywhere' }}
+							>
 								{f}
 							</p>
 						))}

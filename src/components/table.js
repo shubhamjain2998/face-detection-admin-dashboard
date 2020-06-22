@@ -94,9 +94,13 @@ const CustomTable = (props) => {
 								<tr key={r + i} className='d-flex'>
 									<td className='col-1'>{i + 1}</td>
 									<td className='col-2'>{r.firstName + ' ' + r.lastName}</td>
-									<td className='col-2'>{r.phone}</td>
+									<td className='col-2' style={{ overflowWrap: 'anywhere' }}>
+										{r.phone}
+									</td>
 									<td className='col-2'>{r.idType}</td>
-									<td className='col-2'>{r.idProof}</td>
+									<td className='col-2' style={{ overflowWrap: 'anywhere' }}>
+										{r.idProof}
+									</td>
 									<td className='col-2'>{r.role}</td>
 									<td>
 										<BsThreeDotsVertical />

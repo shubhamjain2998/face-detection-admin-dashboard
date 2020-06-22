@@ -127,8 +127,6 @@ const Employee = () => {
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
-	
-
 	const addingDone = (newEmployee) => {
 		const temp = emps;
 		temp.push(newEmployee);
@@ -198,6 +196,9 @@ const Employee = () => {
 					emp.gender.includes(values.gender)
 				);
 			});
+			if (rightSidebar) {
+				dispatch(actions.toggleRightSidebar());
+			}
 			setEmps(filteredOrgs);
 		}
 	};
@@ -283,7 +284,7 @@ const Employee = () => {
 											{!loading &&
 												emps &&
 												emps.map((emp, i) => (
-													<Col key={emp.empId} xs={12} sm={6} md={4} xl={3} className='my-3'>
+													<Col key={emp.empId} xs={6} md={4} xl={3} className='my-3'>
 														<EmployeeCard
 															employee={emp}
 															onDelete={onDeleteHandler}

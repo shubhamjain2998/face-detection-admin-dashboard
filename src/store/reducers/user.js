@@ -9,6 +9,7 @@ const initialState = {
 		pk: null,
 		email: null,
 		is_superuser: false,
+		is_staff: false,
 	},
 	list: [],
 	rightSidebar: false,
@@ -55,6 +56,7 @@ const userReducer = (state = initialState, action) => {
 				pk: action.data.id,
 				email: action.data.email,
 				is_superuser: action.data.is_superuser,
+				is_staff: action.data.is_staff,
 			});
 			return updateObject(state, {
 				error: null,

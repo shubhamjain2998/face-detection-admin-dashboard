@@ -60,17 +60,14 @@ const AttendanceAdmin = () => {
 						))}
 					</FormControl>
 				</Col>
-				{/* <Col sm={2} xs={4}>
-					<Button>Submit</Button>
-				</Col> */}
 			</Form.Row>
 			<Row>
 				<Col>
-					<div className='table-responsive'>
+					<div className='table-responsive attendance-table'>
 						<Table>
 							<thead>
 								<tr>
-									<th>Employee</th>
+									<td>Employee</td>
 									{daysInMonth(month + 1, moment().year()).map((d) => (
 										<td key={d}>{d}</td>
 									))}
@@ -106,6 +103,13 @@ const AttendanceAdmin = () => {
 					</div>
 				</Col>
 			</Row>
+			{/* <Row>
+				<Col xs={{span: 8, offset: 2}} sm={4}>
+					<Button className='mt-3' variant='outline-primary' block>
+						Download Report
+					</Button>
+				</Col>
+			</Row> */}
 		</Container>
 	);
 };

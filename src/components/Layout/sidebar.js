@@ -5,9 +5,10 @@ import {
 	AiOutlineUser,
 	AiOutlineUserAdd,
 	AiOutlineLogout,
+	AiOutlineProfile,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import john from '../../assets/avatar-02.jpg';
 import user_default from '../../assets/user.svg';
@@ -43,7 +44,9 @@ const Sidebar = (props) => {
 	} else {
 		routes = [
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
+			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
 			{ name: 'Attendance', link: '/attAdmin' },
 			{ name: 'Logout', link: '/logout', icon: <AiOutlineLogout /> },
@@ -72,14 +75,7 @@ const Sidebar = (props) => {
 						{user.is_superuser ? (
 							'@Admin'
 						) : (
-							<Link
-								to={{
-									pathname: '/profile',
-									state: { acc: acc.details, org: org.details },
-								}}
-							>
-								<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
-							</Link>
+							<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
 						)}
 					</div>
 				</ListGroup.Item>
@@ -108,6 +104,23 @@ const Sidebar = (props) => {
 
 								{authDropdown ? <div className='dropdown'>{dropDownItems}</div> : ''}
 							</Fragment>
+						);
+					} else if (route.name === 'My Profile') {
+						return (
+							<NavLink
+								key={route.name + i}
+								to={{
+									pathname: '/profile',
+									state: { acc: acc.details, org: org.details },
+								}}
+								activeClassName='active-link'
+								className='link'
+							>
+								<ListGroup.Item onClick={props.showSidebar}>
+									{route.icon ? route.icon : ''}
+									{route.name}
+								</ListGroup.Item>
+							</NavLink>
 						);
 					}
 					return (

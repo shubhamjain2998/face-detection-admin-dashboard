@@ -2,16 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ClientCard from '../components/Cards/clientCard';
 import Heading from '../components/heading';
 // import john from '../assets/avatar-02.jpg';
-import {
-	Row,
-	Col,
-	Button,
-	
-	Container,
-	
-	Tab,
-	Nav,
-} from 'react-bootstrap';
+import { Row, Col, Button, Container, Tab, Nav } from 'react-bootstrap';
 import { BsPlus, BsGrid3X3Gap } from 'react-icons/bs';
 import { FaBars } from 'react-icons/fa';
 import CustomModal from '../components/modal';
@@ -28,7 +19,7 @@ const Clients = (props) => {
 	const [loading, setLoading] = useState(false);
 	const [orgs, setOrgs] = useState(null);
 	const [fetchedOrgs, setFetchedOrgs] = useState(false);
-	const [filters, setFilters] = useState(null);
+	// const [filters, setFilters] = useState(null);
 
 	const user = useSelector((state) => state.user);
 	const storedOrgs = useSelector((state) => state.org.list);
@@ -85,8 +76,6 @@ const Clients = (props) => {
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
-	
-
 	const addingDone = (newOrg) => {
 		// const temp = orgs;
 		// temp.push(newOrg);
@@ -128,7 +117,7 @@ const Clients = (props) => {
 
 	const onSubmitFilters = (values) => {
 		// console.log(values);
-		setFilters(values);
+		// setFilters(values);
 		if (storedOrgs) {
 			const filteredOrgs = storedOrgs.filter((org) => {
 				return (
@@ -138,6 +127,9 @@ const Clients = (props) => {
 					parseInt(org.staffcount) >= values.staffCount
 				);
 			});
+			if (user.rightSidebar) {
+				dispatch(actions.toggleRightSidebar());
+			}
 			setOrgs(filteredOrgs);
 		}
 	};
@@ -167,7 +159,7 @@ const Clients = (props) => {
 							<Nav>
 								<Nav.Item>
 									<Nav.Link eventKey='card'>
-										<span className='px-2 makeLink' >
+										<span className='px-2 makeLink'>
 											<BsGrid3X3Gap />
 										</span>
 										<span>Segment</span>
@@ -176,7 +168,7 @@ const Clients = (props) => {
 
 								<Nav.Item>
 									<Nav.Link eventKey='table'>
-										<span className='px-2 makeLink' >
+										<span className='px-2 makeLink'>
 											<FaBars />
 										</span>
 										<span>ListView</span>
@@ -193,13 +185,7 @@ const Clients = (props) => {
 											{!loading &&
 												orgs &&
 												orgs.map((org, i) => (
-													<Col
-														key={org.Name + i}
-														xs={6}
-														md={4}
-														xl={3}
-														className='my-3'
-													>
+													<Col key={org.Name + i} xs={6} md={4} xl={3} className='my-3'>
 														<ClientCard client={org} onDelete={onDeleteHandler}></ClientCard>
 													</Col>
 												))}

@@ -7,9 +7,10 @@ import {
 	AiOutlineUser,
 	AiOutlineUserAdd,
 	AiOutlineLogout,
+	AiOutlineProfile,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { NavLink, useLocation, Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Sidebar from '../../components/Layout/sidebar';
 import Backdrop from '../../components/Layout/backdrop';
 import moment from 'moment';
@@ -40,7 +41,9 @@ const Layout = (props) => {
 	} else {
 		routes = [
 			{ name: 'Dashboard', link: '/home', icon: <AiOutlineDashboard /> },
+			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
+			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
 			{ name: 'Department', link: '/dept' },
 			{ name: 'Attendance', link: '/attAdmin' },
 		];
@@ -77,21 +80,34 @@ const Layout = (props) => {
 					</div>
 
 					{user.user.is_superuser ? (
-						'@Admin'
+						<p style={{ textAlign: 'center' }}>@Admin</p>
 					) : (
-						<Link
-							to={{
-								pathname: '/profile',
-								state: { acc: acc.details, org: org.details },
-							}}
-						>
-							<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
-						</Link>
+						<p style={{ textAlign: 'center' }}>@{acc.details.username}</p>
 					)}
 				</div>
 
 				{routes.map((route, i) => {
 					if (route.link) {
+						if (route.name === 'My Profile') {
+							return (
+								<NavLink
+									key={route.name + i}
+									to={{
+										pathname: '/profile',
+										state: { acc: acc.details, org: org.details },
+									}}
+									activeClassName='active-link'
+									className='link'
+								>
+									<div className='route'>
+										{route.icon}
+										<p>{route.name}</p>
+										<span className='upper-curve'></span>
+										<span className='lower-curve'></span>
+									</div>
+								</NavLink>
+							);
+						}
 						return (
 							<NavLink
 								key={route.name + i}

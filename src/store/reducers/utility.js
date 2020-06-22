@@ -6,11 +6,15 @@ export const updateObject = (oldObject, updatedProperties) => {
 };
 
 export const showErrors = (err) => {
-	const errors = err.response.data;
 	let msg = '';
-	for (let error in errors) {
-		// console.log(errors[error].join(' '));
-		msg = msg.concat(' ', errors[error].join(' '));
+	if (!err.response) {
+		msg = msg.concat(err.message);
+	} else {
+		const errors = err.response.data;
+		for (let error in errors) {
+			// console.log(errors[error].join(' '));
+			msg = msg.concat(' ', errors[error].join(' '));
+		}
 	}
 	return msg;
 };
