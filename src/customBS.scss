@@ -587,13 +587,95 @@ body {
 	}
 
 	.nav-tabs .nav-link {
-		border-color: white white $custom-color;
-		border-radius: unset !important;
+		border-color: white;
+		border-radius: 0;
 	}
 
 	.nav-tabs .nav-link.active {
-		border-color: $custom-color $custom-color white;
-		border-radius: unset !important;
+		border-bottom: 0.3em solid #654aa1 !important;
+		animation: slide-down 0.5s ease-out;
+	}
+}
+
+@keyframes slide-down {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.profile-wrapper {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	grid-auto-rows: minmax(18em, auto);
+	gap: 1em;
+
+	& > div {
+		padding: 1em;
+	}
+
+	.profile {
+		grid-row: 1/3;
+	}
+}
+
+.profile-card {
+	display: flex;
+	flex-direction: column;
+	padding: 1em 2em;
+	align-items: center;
+	background: #fff;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+	border-radius: 1em;
+
+	.profile-detail {
+		padding: 1em;
+		margin-top: 1em;
+		width: 100%;
+		border-radius: 1em;
+		background-color: rgb(241, 240, 240);
+
+		p {
+			margin-bottom: 0;
+			font-size: 0.8em;
+			font-weight: bold;
+			color: #666;
+		}
+
+		h6 {
+			font-weight: bold;
+			overflow-wrap: anywhere;
+		}
+	}
+
+	img {
+		width: 30%;
+		padding: 0.8em 0;
+	}
+}
+
+.profile-stats {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 2em;
+	row-gap: 1em;
+
+	.profile-stats-card {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 1em;
+		background: #fff;
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+		p {
+			margin-bottom: 0;
+			text-align: center;
+			text-transform: capitalize;
+		}
 	}
 }
 
@@ -764,15 +846,6 @@ body {
 	clear: both;
 }
 
-.profile-card {
-	background: #fff;
-	border-radius: 1rem;
-	box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
-	.profile-card-left {
-		border-right: 2px dashed rgb(180, 179, 179);
-	}
-}
-
 .attendance-table {
 	&.table-responsive {
 		&::-webkit-scrollbar-track {
@@ -933,6 +1006,10 @@ body {
 	.rightSide {
 		margin-top: 2em;
 	}
+	.profile-wrapper {
+		grid-template-columns: 100%;
+		column-gap: 0;
+	}
 }
 
 @include media-breakpoint-down(sm) {
@@ -950,12 +1027,6 @@ body {
 					}
 				}
 			}
-		}
-	}
-	.profile-card {
-		.profile-card-left {
-			border-right: none;
-			border-bottom: 2px dashed rgb(180, 179, 179);
 		}
 	}
 }
