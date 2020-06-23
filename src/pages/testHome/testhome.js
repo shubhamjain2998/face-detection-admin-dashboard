@@ -76,7 +76,7 @@ const Home = () => {
 			{/* {sw.initialized && alert('page has been saved for offline use')} */}
 			{sw.updated && (
 				<Row className='py-3 mb-2 justify-content-center'>
-					<Col sm={12} md={6}>
+					<Col xs={12} md={6}>
 						<Alert
 							show={showError}
 							variant='primary'

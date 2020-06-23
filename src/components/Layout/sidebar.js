@@ -8,6 +8,8 @@ import {
 	AiOutlineProfile,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
+import { FcDepartment } from 'react-icons/fc';
+import { IoIosPeople } from 'react-icons/io';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import john from '../../assets/avatar-02.jpg';
@@ -36,8 +38,8 @@ const Sidebar = (props) => {
 			{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
-			{ name: 'Department', link: '/dept' },
-			{ name: 'Attendance admin', link: '/attAdmin' },
+			{ name: 'Department', link: '/dept', icon: <FcDepartment /> },
+			{ name: 'Attendance admin', link: '/attAdmin', icon: <IoIosPeople /> },
 			{ name: 'Attendance employee', link: '/home' },
 			{ name: 'Logout', link: '/logout', icon: <AiOutlineLogout /> },
 		];
@@ -47,8 +49,8 @@ const Sidebar = (props) => {
 			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
-			{ name: 'Department', link: '/dept' },
-			{ name: 'Attendance', link: '/attAdmin' },
+			{ name: 'Department', link: '/dept', icon: <FcDepartment /> },
+			{ name: 'Attendance', link: '/attAdmin', icon: <IoIosPeople /> },
 			{ name: 'Logout', link: '/logout', icon: <AiOutlineLogout /> },
 		];
 	}

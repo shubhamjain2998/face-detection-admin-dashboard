@@ -15,9 +15,9 @@ const ProfileCard = ({ account, org }) => {
 			<Badge pill variant='success' className='mt-2'>
 				Non Premium User
 			</Badge>
-			<Button variant='warning' block className='w-75 my-3'>
+			{/* <Button variant='warning' block className='w-75 my-3'>
 				Send Message
-			</Button>
+			</Button> */}
 			<div className='profile-detail'>
 				<p>Email</p>
 				<h6>{account.emailId}</h6>

@@ -43,7 +43,7 @@ const Dashboard = () => {
 			axios
 				.get('/attendance/api/accounts/filter?orgId=' + account.orgId)
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(actions.setAccounts(res.data));
 				})
 				.catch((err) => console.log(err.response.data));
@@ -53,12 +53,12 @@ const Dashboard = () => {
 	let mostProductiveEmp = null;
 	let leastProductiveEmp = null;
 
-	if (maxData) {
+	if (maxData && totalAcc) {
 		mostProductiveEmp = totalAcc.filter((emp) => emp.empId === maxData[0])[0];
-		console.log(mostProductiveEmp);
+		// console.log(mostProductiveEmp);
 	}
 
-	if (minData) {
+	if (minData && totalAcc) {
 		leastProductiveEmp = totalAcc.filter((emp) => emp.empId === minData[0])[0];
 	}
 
@@ -106,7 +106,7 @@ const Dashboard = () => {
 					</Col>
 					<Col sm={12} lg={5} className='my-1'>
 						<h3 className='graph-header'>Most Productive Employee</h3>
-						{maxData && totalAcc && (
+						{totalAcc && maxData && mostProductiveEmp && (
 							<Row>
 								<Col xs={6}>
 									<Row className='justify-content-center align-items-center'>
@@ -138,7 +138,7 @@ const Dashboard = () => {
 					</Col>
 					<Col sm={12} lg={5} className='my-1'>
 						<h3 className='graph-header'>Least Productive Employee</h3>
-						{minData && totalAcc && (
+						{minData && totalAcc && mostProductiveEmp && (
 							<Row>
 								<Col xs={6}>
 									<Row className='justify-content-center align-items-center'>

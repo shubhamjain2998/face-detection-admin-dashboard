@@ -28,28 +28,6 @@ const Profile = (props) => {
 					</Button>
 				</Col>
 			</Row>
-			{/* <ProfileCard account={orgAccount} org={org} />
-			<hr></hr>
-			<Row className='my-2'>
-				<Col sm={{ span: 10, offset: 1 }} xs={12} className='profile-tabs'>
-					<Tabs
-						defaultActiveKey='employee'
-						id='uncontrolled-tab-example'
-						className='mt-3 text-primary'
-					>
-						<Tab eventKey='employee' title='Employees'>
-							<Row>
-								{orgEmployees.map((oe) => (
-									<Col key={oe.pk} xs={6} lg={3} className='my-2'>
-										<EmployeeCard employee={oe} />
-									</Col>
-								))}
-							</Row>
-						</Tab>
-						<Tab eventKey='department' title='Departments'></Tab>
-					</Tabs>
-				</Col>
-			</Row> */}
 			<div className='profile-wrapper'>
 				<div className='profile'>
 					<ProfileCard account={orgAccount} org={org} />

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from '../../axios-faceDet';
 import moment from 'moment';
 import * as actions from '../../store/actions/index';
+import Loader from '../loader';
 
 const LastMonthStat = (props) => {
 	const employees = useSelector((state) => state.acc.list);
@@ -136,33 +137,38 @@ const LastMonthStat = (props) => {
 	};
 
 	return (
-		<div className='graph'>
-			{data && (
-				<HorizontalBar
-					data={Data}
-					options={{
-						// responsive: true,
-						maintainAspectRatio: false,
-						legend: {
-							display: true,
-							position: 'bottom',
-						},
-						scales: {
-							xAxes: [
-								{
-									stacked: true,
-								},
-							],
-							yAxes: [
-								{
-									stacked: true,
-								},
-							],
-						},
-					}}
-				/>
-			)}
-		</div>
+		<>
+			<div className='my-3'>
+				<Loader loading={data ? false : true} />
+			</div>
+			<div className='graph'>
+				{data && (
+					<HorizontalBar
+						data={Data}
+						options={{
+							// responsive: true,
+							maintainAspectRatio: false,
+							legend: {
+								display: true,
+								position: 'bottom',
+							},
+							scales: {
+								xAxes: [
+									{
+										stacked: true,
+									},
+								],
+								yAxes: [
+									{
+										stacked: true,
+									},
+								],
+							},
+						}}
+					/>
+				)}
+			</div>
+		</>
 	);
 };
 

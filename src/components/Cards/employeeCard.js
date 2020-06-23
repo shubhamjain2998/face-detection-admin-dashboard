@@ -34,13 +34,17 @@ const EmployeeCard = ({ employee, onDelete }) => {
 
 	return (
 		<Card className='emp-card position-relative'>
-			<Card.Title className='mb-0 position-absolute w-100'>
+			{/* <Card.Title className='mb-0 position-absolute w-100'>
 				<span className='float-right mx-2 my-2' style={{ cursor: 'pointer' }}>
 					<MdEdit className='mx-1 text-primary' onClick={handleShow} />
 					<BsTrash className='mx-1 text-danger' onClick={handleShowDelete} />
 				</span>
-			</Card.Title>
-			<div className='d-flex justify-content-center pb-1 pt-3'>
+			</Card.Title> */}
+			<div className='client-card-top'>
+				<MdEdit className='mx-1 text-primary' onClick={handleShow} />
+				<BsTrash className='mx-1 text-danger' onClick={handleShowDelete} />
+			</div>
+			<div className='d-flex justify-content-center pb-1'>
 				<Image
 					src={emp.profileImg ? emp.profileImg : defaultImg}
 					alt=''
@@ -59,7 +63,7 @@ const EmployeeCard = ({ employee, onDelete }) => {
 					{emp.role}
 				</p>
 
-				<Button onClick={handleShowTraining} variant='outline-primary' size='sm'>
+				<Button onClick={handleShowTraining} variant='outline-primary'>
 					Setup Face Detection
 				</Button>
 			</Card.Body>
