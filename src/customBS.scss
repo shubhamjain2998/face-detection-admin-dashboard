@@ -921,6 +921,10 @@ body {
 	border-bottom: 1px solid #ccc;
 }
 
+.download-button {
+	font-size: 1em;
+}
+
 @include media-breakpoint-down(lg) {
 	.layout-outer-div {
 		.layout-sidebar {

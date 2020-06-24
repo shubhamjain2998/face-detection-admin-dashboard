@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Row, Table, Form, FormControl } from 'react-bootstrap';
+import {
+	Container,
+	Col,
+	Row,
+	Table,
+	Form,
+	FormControl,
+	Button,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import axios from '../axios-faceDet';
 import { TiTick, TiDeleteOutline } from 'react-icons/ti';
 import moment from 'moment';
+import FileDownload from 'js-file-download';
 
 let months = [];
 
@@ -26,6 +35,8 @@ const daysInMonth = (month, year) => {
 
 const AttendanceAdmin = () => {
 	const employees = useSelector((state) => state.acc.list);
+	const org = useSelector((state) => state.org);
+	const user = useSelector((state) => state.user.user);
 	const [att, setAtt] = useState(null);
 	const [month, setMonth] = useState(moment(months[0]).month());
 
@@ -43,6 +54,20 @@ const AttendanceAdmin = () => {
 	const onChangeHandler = (event) => {
 		event.preventDefault();
 		setMonth(parseInt(event.target.value));
+	};
+
+	const generateReport = () => {
+		axios
+			.get(
+				`http://localhost:8000/attendance/api/report_download?orgId=${org.details.pk}&month=${month}`
+			)
+			.then((res) =>
+				FileDownload(
+					res.data,
+					`report ${moment().format('DD-MM-YYYY,hh:mm:ss a')}.csv`
+				)
+			)
+			.catch((err) => console.log(err));
 	};
 
 	return (
@@ -103,13 +128,20 @@ const AttendanceAdmin = () => {
 					</div>
 				</Col>
 			</Row>
-			{/* <Row>
-				<Col xs={{span: 8, offset: 2}} sm={4}>
-					<Button className='mt-3' variant='outline-primary' block>
-						Download Report
-					</Button>
-				</Col>
-			</Row> */}
+			{!user.is_superuser && (
+				<Row className='justify-content-center my-3'>
+					<Col xs={6} sm={4}>
+						<Button
+							className='mt-3 download-button'
+							variant='outline-primary'
+							block
+							onClick={generateReport}
+						>
+							Download as CSV
+						</Button>
+					</Col>
+				</Row>
+			)}
 		</Container>
 	);
 };

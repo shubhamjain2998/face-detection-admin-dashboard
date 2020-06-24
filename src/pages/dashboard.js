@@ -47,6 +47,7 @@ const Dashboard = () => {
 					dispatch(actions.setAccounts(res.data));
 				})
 				.catch((err) => console.log(err.response.data));
+			dispatch(actions.fetchUsers());
 		}
 	}, [dispatch, account.orgId, user.is_superuser]);
 
