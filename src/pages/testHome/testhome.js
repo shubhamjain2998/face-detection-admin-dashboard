@@ -94,7 +94,7 @@ const Home = () => {
 					</Col>
 				</Row>
 			)}
-			<Row className='inner-container justify-content-center'>
+			<Row className='inner-container justify-content-center w-100'>
 				<Col xs={12} lg={5} className='pt-4 px-4 roleSelect'>
 					<Col xs={12} className='mt-4'>
 						<div className='bg'>

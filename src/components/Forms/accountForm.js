@@ -258,6 +258,7 @@ const AccountForm = (props) => {
 					.post('/attendance/api/user/register', {
 						email: values.email,
 						password: values.password,
+						is_staff: false,
 					})
 					.then((res) => {
 						// console.log(res);

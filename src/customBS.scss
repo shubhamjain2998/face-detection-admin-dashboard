@@ -384,7 +384,7 @@ body {
 		.content {
 			// position: fixed;
 			// height: 100%;
-			background-color: rgb(255, 255, 255);
+			background-color: #fffcfc;
 			border-radius: 1em 0 0 1em;
 			overflow-y: scroll;
 
@@ -739,6 +739,7 @@ body {
 		letter-spacing: 0.08em;
 		text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
 		font-weight: 590;
+		cursor: pointer;
 	}
 
 	table tr:first-child:hover {
@@ -920,6 +921,13 @@ body {
 	margin-bottom: 0.8em;
 	border-bottom: 1px solid #ccc;
 }
+
+// .dash-graph {
+// 	background-color: rgba(255, 255, 255, 0.8);
+// 	border-radius: 2em;
+// 	box-shadow: 20px 20px 60px #bec7d6, -20px -20px 60px #ffffff;
+// 	padding: 2em 1em;
+// }
 
 .download-button {
 	font-size: 1em;

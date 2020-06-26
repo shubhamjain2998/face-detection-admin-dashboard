@@ -59,7 +59,7 @@ const AttendanceAdmin = () => {
 	const generateReport = () => {
 		axios
 			.get(
-				`http://localhost:8000/attendance/api/report_download?orgId=${org.details.pk}&month=${month}`
+				`/attendance/api/report_download?orgId=${org.details.pk}&month=${month+1}`
 			)
 			.then((res) =>
 				FileDownload(

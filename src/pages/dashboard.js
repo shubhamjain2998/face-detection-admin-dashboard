@@ -97,15 +97,15 @@ const Dashboard = () => {
 			</Row>
 			{!user.is_superuser && (
 				<Row className='my-4 mx-2'>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Today's Statistics</h3>
 						<DailyStat />
 					</Col>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Last Month Productivity</h3>
 						<LastMonthStat />
 					</Col>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Most Productive Employee</h3>
 						{totalAcc && maxData && mostProductiveEmp && (
 							<Row>
@@ -137,7 +137,7 @@ const Dashboard = () => {
 							</Row>
 						)}
 					</Col>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Least Productive Employee</h3>
 						{minData && totalAcc && mostProductiveEmp && (
 							<Row>
