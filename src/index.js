@@ -15,6 +15,7 @@ import orgReducer from './store/reducers/org';
 import accReducer from './store/reducers/accounts';
 import * as actions from './store/actions/index';
 import swReducer from './store/reducers/serviceWorker';
+import TestPayment from './components/testPayment';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -35,6 +36,7 @@ const app = (
 		<BrowserRouter>
 			<React.StrictMode>
 				<App />
+				{/* <TestPayment /> */}
 			</React.StrictMode>
 		</BrowserRouter>
 	</Provider>

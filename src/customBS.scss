@@ -560,19 +560,23 @@ body {
 	position: relative;
 
 	&:hover {
-		transform: scale(1.05);
+		z-index: 100;
+		&::before {
+			// transform: scale(1.05);
+			clip-path: circle(75% at 50% 50%);
+		}
 	}
 
-	// &::before {
-	// 	position: absolute;
-	// 	content: '';
-	// 	background-color: rgba(17, 30, 51, .9);
-	// 	clip-path: circle(25% at 0 0);
-	// 	z-index: 1;
-	// 	height: 100%;
-	// 	width: 100%;
-	// 	transition: clip-path .5s ease-in-out;
-	// }
+	&::before {
+		position: absolute;
+		content: '';
+		background-color: rgba(60, 200, 210, 0.2);
+		clip-path: circle(25% at 0 0);
+		z-index: 1;
+		height: 100%;
+		width: 100%;
+		transition: clip-path 0.5s ease-in-out;
+	}
 
 	.client-card-top {
 		display: flex;
@@ -931,6 +935,31 @@ body {
 
 .download-button {
 	font-size: 1em;
+}
+.leave-icon {
+	path:first-child,
+	g {
+		fill: rgb(248, 232, 0) !important;
+	}
+	path:nth-child(2),
+	path:last-child {
+		fill: rgb(89, 86, 1) !important;
+	}
+}
+
+.att-icon-detail {
+	padding: 1em;
+	margin: 1em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: white;
+	border-radius: 1em;
+	box-shadow: 5px 5px 10px #e0eafc, -5px -5px 10px #ffffff;
+
+	p {
+		margin: 0 0.5em;
+	}
 }
 
 @include media-breakpoint-down(lg) {

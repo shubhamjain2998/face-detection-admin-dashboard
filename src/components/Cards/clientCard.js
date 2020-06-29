@@ -59,9 +59,11 @@ const ClientCard = ({ client, onDelete }) => {
 				<BsTrash className='mx-1 text-danger' onClick={handleShowDelete} />
 			</div>
 			<Card.Body className='d-flex flex-column align-items-center py-2'>
-				<h6 className='mb-1 text-center'>{org.Name}</h6>
+				<h6 className='w-100 mb-1 text-center text-truncate'>{org.Name}</h6>
 				{/* <p className='my-0 pt-1'>{props.name} </p> */}
-				<p className='font-weight-light text-secondary'>{org.orgType}</p>
+				<p className='w-100 font-weight-light text-secondary text-truncate'>
+					{org.orgType}
+				</p>
 				<div className='d-flex justify-content-center flex-wrap'>
 					{/* <Button variant='outline-primary' className='mx-1 my-1'>
 						Message
