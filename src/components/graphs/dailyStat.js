@@ -3,6 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import axios from '../../axios-faceDet';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import Loader from '../loader';
 
 const DailyStat = () => {
 	const [data, setData] = useState(null);
@@ -61,16 +62,21 @@ const DailyStat = () => {
 	};
 
 	return (
-		<div className='graph'>
-			{data && (
-				<Pie
-					data={Data}
-					options={{
-						maintainAspectRatio: false,
-					}}
-				/>
-			)}
-		</div>
+		<>
+			<div className='my-3'>
+				<Loader loading={data ? false : true} />
+			</div>
+			<div className='graph'>
+				{data && (
+					<Pie
+						data={Data}
+						options={{
+							maintainAspectRatio: false,
+						}}
+					/>
+				)}
+			</div>
+		</>
 	);
 };
 

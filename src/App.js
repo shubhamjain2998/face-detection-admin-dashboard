@@ -60,5 +60,5 @@ export default App;
 // !DONE: Step 2 - Departments DropDown Implementation
 // !DONE: Step 3 - Uploading Images Functionality
 // !DONE: Step 4 - Attendance Page Functionality For Admin
-// TODO: Step 5 - Attendance Page Functionality For Employee
+// !DONE: Step 5 - Attendance Page Functionality For Employee
 // !DONE: Step 6 - Implementation Of the Attendance App

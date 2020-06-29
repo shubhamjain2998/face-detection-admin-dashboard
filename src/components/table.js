@@ -1,9 +1,52 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Table, Badge } from 'react-bootstrap';
-import { BsThreeDotsVertical, BsTrash } from 'react-icons/bs';
+import {
+	BsThreeDotsVertical,
+	BsTrash,
+	BsArrowDown,
+	BsArrowUp,
+} from 'react-icons/bs';
 import { MdEdit } from 'react-icons/md';
 
 const CustomTable = (props) => {
+	const useSortableData = (items, config = null) => {
+		const [sortConfig, setSortConfig] = useState(config);
+
+		console.log(sortConfig);
+		const sortedItems = useMemo(() => {
+			let sortableItems = [...items];
+
+			if (sortConfig != null) {
+				sortableItems.sort((a, b) => {
+					if (a[sortConfig.key] < b[sortConfig.key]) {
+						return sortConfig.direction === 'ascending' ? 1 : -1;
+					}
+					if (a[sortConfig.key] > b[sortConfig.key]) {
+						return sortConfig.direction === 'ascending' ? -1 : 1;
+					}
+					return 0;
+				});
+			}
+			return sortableItems;
+		}, [items, sortConfig]);
+
+		const requestSort = (key) => {
+			let direction = 'ascending';
+			if (
+				sortConfig &&
+				sortConfig.key === key &&
+				sortConfig.direction === 'ascending'
+			) {
+				direction = 'descending';
+			}
+			setSortConfig({ key, direction });
+		};
+
+		return { items: sortedItems, requestSort, sortConfig };
+	};
+
+	const { items, requestSort, sortConfig } = useSortableData(props.values);
+
 	let headers = null;
 
 	if (props.type === 'client') {
@@ -16,29 +59,138 @@ const CustomTable = (props) => {
 						{el}
 					</th>
 				))} */}
-				<td className='col-4'>Name</td>
-				<td className='col-4'>Type</td>
-				{/* <td className='col-2'>Contact</td> */}
-				<td className='col-3'>Staff Count</td>
+				<td className='col-4' onClick={() => requestSort('Name')}>
+					Name
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'Name' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-4' onClick={() => requestSort('orgType')}>
+					Type
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'orgType' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-3' onClick={() => requestSort('staffcount')}>
+					Staff Count
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'staffcount' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
 			</>
 		);
 	} else if (props.type === 'dept') {
 		headers = (
 			<>
 				<td className='col-1'>#</td>
-				<td className='col-4'>Name</td>
-				<td className='col-6'>Description</td>
+				<td className='col-4' onClick={() => requestSort('DeptName')}>
+					Name
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'DeptName' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-6' onClick={() => requestSort('Description')}>
+					Description
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'Description' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
 			</>
 		);
 	} else if (props.type === 'emp') {
 		headers = (
 			<>
 				<td className='col-1'>#</td>
-				<td className='col-2'>Name</td>
-				<td className='col-2'>Phone</td>
-				<td className='col-2'>ID Type</td>
-				<td className='col-2'>ID Proof</td>
-				<td className='col-2'>Role</td>
+				<td className='col-2' onClick={() => requestSort('firstName')}>
+					Name
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'firstName' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-2' onClick={() => requestSort('phone')}>
+					Phone
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'phone' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-2' onClick={() => requestSort('idType')}>
+					ID Type
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'idType' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-2' onClick={() => requestSort('idProof')}>
+					ID Proof
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'idProof' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-2' onClick={() => requestSort('role')}>
+					Role
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'role' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
 			</>
 		);
 	}
@@ -51,7 +203,7 @@ const CustomTable = (props) => {
 						{headers}
 						<td className='col-1'></td>
 					</tr>
-					{props.values.map((r, i) => {
+					{items.map((r, i) => {
 						if (props.type === 'dept') {
 							return (
 								<tr key={r + i} className='d-flex'>

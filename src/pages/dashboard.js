@@ -43,22 +43,23 @@ const Dashboard = () => {
 			axios
 				.get('/attendance/api/accounts/filter?orgId=' + account.orgId)
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					dispatch(actions.setAccounts(res.data));
 				})
 				.catch((err) => console.log(err.response.data));
+			dispatch(actions.fetchUsers());
 		}
 	}, [dispatch, account.orgId, user.is_superuser]);
 
 	let mostProductiveEmp = null;
 	let leastProductiveEmp = null;
 
-	if (maxData) {
+	if (maxData && totalAcc) {
 		mostProductiveEmp = totalAcc.filter((emp) => emp.empId === maxData[0])[0];
-		console.log(mostProductiveEmp);
+		// console.log(mostProductiveEmp);
 	}
 
-	if (minData) {
+	if (minData && totalAcc) {
 		leastProductiveEmp = totalAcc.filter((emp) => emp.empId === minData[0])[0];
 	}
 
@@ -96,17 +97,17 @@ const Dashboard = () => {
 			</Row>
 			{!user.is_superuser && (
 				<Row className='my-4 mx-2'>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Today's Statistics</h3>
 						<DailyStat />
 					</Col>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Last Month Productivity</h3>
 						<LastMonthStat />
 					</Col>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Most Productive Employee</h3>
-						{maxData && totalAcc && (
+						{totalAcc && maxData && mostProductiveEmp && (
 							<Row>
 								<Col xs={6}>
 									<Row className='justify-content-center align-items-center'>
@@ -136,9 +137,9 @@ const Dashboard = () => {
 							</Row>
 						)}
 					</Col>
-					<Col sm={12} lg={5} className='my-1'>
+					<Col sm={12} lg={5} className='my-1 mx-1 dash-graph'>
 						<h3 className='graph-header'>Least Productive Employee</h3>
-						{minData && totalAcc && (
+						{minData && totalAcc && mostProductiveEmp && (
 							<Row>
 								<Col xs={6}>
 									<Row className='justify-content-center align-items-center'>

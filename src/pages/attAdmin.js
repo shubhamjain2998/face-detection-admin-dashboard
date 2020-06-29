@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Col, Row, Table, Form, FormControl } from 'react-bootstrap';
+import {
+	Container,
+	Col,
+	Row,
+	Table,
+	Form,
+	FormControl,
+	Button,
+	OverlayTrigger,
+	Tooltip,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import axios from '../axios-faceDet';
 import { TiTick, TiDeleteOutline } from 'react-icons/ti';
+import { FcLeave } from 'react-icons/fc';
+import { BsTriangleHalf } from 'react-icons/bs';
 import moment from 'moment';
+import FileDownload from 'js-file-download';
 
 let months = [];
 
@@ -26,6 +39,8 @@ const daysInMonth = (month, year) => {
 
 const AttendanceAdmin = () => {
 	const employees = useSelector((state) => state.acc.list);
+	const org = useSelector((state) => state.org);
+	const user = useSelector((state) => state.user.user);
 	const [att, setAtt] = useState(null);
 	const [month, setMonth] = useState(moment(months[0]).month());
 
@@ -45,6 +60,20 @@ const AttendanceAdmin = () => {
 		setMonth(parseInt(event.target.value));
 	};
 
+	const generateReport = () => {
+		axios
+			.get(
+				`/attendance/api/report_download?orgId=${org.details.pk}&month=${month + 1}`
+			)
+			.then((res) =>
+				FileDownload(
+					res.data,
+					`report ${moment().format('DD-MM-YYYY,hh:mm:ss a')}.csv`
+				)
+			)
+			.catch((err) => console.log(err));
+	};
+
 	return (
 		<Container fluid>
 			<Form.Row className='mt-2 mb-1'>
@@ -61,6 +90,40 @@ const AttendanceAdmin = () => {
 					</FormControl>
 				</Col>
 			</Form.Row>
+			<Row className='my-2'>
+				<Col xs={6} md={3}>
+					<div className='att-icon-detail'>
+						<span className='mx-1'>
+							<TiTick color='green' size='1.5em' />
+						</span>
+						<p>Present</p>
+					</div>{' '}
+				</Col>
+				<Col xs={6} md={3}>
+					<div className='att-icon-detail'>
+						<span className='mx-1'>
+							<BsTriangleHalf color='blue' size='1.5em' />
+						</span>
+						<p>Half Day</p>
+					</div>{' '}
+				</Col>
+				<Col xs={6} md={3}>
+					<div className='att-icon-detail'>
+						<span className='mx-1'>
+							<TiDeleteOutline color='red' size='1.5em' />
+						</span>
+						<p>Absent</p>
+					</div>{' '}
+				</Col>
+				<Col xs={6} md={3}>
+					<div className='att-icon-detail'>
+						<span className='mx-1'>
+							<FcLeave color='yellow' size='1.5em' className='leave-icon' />
+						</span>
+						<p>On Leave</p>
+					</div>{' '}
+				</Col>
+			</Row>
 			<Row>
 				<Col>
 					<div className='table-responsive attendance-table'>
@@ -79,22 +142,58 @@ const AttendanceAdmin = () => {
 										return (
 											<tr key={emp.pk}>
 												<td>{emp.firstName + ' ' + emp.lastName}</td>
-												{daysInMonth(month + 1, moment().year()).map((d) =>
-													att.filter(
+												{daysInMonth(month + 1, moment().year()).map((d) => {
+													const temp_att = att.filter(
 														(attendance) =>
 															attendance.empId === emp.empId &&
 															moment(attendance.date).date() === d &&
 															moment(attendance.date).month() === month
-													).length > 0 ? (
-														<td key={d}>
-															<TiTick color='green' size='1.5em' />
-														</td>
-													) : (
-														<td key={d}>
-															<TiDeleteOutline color='red' size='1.5em' />
-														</td>
-													)
-												)}
+													)[0];
+
+													if (temp_att && temp_att.leave) {
+														return (
+															<td key={d}>
+																<FcLeave color='yellow' size='1.5em' className='leave-icon' />
+															</td>
+														);
+													} else if (temp_att && !temp_att.leave) {
+														if (
+															temp_att.check_in > '10:00:00' ||
+															temp_att.check_out < '06:00:00'
+														) {
+															return (
+																<td key={d}>
+																	<BsTriangleHalf color='blue' size='1.5em' />
+																</td>
+															);
+														}
+														return (
+															<td key={d}>
+																<OverlayTrigger
+																	placement='top'
+																	overlay={
+																		<Tooltip id='tooltip-present'>
+																			<p style={{ marginBottom: '0' }}>
+																				Entry Time: {temp_att.check_in}
+																			</p>
+																			<p style={{ marginBottom: '0' }}>
+																				Exit Time: {temp_att.check_out}
+																			</p>
+																		</Tooltip>
+																	}
+																>
+																	<TiTick color='green' size='1.5em' />
+																</OverlayTrigger>
+															</td>
+														);
+													} else {
+														return (
+															<td key={d}>
+																<TiDeleteOutline color='red' size='1.5em' />
+															</td>
+														);
+													}
+												})}
 											</tr>
 										);
 									})}
@@ -103,13 +202,20 @@ const AttendanceAdmin = () => {
 					</div>
 				</Col>
 			</Row>
-			{/* <Row>
-				<Col xs={{span: 8, offset: 2}} sm={4}>
-					<Button className='mt-3' variant='outline-primary' block>
-						Download Report
-					</Button>
-				</Col>
-			</Row> */}
+			{!user.is_superuser && (
+				<Row className='justify-content-center my-3'>
+					<Col xs={6} sm={4}>
+						<Button
+							className='mt-3 download-button'
+							variant='outline-primary'
+							block
+							onClick={generateReport}
+						>
+							Download as CSV
+						</Button>
+					</Col>
+				</Row>
+			)}
 		</Container>
 	);
 };

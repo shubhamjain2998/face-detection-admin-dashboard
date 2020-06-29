@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Image, FormControl, Form, Button } from 'react-bootstrap';
 import john from '../../assets/avatar-02.jpg';
 import user_default from '../../assets/user.svg';
+
 import {
 	AiOutlineDashboard,
 	AiOutlineUser,
@@ -10,6 +11,8 @@ import {
 	AiOutlineProfile,
 } from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
+import { FcDepartment } from 'react-icons/fc';
+import { IoIosPeople } from 'react-icons/io';
 import { NavLink, useLocation } from 'react-router-dom';
 import Sidebar from '../../components/Layout/sidebar';
 import Backdrop from '../../components/Layout/backdrop';
@@ -34,8 +37,8 @@ const Layout = (props) => {
 			{ name: 'Clients', link: '/client', icon: <BsFillPeopleFill /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
-			{ name: 'Department', link: '/dept' },
-			{ name: 'Attendance admin', link: '/attAdmin' },
+			{ name: 'Department', link: '/dept', icon: <FcDepartment /> },
+			{ name: 'Attendance admin', link: '/attAdmin', icon: <IoIosPeople /> },
 			// { name: 'Attendance employee', link: '/home' },
 		];
 	} else {
@@ -44,8 +47,8 @@ const Layout = (props) => {
 			{ name: 'My Profile', link: '/attAdmin', icon: <AiOutlineProfile /> },
 			{ name: 'Employees', link: '/employee', icon: <AiOutlineUser /> },
 			{ name: 'Users', link: '/user', icon: <AiOutlineUserAdd /> },
-			{ name: 'Department', link: '/dept' },
-			{ name: 'Attendance', link: '/attAdmin' },
+			{ name: 'Department', link: '/dept', icon: <FcDepartment /> },
+			{ name: 'Attendance', link: '/attAdmin', icon: <IoIosPeople /> },
 		];
 	}
 
@@ -144,7 +147,7 @@ const Layout = (props) => {
 								className={sidebar ? 'nav-menu-icon light' : 'nav-menu-icon dark'}
 								onClick={onToggleSidebar}
 							>
-								<RiMenu2Line size='1.5rem' />
+								<RiMenu2Line size='1.5em' />
 							</div>
 							<Form inline className='nav-form'>
 								<FormControl
@@ -158,7 +161,7 @@ const Layout = (props) => {
 							</Form>
 							<p>{moment().format('DD MMMM YYYY, dddd')}</p>
 							<div className='nav-sidebar-icon' onClick={onToggleRightSidebar}>
-								<RiMenu3Line size='1.5rem' />
+								<RiMenu3Line size='1.5em' />
 							</div>
 						</Col>
 						{props.children}

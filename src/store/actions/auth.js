@@ -126,6 +126,7 @@ export const registerUser = (userDetails) => {
 			.post('/attendance/api/user/register', {
 				email: userDetails.email,
 				password: userDetails.password,
+				is_staff: true,
 			})
 			.then((res) => {
 				console.log(res);
@@ -146,7 +147,6 @@ export const loginUser = (userDetails) => {
 			.post('/attendance/auth/login/', {
 				email: userDetails.email,
 				password: userDetails.password,
-				is_staff: true,
 			})
 			.then((res) => {
 				console.log(res);

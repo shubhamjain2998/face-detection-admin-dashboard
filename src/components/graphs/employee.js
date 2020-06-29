@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
+import Loader from '../loader';
 
 const EmployeeStat = (props) => {
 	const maxData = useSelector((state) => state.acc.maxAttendanceEmployee);
@@ -37,30 +38,35 @@ const EmployeeStat = (props) => {
 	};
 
 	return (
-		<div className='graph'>
-			<Bar
-				data={data}
-				options={{
-					// responsive: true,
-					maintainAspectRatio: false,
-					legend: {
-						display: true,
-						position: 'bottom',
-					},
-					scales: {
-						yAxes: [
-							{
-								ticks: {
-									beginAtZero: true,
-									min: 0,
-									max: 35,
+		<>
+			<div className='my-3'>
+				<Loader loading={data ? false : true} />
+			</div>
+			<div className='graph'>
+				<Bar
+					data={data}
+					options={{
+						// responsive: true,
+						maintainAspectRatio: false,
+						legend: {
+							display: true,
+							position: 'bottom',
+						},
+						scales: {
+							yAxes: [
+								{
+									ticks: {
+										beginAtZero: true,
+										min: 0,
+										max: 35,
+									},
 								},
-							},
-						],
-					},
-				}}
-			/>
-		</div>
+							],
+						},
+					}}
+				/>
+			</div>
+		</>
 	);
 };
 

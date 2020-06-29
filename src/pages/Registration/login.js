@@ -12,7 +12,7 @@ const Login = () => {
 		<>
 			<LoginForm />
 			{user.error ? <p className='py-2 text-danger text-capitalize'>{user.error}</p> : ''}
-			<div className='d-flex justify-content-center my-3'>
+			<div className='d-flex justify-content-center py-2 my-3'>
 				<PropagateLoader
 					size={10}
 					color={"#654aa1"}

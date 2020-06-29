@@ -22,9 +22,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../store/actions/index';
 import Loader from '../components/loader';
 import CustomForm from '../components/Forms/customForm';
+import ConfigOrg from '../components/Forms/configOrg';
 
 const Employee = () => {
 	const [show, setShow] = useState(false);
+	const [configShow, setConfigShow] = useState(false);
 	const [activeOrg, setActiveOrg] = useState('All');
 	const [selectedOrg, setSelectedOrg] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -32,6 +34,7 @@ const Employee = () => {
 	const user = useSelector((state) => state.user.user);
 	const rightSidebar = useSelector((state) => state.user.rightSidebar);
 	const account = useSelector((state) => state.acc.details);
+	const org = useSelector((state) => state.org.details);
 	const orgs = useSelector((state) => state.org.list);
 	const storedEmps = useSelector((state) => state.acc.list);
 	const dispatch = useDispatch();
@@ -126,6 +129,8 @@ const Employee = () => {
 
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
+	const handleConfigShow = () => setConfigShow(true);
+	const handleConfigClose = () => setConfigShow(false);
 
 	const addingDone = (newEmployee) => {
 		const temp = emps;
@@ -203,20 +208,47 @@ const Employee = () => {
 		}
 	};
 
+	const setAttendanceConfig = (config) => {
+		user.is_superuser
+			? (config['orgId'] = selectedOrg.pk)
+			: (config['orgId'] = org.pk);
+
+		console.log(config);
+		axios
+			.post('/attendance/api/attendance_config', config)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => console.log(err.message));
+		setConfigShow(false);
+	};
+
 	return (
 		<Container fluid>
 			<Row className='position-relative'>
 				<Col xl={10} md={12}>
 					<Row>
-						<Col lg={9}>
+						<Col lg={7}>
 							<Heading name='Employees' link='employee' />
 						</Col>
 						<Col lg={3} className='d-flex justify-content-center align-items-center'>
 							<Button
 								variant='primary'
-								className='px-2'
+								className='px-2 my-1'
+								onClick={handleConfigShow}
+								disabled={activeOrg === 'All' && user.is_superuser}
+								block
+							>
+								Configure attendance
+							</Button>
+						</Col>
+						<Col lg={2} className='d-flex justify-content-center align-items-center'>
+							<Button
+								variant='primary'
+								className='px-2 my-1'
 								onClick={handleShow}
 								disabled={activeOrg === 'All' && user.is_superuser}
+								block
 							>
 								<span className='pr-1'>
 									<BsPlus />
@@ -307,6 +339,13 @@ const Employee = () => {
 							values={empTemplate}
 							onEditingDone={addingDone}
 						/>
+					</CustomModal>
+					<CustomModal
+						show={configShow}
+						onClose={handleConfigClose}
+						heading='Configure Attendance Time for Employees'
+					>
+						<ConfigOrg passValues={setAttendanceConfig} />
 					</CustomModal>
 				</Col>
 				<Col xl={2} md={12} className={rightSidebarClasses}>

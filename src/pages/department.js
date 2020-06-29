@@ -11,12 +11,13 @@ import * as actions from '../store/actions/index';
 import axios from '../axios-faceDet';
 import CustomForm from '../components/Forms/customForm';
 
-const Department = () => {
+const Department = (props) => {
 	const [show, setShow] = useState(false);
 	const [showDelete, setShowDelete] = useState(false);
 	const [activeDept, setActiveDept] = useState(null);
 	const [mode, setMode] = useState('add');
 	const [department, setDepartment] = useState(null);
+	const [orgDept, setOrgDept] = useState(null);
 	const dispatch = useDispatch();
 
 	const handleClose = () => setShow(false);
@@ -24,12 +25,22 @@ const Department = () => {
 
 	const storedDepartment = useSelector((state) => state.acc.department);
 	const user = useSelector((state) => state.user);
+	const accounts = useSelector((state) => state.acc.list);
 
 	useEffect(() => {
 		if (storedDepartment) {
 			setDepartment(storedDepartment);
 		}
-	}, [storedDepartment]);
+		if (department && !user.user.is_superuser && !orgDept) {
+			const dept = [];
+			for (let i in department) {
+				if (accounts.filter((acc) => acc.deptId === department[i].id).length > 0) {
+					dept.push(department[i]);
+				}
+			}
+			setOrgDept(dept);
+		}
+	}, [storedDepartment, accounts, department, orgDept, user.user.is_superuser]);
 
 	const tableElements = ['Department Name', 'Description'];
 
@@ -102,11 +113,13 @@ const Department = () => {
 	return (
 		<Container fluid>
 			<Row>
-				<Col xl={10} md={12}>
-					<Row>
-						<Col lg={9}>
-							<Heading name='Department' link='department' />
-						</Col>
+				<Col xl={props.profile ? 12 : 10} md={12}>
+					<Row className={props.profile ? 'justify-content-end' : ''}>
+						{!props.profile && (
+							<Col lg={9}>
+								<Heading name='Department' link='department' />
+							</Col>
+						)}
 						<Col lg={3} className='d-flex justify-content-center align-items-center'>
 							<Button variant='primary' className='px-2' onClick={onAddHandler}>
 								<span className='pr-1'>
@@ -117,17 +130,28 @@ const Department = () => {
 						</Col>
 					</Row>
 
-					<Row className='mt-3'>
+					<Row className={props.profile ? 'mt-1' : 'mt-3'}>
 						<Col xs={12}>
-							{department && (
-								<CustomTable
-									values={department}
-									elements={tableElements}
-									type='dept'
-									onEdit={onEditHandler}
-									onDelete={onDeleteHandlerTable}
-								/>
-							)}
+							{user.user.is_superuser
+								? department && (
+										<CustomTable
+											values={department}
+											elements={tableElements}
+											type='dept'
+											onEdit={onEditHandler}
+											onDelete={onDeleteHandlerTable}
+										/>
+									)
+								: department &&
+									orgDept && (
+										<CustomTable
+											values={orgDept}
+											elements={tableElements}
+											type='dept'
+											onEdit={onEditHandler}
+											onDelete={onDeleteHandlerTable}
+										/>
+									)}
 						</Col>
 					</Row>
 
@@ -144,16 +168,18 @@ const Department = () => {
 						onDeleteHandler={onDeleteHandler}
 					/>
 				</Col>
-				<Col xl={2} md={12} className={rightSidebarClasses}>
-					<p>filters</p>
-					<div className='applied-filters'></div>
+				{!props.profile && (
+					<Col xl={2} md={12} className={rightSidebarClasses}>
+						<p>filters</p>
+						<div className='applied-filters'></div>
 
-					<CustomForm
-						filters
-						elements={filterElements}
-						handleSubmit={onSubmitFilters}
-					/>
-				</Col>
+						<CustomForm
+							filters
+							elements={filterElements}
+							handleSubmit={onSubmitFilters}
+						/>
+					</Col>
+				)}
 			</Row>
 		</Container>
 	);
