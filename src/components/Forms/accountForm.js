@@ -83,7 +83,7 @@ const AccountForm = (props) => {
 			name: 'phone',
 			type: 'number',
 			value: props.values ? props.values.phone : '',
-			label: 'Alternate Mobile Number',
+			label: 'Personal Mobile Number',
 		},
 
 		{

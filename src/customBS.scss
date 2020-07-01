@@ -11,6 +11,7 @@ $enable-responsive-font-sizes: true;
 $custom-color: rgb(17, 30, 51);
 $active: rgb(143, 143, 143);
 $border-color: rgb(214, 214, 214);
+$background-color: #fafafa;
 
 body {
 	font-family: 'Raleway', sans-serif;
@@ -229,7 +230,7 @@ body {
 
 	.layout-sidebar {
 		position: fixed;
-		width: 15%;
+		width: 10%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
@@ -272,7 +273,7 @@ body {
 				right: 0;
 				height: 15px;
 				width: 15px;
-				background-color: white;
+				background-color: $background-color;
 				visibility: hidden;
 				&::before {
 					content: '';
@@ -290,7 +291,7 @@ body {
 				right: 0;
 				height: 15px;
 				width: 15px;
-				background-color: white;
+				background-color: $background-color;
 				visibility: hidden;
 				&::before {
 					content: '';
@@ -311,7 +312,7 @@ body {
 		}
 
 		.active-link {
-			background-color: white;
+			background-color: $background-color;
 			border-radius: 0;
 
 			.route {
@@ -371,11 +372,11 @@ body {
 
 	.layout-inner-div {
 		position: absolute;
-		width: 85%;
+		width: 90%;
 		max-height: 100%;
 		right: 0;
 		top: 0;
-		// background-color: rgb(251, 249, 249);
+		background-color: $background-color;
 		z-index: 1000;
 		border-radius: 0.8em 0 0 0.8em;
 		overflow-x: hidden;
@@ -384,7 +385,7 @@ body {
 		.content {
 			// position: fixed;
 			// height: 100%;
-			background-color: #fffcfc;
+			background-color: $background-color;
 			border-radius: 1em 0 0 1em;
 			overflow-y: scroll;
 
@@ -468,7 +469,7 @@ body {
 		position: fixed;
 		height: 100%;
 		border-radius: 0 1em 1em 0;
-		background-color: rgb(255, 252, 252);
+		background-color: $background-color;
 		right: -0.9em;
 		top: 0;
 		display: flex;
@@ -736,6 +737,14 @@ body {
 .userTable {
 	margin-top: 2em;
 
+	box-shadow: 5px 5px 10px #cfdef3, -5px -5px 10px #ffffff ;
+	background: white;
+	border-radius: 1em;
+
+	table {
+		margin: 0 !important;
+	}
+
 	table tr:first-child td {
 		border-top: 0;
 		text-transform: uppercase;
@@ -746,10 +755,6 @@ body {
 		cursor: pointer;
 	}
 
-	table tr:first-child:hover {
-		transform: scale(1) !important;
-	}
-
 	.dataTable {
 		tr:not(:first-child) {
 			transition: transform 0.1s ease-out;
@@ -757,14 +762,60 @@ body {
 			font-size: 0.9em;
 			letter-spacing: 0.05em;
 			font-weight: 500;
+			position: relative;
 		}
 
-		tr:hover {
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-			transform: scale(1.02);
-			font-size: 1em;
-			color: warning;
-			font-weight: 590;
+		tr:not(:first-child)::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			background-color: rgba(60, 200, 210, 0.1);
+			clip-path: circle(0 at 50% 50%);
+			transition: clip-path .5s ease-in-out;
+		}
+
+		tr:not(:first-child):hover::after {
+			// box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			// transform: scale(1.02);
+			// font-size: 1em;
+			// color: warning;
+			// font-weight: 590;
+			clip-path: circle(100% at 50% 50%);
+			pointer-events: none;
+		}
+
+		.emp-table-profile {
+			display: flex;
+			align-items: center;
+			width: 100%;
+
+			img {
+				max-width: 4em;
+				height: 4em;
+			}
+
+			> div {
+				display: flex;
+				flex-direction: column;
+				padding-left: 1em;
+				overflow: hidden;
+
+				h6:first-child {
+					font-size: 1em;
+					font-weight: bold;
+					letter-spacing: .1em;
+					text-transform: capitalize;
+				}
+
+				h6:last-child {
+					font-size: .9em;
+					color: $active;
+					font-weight: bolder;
+				}
+			}
 		}
 
 		.badge-pill {
