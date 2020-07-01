@@ -54,7 +54,7 @@ const LoginForm = (props) => {
 	return (
 		<div className='d-flex align-items-center flex-column'>
 			<h5 className='login-heading w-100'>
-				{props.register ? 'Create a new account' : 'Sign in to your account'}
+				{props.register ? '' : 'Sign in to your account'}
 			</h5>
 			{/* <p className='text-secondary'>Access to our Dashboard</p> */}
 
@@ -75,7 +75,7 @@ const LoginForm = (props) => {
 				}) => (
 					<Form noValidate onSubmit={handleSubmit} className='w-100 mt-2 login-form'>
 						<Form.Group>
-							<Form.Label>Email Address</Form.Label>
+							<Form.Label>Email</Form.Label>
 							<Form.Control
 								name='email'
 								ref={loginRef}
@@ -136,23 +136,6 @@ const LoginForm = (props) => {
 					</Form>
 				)}
 			</Formik>
-			<div className='pt-2'>
-				{/* {props.register ? (
-					<p className='font-weight-light py-2'>
-						Already have an account?{' '}
-						<span className='text-primary'>
-							<Link to='/login'>Login</Link>
-						</span>
-					</p>
-				) : (
-					<p className='font-weight-light py-2'>
-						Don't have an account yet?{' '}
-						<span className='text-primary'>
-							<Link to='register'>Register</Link>
-						</span>
-					</p>
-				)} */}
-			</div>
 		</div>
 	);
 };

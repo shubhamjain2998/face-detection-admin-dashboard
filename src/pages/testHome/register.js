@@ -30,7 +30,7 @@ const RegisterTab = (props) => {
 			{user.token && org.details.pk && account.details.pk && (
 				<Redirect to='/home' />
 			)}
-			<Row className='formTabs'>
+			{/* <Row className='formTabs'>
 				<>
 					<Nav variant='pills'>
 						<Col xs={4}>
@@ -62,7 +62,57 @@ const RegisterTab = (props) => {
 						</Col>
 					</Nav>
 				</>
-			</Row>
+			</Row> */}
+			<div className='formTabs'>
+				<Nav variant='pills'>
+					<ul>
+						<li className={user.token ? 'step-complete' : 'step-toBeDone'}>
+							<Nav.Item>
+								<Nav.Link eventKey='user' disabled={user.token}>
+									<p>1</p>
+								</Nav.Link>
+								<small className='text-center pt-2 font-weight-bold'>Create Your Account</small>
+							</Nav.Item>
+						</li>
+						<li
+							className={
+								!user.token && key === 'user'
+									? 'step-toBeDone'
+									: key === 'org'
+									? 'step-complete mid'
+									: 'step-complete'
+							}
+						>
+							<Nav.Item>
+								<Nav.Link eventKey='org' disabled={!user.token}>
+									<p>2</p>
+								</Nav.Link>
+								<small className='text-center pt-2 font-weight-bold'>
+									Enter Your Organization Details
+								</small>
+							</Nav.Item>
+						</li>
+						<li
+							className={
+								!user.token || (user.token && !org.details.pk)
+									? 'step-toBeDone'
+									: 'step-complete'
+							}
+						>
+							<Nav.Item>
+								<Nav.Link
+									eventKey='acc'
+									disabled={!user.token || (user.token && !org.details.pk)}
+								>
+									<p>3</p>
+								</Nav.Link>
+								<small className='text-center pt-2 font-weight-bold'>Enter Your Personal Details</small>
+							</Nav.Item>
+						</li>
+					</ul>
+				</Nav>
+			</div>
+
 			<Row>
 				<Col sm={12}>
 					<Tab.Content className='tabContent'>
@@ -75,7 +125,9 @@ const RegisterTab = (props) => {
 									loading={user.loading}
 									// loading={true}
 								/>
-								{user.error && <p className='text-danger text-capitalize'>{user.error}</p>}
+								{user.error && (
+									<p className='text-danger text-capitalize'>{user.error}</p>
+								)}
 							</div>
 						</Tab.Pane>
 						<Tab.Pane eventKey='org'>
@@ -87,7 +139,9 @@ const RegisterTab = (props) => {
 									loading={org.loading}
 									// loading={true}
 								/>
-								{org.error && <p className='text-danger text-capitalize'>{org.error}</p>}
+								{org.error && (
+									<p className='text-danger text-capitalize'>{org.error}</p>
+								)}
 							</div>
 						</Tab.Pane>
 						<Tab.Pane eventKey='acc'>
@@ -99,7 +153,9 @@ const RegisterTab = (props) => {
 									loading={account.loading}
 									// loading={true}
 								/>
-								{account.error && <p className='text-danger text-capitalize'>{account.error}</p>}
+								{account.error && (
+									<p className='text-danger text-capitalize'>{account.error}</p>
+								)}
 							</div>
 						</Tab.Pane>
 					</Tab.Content>
