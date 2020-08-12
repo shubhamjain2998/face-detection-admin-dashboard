@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Table, Badge } from 'react-bootstrap';
+import { Table, Badge, Image } from 'react-bootstrap';
 import {
 	BsThreeDotsVertical,
 	BsTrash,
@@ -7,6 +7,7 @@ import {
 	BsArrowUp,
 } from 'react-icons/bs';
 import { MdEdit } from 'react-icons/md';
+import defaultImg from '../assets/user.svg';
 
 const CustomTable = (props) => {
 	const useSortableData = (items, config = null) => {
@@ -130,8 +131,8 @@ const CustomTable = (props) => {
 	} else if (props.type === 'emp') {
 		headers = (
 			<>
-				<td className='col-1'>#</td>
-				<td className='col-2' onClick={() => requestSort('firstName')}>
+				<td className='col-1'>ID</td>
+				<td className='col-4' onClick={() => requestSort('firstName')}>
 					Name
 					<span className='mx-1'>
 						{sortConfig &&
@@ -143,7 +144,19 @@ const CustomTable = (props) => {
 						)}
 					</span>
 				</td>
-				<td className='col-2' onClick={() => requestSort('phone')}>
+				<td className='col-3' onClick={() => requestSort('role')}>
+					Role
+					<span className='mx-1'>
+						{sortConfig &&
+						sortConfig.key === 'role' &&
+						sortConfig.direction === 'ascending' ? (
+							<BsArrowDown size='1.5em' />
+						) : (
+							<BsArrowUp size='1.5em' />
+						)}
+					</span>
+				</td>
+				<td className='col-3' onClick={() => requestSort('phone')}>
 					Phone
 					<span className='mx-1'>
 						{sortConfig &&
@@ -155,7 +168,7 @@ const CustomTable = (props) => {
 						)}
 					</span>
 				</td>
-				<td className='col-2' onClick={() => requestSort('idType')}>
+				{/* <td className='col-2' onClick={() => requestSort('idType')}>
 					ID Type
 					<span className='mx-1'>
 						{sortConfig &&
@@ -178,25 +191,14 @@ const CustomTable = (props) => {
 							<BsArrowUp size='1.5em' />
 						)}
 					</span>
-				</td>
-				<td className='col-2' onClick={() => requestSort('role')}>
-					Role
-					<span className='mx-1'>
-						{sortConfig &&
-						sortConfig.key === 'role' &&
-						sortConfig.direction === 'ascending' ? (
-							<BsArrowDown size='1.5em' />
-						) : (
-							<BsArrowUp size='1.5em' />
-						)}
-					</span>
-				</td>
+				</td> */}
+				
 			</>
 		);
 	}
 
 	return (
-		<div className='px-4 table-responsive userTable'>
+		<div className='mx-2 table-responsive userTable'>
 			<Table>
 				<tbody className='dataTable'>
 					<tr className='d-flex'>
@@ -244,18 +246,39 @@ const CustomTable = (props) => {
 						} else if (props.type === 'emp') {
 							return (
 								<tr key={r + i} className='d-flex'>
-									<td className='col-1'>{i + 1}</td>
-									<td className='col-2'>{r.firstName + ' ' + r.lastName}</td>
-									<td className='col-2' style={{ overflowWrap: 'anywhere' }}>
+									<td className='col-1'>{r.empId}</td>
+									<td className='col-4'>
+										<div className='emp-table-profile'>
+											<Image
+												src={r.profileImg ? r.profileImg : defaultImg}
+												alt
+												roundedCircle
+											/>
+											<div>
+												<h6>{r.firstName + ' ' + r.lastName}</h6>
+												<h6 className='text-truncate'>{r.emailId}</h6>
+											</div>
+										</div>
+									</td>
+									<td className='col-3 font-weight-bold'>{r.role}</td>
+									<td className='col-3' style={{ overflowWrap: 'anywhere' }}>
 										{r.phone}
 									</td>
-									<td className='col-2'>{r.idType}</td>
+									{/* <td className='col-2'>{r.idType}</td>
 									<td className='col-2' style={{ overflowWrap: 'anywhere' }}>
 										{r.idProof}
-									</td>
-									<td className='col-2'>{r.role}</td>
+									</td> */}
 									<td>
-										<BsThreeDotsVertical />
+									<span style={{ cursor: 'pointer' }}>
+											<MdEdit size='1.5em'
+												className='mx-2 text-primary'
+												// onClick={() => props.onEdit(r)}
+											/>
+											<BsTrash size='1.5em'
+												className='mx-2 text-danger'
+												// onClick={() => props.onDelete(r)}
+											/>
+										</span>
 									</td>
 								</tr>
 							);

@@ -11,6 +11,7 @@ $enable-responsive-font-sizes: true;
 $custom-color: rgb(17, 30, 51);
 $active: rgb(143, 143, 143);
 $border-color: rgb(214, 214, 214);
+$background-color: #fafafa;
 
 body {
 	font-family: 'Raleway', sans-serif;
@@ -94,6 +95,76 @@ body {
 .formTabs {
 	margin-top: 4em;
 
+	ul {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		text-decoration: none;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+	}
+
+	li {
+		display: inline-block;
+		margin: 1em 0;
+		list-style-type: none;
+		flex-grow: 1;
+		position: relative;
+
+		&::before {
+			content: ' ';
+			position: absolute;
+			width: 50%;
+			height: 0.2em;
+			top: 1em;
+			background-color: #654aa1;
+			z-index: 1;
+		}
+		&:first-child::before {
+			right: 0;
+		}
+		&:last-child::before {
+			left: 0;
+		}
+		&:nth-child(2)::after {
+			content: ' ';
+			position: absolute;
+			width: 50%;
+			height: 0.2em;
+			top: 1em;
+			right: 0;
+			background-color: #654aa1;
+			z-index: 1;
+		}
+		&.step-complete {
+			a {
+				border-color: #664aa188;
+			}
+			&::before,
+			&:nth-child(2)::after {
+				background-color: #664aa188;
+			}
+			&.mid {
+				&::before {
+					background-color: #664aa188;
+				}
+				&::after {
+					background-color: $active;
+				}
+			}
+		}
+		&.step-toBeDone {
+			a {
+				border-color: $active;
+			}
+			&::before,
+			&:nth-child(2)::after {
+				background-color: $active;
+			}
+		}
+	}
+
 	.nav {
 		width: 100%;
 	}
@@ -103,8 +174,13 @@ body {
 	// }
 
 	.nav-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 		width: auto;
 		height: 100%;
+		margin: 0 auto;
 
 		a {
 			// padding-bottom: 0.4em;
@@ -116,18 +192,32 @@ body {
 			align-items: center;
 			justify-content: center;
 			flex-direction: column;
+			z-index: 100;
+			background-color: rgb(250, 250, 250);
+			border: 1px solid #654aa1;
+			border-radius: 50%;
+			padding: 0.5em 1em;
+
+			// clip-path: circle(40% at 50% 50%);
 		}
 
 		.a:focus,
 		.a:active {
 			outline: none !important;
 			box-shadow: none;
+			background-color: #654aa1;
+		}
+
+		p,
+		h6 {
+			margin-bottom: 0;
+			overflow-wrap: break-word;
 		}
 	}
 }
 
 .nav-pills {
-	background-color: #dadff0;
+	// background-color: #dadff0;
 }
 
 .nav-item {
@@ -229,7 +319,7 @@ body {
 
 	.layout-sidebar {
 		position: fixed;
-		width: 15%;
+		width: 10%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
@@ -272,7 +362,7 @@ body {
 				right: 0;
 				height: 15px;
 				width: 15px;
-				background-color: white;
+				background-color: $background-color;
 				visibility: hidden;
 				&::before {
 					content: '';
@@ -290,7 +380,7 @@ body {
 				right: 0;
 				height: 15px;
 				width: 15px;
-				background-color: white;
+				background-color: $background-color;
 				visibility: hidden;
 				&::before {
 					content: '';
@@ -311,7 +401,7 @@ body {
 		}
 
 		.active-link {
-			background-color: white;
+			background-color: $background-color;
 			border-radius: 0;
 
 			.route {
@@ -371,11 +461,11 @@ body {
 
 	.layout-inner-div {
 		position: absolute;
-		width: 85%;
+		width: 90%;
 		max-height: 100%;
 		right: 0;
 		top: 0;
-		// background-color: rgb(251, 249, 249);
+		background-color: $background-color;
 		z-index: 1000;
 		border-radius: 0.8em 0 0 0.8em;
 		overflow-x: hidden;
@@ -384,7 +474,7 @@ body {
 		.content {
 			// position: fixed;
 			// height: 100%;
-			background-color: #fffcfc;
+			background-color: $background-color;
 			border-radius: 1em 0 0 1em;
 			overflow-y: scroll;
 
@@ -468,7 +558,7 @@ body {
 		position: fixed;
 		height: 100%;
 		border-radius: 0 1em 1em 0;
-		background-color: rgb(255, 252, 252);
+		background-color: $background-color;
 		right: -0.9em;
 		top: 0;
 		display: flex;
@@ -564,6 +654,7 @@ body {
 		&::before {
 			// transform: scale(1.05);
 			clip-path: circle(75% at 50% 50%);
+			z-index: -1;
 		}
 	}
 
@@ -601,21 +692,26 @@ body {
 	.nav-tabs .nav-link {
 		border-color: white;
 		border-radius: 0;
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: .2em;
+			background-color: #654aa1;
+			clip-path: circle(0 at 50% 50%);
+			transition: clip-path .5s ease-in-out;
+		}
+
+		&.active::after{
+			clip-path: circle(50% at 50% 50%);
+		}
 	}
 
-	.nav-tabs .nav-link.active {
-		border-bottom: 0.2em solid #654aa1 !important;
-		animation: slide-down 0.5s ease-out;
-	}
-}
-
-@keyframes slide-down {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+	
 }
 
 .profile-wrapper {
@@ -736,6 +832,14 @@ body {
 .userTable {
 	margin-top: 2em;
 
+	box-shadow: 5px 5px 10px #cfdef3, -5px -5px 10px #ffffff;
+	background: white;
+	border-radius: 1em;
+
+	table {
+		margin: 0 !important;
+	}
+
 	table tr:first-child td {
 		border-top: 0;
 		text-transform: uppercase;
@@ -746,10 +850,6 @@ body {
 		cursor: pointer;
 	}
 
-	table tr:first-child:hover {
-		transform: scale(1) !important;
-	}
-
 	.dataTable {
 		tr:not(:first-child) {
 			transition: transform 0.1s ease-out;
@@ -757,14 +857,60 @@ body {
 			font-size: 0.9em;
 			letter-spacing: 0.05em;
 			font-weight: 500;
+			position: relative;
 		}
 
-		tr:hover {
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-			transform: scale(1.02);
-			font-size: 1em;
-			color: warning;
-			font-weight: 590;
+		tr:not(:first-child)::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			background-color: rgba(60, 200, 210, 0.1);
+			clip-path: circle(0 at 50% 50%);
+			transition: clip-path 0.5s ease-in-out;
+		}
+
+		tr:not(:first-child):hover::after {
+			// box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			// transform: scale(1.02);
+			// font-size: 1em;
+			// color: warning;
+			// font-weight: 590;
+			clip-path: circle(100% at 50% 50%);
+			pointer-events: none;
+		}
+
+		.emp-table-profile {
+			display: flex;
+			align-items: center;
+			width: 100%;
+
+			img {
+				max-width: 4em;
+				height: 4em;
+			}
+
+			> div {
+				display: flex;
+				flex-direction: column;
+				padding-left: 1em;
+				overflow: hidden;
+
+				h6:first-child {
+					font-size: 1em;
+					font-weight: bold;
+					letter-spacing: 0.1em;
+					text-transform: capitalize;
+				}
+
+				h6:last-child {
+					font-size: 0.9em;
+					color: $active;
+					font-weight: bolder;
+				}
+			}
 		}
 
 		.badge-pill {

@@ -29,12 +29,13 @@ for (let i = 0; i <= 3; i++) {
 // of the last month, so you have to add 1 to the month number
 // so it returns the correct amount of days
 const daysInMonth = (month, year) => {
+	const dates = [];
 	const days = [];
 	const totalDays = new Date(year, month, 0).getDate();
 	for (let i = 1; i <= totalDays; i++) {
-		days.push(i);
+		dates.push(i);
 	}
-	return days;
+	return dates;
 };
 
 const AttendanceAdmin = () => {
@@ -130,7 +131,22 @@ const AttendanceAdmin = () => {
 						<Table>
 							<thead>
 								<tr>
-									<td>Employee</td>
+									<td
+										rowSpan='2'
+										style={{ textAlign: 'center', verticalAlign: 'inherit' }}
+									>
+										Employees
+									</td>
+									{daysInMonth(month + 1, moment().year()).map((d) => {
+										// console.log(moment().year(moment().year()).month(month).date(d).format('dd'));
+										return (
+											<td key={d}>
+												{moment().year(moment().year()).month(month).date(d).format('dd')}
+											</td>
+										);
+									})}
+								</tr>
+								<tr>
 									{daysInMonth(month + 1, moment().year()).map((d) => (
 										<td key={d}>{d}</td>
 									))}
@@ -143,7 +159,12 @@ const AttendanceAdmin = () => {
 											<tr key={emp.pk}>
 												<td>{emp.firstName + ' ' + emp.lastName}</td>
 												{daysInMonth(month + 1, moment().year()).map((d) => {
-													const temp_att = att.filter(
+
+													if (moment().year(moment().year()).month(month).date(d).format('dddd') === 'Sunday') {
+														return <td style={{backgroundColor: '#fcb6b7'}}></td>
+													}
+
+													const temp_att = att.filter(	
 														(attendance) =>
 															attendance.empId === emp.empId &&
 															moment(attendance.date).date() === d &&

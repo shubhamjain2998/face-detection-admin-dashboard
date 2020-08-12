@@ -82,7 +82,7 @@ const UserTable = (props) => {
 
 	return (
 		<div>
-			<div className='table-responsive userTable px-3'>
+			<div className='table-responsive userTable px-3 my-2'>
 				<Table>
 					<tbody className='dataTable'>
 						<tr className='d-flex'>
