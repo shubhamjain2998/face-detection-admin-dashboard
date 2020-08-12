@@ -654,6 +654,7 @@ body {
 		&::before {
 			// transform: scale(1.05);
 			clip-path: circle(75% at 50% 50%);
+			z-index: -1;
 		}
 	}
 
@@ -691,21 +692,26 @@ body {
 	.nav-tabs .nav-link {
 		border-color: white;
 		border-radius: 0;
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: .2em;
+			background-color: #654aa1;
+			clip-path: circle(0 at 50% 50%);
+			transition: clip-path .5s ease-in-out;
+		}
+
+		&.active::after{
+			clip-path: circle(50% at 50% 50%);
+		}
 	}
 
-	.nav-tabs .nav-link.active {
-		border-bottom: 0.2em solid #654aa1 !important;
-		animation: slide-down 0.5s ease-out;
-	}
-}
-
-@keyframes slide-down {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+	
 }
 
 .profile-wrapper {
