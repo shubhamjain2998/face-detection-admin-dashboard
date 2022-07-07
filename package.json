@@ -12,7 +12,7 @@
     "dotenv": "^8.2.0",
     "formik": "^2.1.4",
     "js-file-download": "^0.4.12",
-    "moment": "^2.26.0",
+    "moment": "^2.29.4",
     "nivo": "^0.31.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
